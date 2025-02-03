@@ -1,0 +1,9 @@
+# Manual Técnico - Proyecto 1
+## Objetivos
+### Objetivo General
+- Proporcionar una explicación detallado sobre la utilización del código y la lógica utilizada
+### Objetivos Específicos
+- Presentar y explicar el funcionamiento del código utilizado para la solución creada
+- Detallar la manera en que se idearon las soluciones y la lógica detrás de cada una
+
+## Alcances del Sistema

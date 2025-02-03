@@ -1,0 +1,16 @@
+# Manual de Usuario - Proyecto 1
+## Objetivos
+### General 
+- Explicar el flujo con el cual el programa funciona
+### Específicos
+- Propiciar una buena compresión de la manera en la que las funciones interactúan entre sí
+- Especificar detalladamente la manera en la que funciona la solución
+
+## Información del Sistema
+El presente manual tiene la finalidad de proporcionar el conocimiento necesario para utilizar correctamente el programa. Este proporcional la descripción detallada de las funcionalidades y, especialmente, del flujo de este.
+
+
+
+## Información del Sistema
+- Poseer el ejecutable
+- 
