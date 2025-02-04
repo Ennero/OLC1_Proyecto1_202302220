@@ -1,0 +1,30 @@
+strategy AlwaysDefect {
+    initial: D
+    rules: [
+        else D
+    ]
+}
+
+strategy AlwaysCooperate {
+    initial: C
+    rules: [
+        else C
+    ]
+}
+
+match ADefectvsACoop {
+    players strategies: [AlwaysDefect, AlwaysCooperate]
+    rounds: 100
+    scoring: {
+        mutual cooperation: 3, 
+        mutual defection: 1, 
+        betrayal reward: 5, 
+        betrayal punishment: 0 
+    }
+}
+
+main {
+    run [ADefectvsACoop] with {
+        seed: 42
+    }
+}

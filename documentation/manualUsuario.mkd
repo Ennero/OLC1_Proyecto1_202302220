@@ -1,16 +1,59 @@
 # Manual de Usuario - Proyecto 1
 ## Objetivos
 ### General 
-- Explicar el flujo con el cual el programa funciona
+- Explicar el flujo de funcionamiento del programa.
 ### Específicos
-- Propiciar una buena compresión de la manera en la que las funciones interactúan entre sí
-- Especificar detalladamente la manera en la que funciona la solución
+- Facilitar una comprensión clara de la interacción entre las funciones del programa.
+- Detallar de manera precisa el funcionamiento de la solución implementada.
 
-## Información del Sistema
-El presente manual tiene la finalidad de proporcionar el conocimiento necesario para utilizar correctamente el programa. Este proporcional la descripción detallada de las funcionalidades y, especialmente, del flujo de este.
+## Introducción
+El presente manual tiene como objetivo proporcionar los conocimientos necesarios para utilizar el programa de manera efectiva. En este se describe detalladamente las funcionalidades del software, con especial énfasis en su flujo de trabajo.
+
+El programa es un compilador que simula el dilema del prisionero, un concepto desarrollado por Robert Axelrod. El software permite al usuario ingresar datos mediante un archivo o directamente en un área de texto designada. La entrada se divide en tres secciones principales:
+- Definición de Estrategias: Donde se especifican las estrategias que los "prisioneros" seguirán durante la simulación.
+- Definición de Partidas: Donde se configuran las condiciones y reglas de las partidas a simular.
+- Punto de Entrada: Donde se inicia la ejecución de la simulación.
+
+Una vez ejecutado, el programa genera una salida en un área designada, mostrando el desarrollo de la partida y el comportamiento de las estrategias. Además, se genera un reporte de tokens y, en caso de errores, un reporte de errores con información detallada para facilitar la corrección en el código fuente.
+
+## Requisito del Sistema
+- Poseer el ejecutable (.jar)
+- Sistema operativo compatible con JDK
+- Tener instalado JDK
+- Procesador de 1GHz o superior 
+- Memoria RAM de 2GB
+- Teclado
+- Pantalla
+- Mouse (opcional) 
+
+## Flujo de funcionalidades del programa
 
 
-
-## Información del Sistema
-- Poseer el ejecutable
-- 
+1. 
+   ![1](./img/1.png)
+2. 
+   ![2](./img/2.png)
+3. 
+   ![3](./img/3.png)
+4. 
+   ![4](./img/4.png)
+5. 
+   ![6](./img/6.png)
+6. 
+   ![7](./img/7.png)
+7. 
+   ![9](./img/9.png)
+8. 
+   ![10](./img/10.png)
+9.  
+    ![11](./img/11.png) 
+10. 
+    ![12](./img/12.png) 
+11. 
+    ![13](./img/13.png)
+12. 
+    ![14](./img/14.png)
+13. 
+    ![15](./img/15.png)
+14. 
+    ![16](./img/16.png)
