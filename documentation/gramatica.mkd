@@ -1,0 +1,95 @@
+# GRAMATICA
+G = {E, N, I, P} donde:
+
+E = Conjunto de terminales
+N = Conjunto de no terminales
+I = Símbolo Inicial
+P = Producciones
+
+E = {
+```
+    accion
+    entero
+    flotante
+    booleano
+    lista
+
+    strategy
+    nombre
+    initial
+    :
+    {
+    }
+    rules
+
+
+    random
+    get_moves_count
+    round_number
+    get_last_n_moves
+    
+    comparador
+
+
+
+
+
+
+
+    main
+
+```
+}
+
+N = {
+```
+    Estrategias
+    AccionInicial
+    Reglas
+
+
+
+    Partidas
+
+
+
+
+
+    Entrada
+    PartidaEjecutar
+    SemillaAleatoria
+
+
+    
+
+
+```
+}
+
+## Representación de la gramática
+```
+S ::=  Estrategias Partidas Entrada
+```
+```
+Estrategias ::= 'strategy' nombre '{' AccionInicial Reglas '}'
+
+AccionInicial ::= 'initial' ':' accion
+
+Reglas ::= 'rules' ':' '[' Condicional ']'
+
+Condicional ::= 'if' condicionBooleana 'then' accion
+
+
+
+```
+
+
+```
+
+
+```
+
+```
+Entrada ::= 'main' '{' PartidaEjecutar SemillaAleatoria '}'
+
+```
