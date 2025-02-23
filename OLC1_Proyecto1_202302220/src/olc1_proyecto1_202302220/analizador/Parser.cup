@@ -1,19 +1,102 @@
 package olc1_proyecto1_202302220.analizador;
 import java_cup.runtime.Symbol;
 
-terminal String NUM, PLUS, MULT;
-non terminal ini;
-non terminal expr;
+
+//----------------------------------------------------------------------------------
+//Funciones del sistema
+terminal String GET_MOVE, LAST_MOVE, GET_MOVES_COUNT,GET_LAST_N_MOVES;
+
+//Estados del sistema
+terminal String ROUND_NUMBER, OPPONENT_HISTORY, SELF_HISTORY,TOTAL_ROUNDS,RANDOM;
+
+//Puntuacion
+terminal String BETRAYAL_REWARD, BETRAYAL_REWARD, MUTUAL_DEFECTION,BETRAYAL_PUNISHMENT;
+
+//Validacion Parametros
+terminal String SEED;
+
+//Estructurales
+terminal String STRATEGY, MATCH, MAIN;
+
+//definicionPartida
+terminal String PLAYERS, ROUNDS, SCORING;
+
+//Secciones
+terminal String INITIAL, RULES;
+
+//Flujo
+terminal String IF, THEN, ELSE;
+
+//Configuración
+terminal String SCORING, RUN, WITH, SEED;
+
+//Logicas
+terminal String AND, OR, NOT;
+
+//Comparadores
+terminal String IGUAL, NO_IGUAL, MENOR, MAYOR, MENOR_IGUAL, MAYOR_IGUAL;
+
+//Otros
+terminal String ABRE_CORCHETE, CIERRA_CORCHETE, ABRE_LLAVE, CIERRA_LLAVE, ABRE_PARENTESIS, CIERRA_PARENTESIS, COMA, DOS_PUNTOS;
+
+//Tipos
+terminal String ACCION, ENTERO, FLOTANTE, BOOLEANO;
+
+//Identificador
+terminal String ID;
+//----------------------------------------------------------------------------------
+//Init y bloques
+non terminal ini, bloque_Strategy, bloque_Match, bloque_Main;
+
+//Lo que vendrá con el bloque de strategy
+non terminal strategy_Cuerpo, regla_Inicial, reglas, lista_Reglas, if
+
+//Lo que vendra con el bloque de match
 
 
-precedence left PLUS;
-precedence left MULT;
+//Lo que vendrá con el bloque de Main
+
+
 
 start with ini;
 
-ini ::= expr:e ;
+ini ::= bloque_Strategy bloque_Match bloque_Main ;
 
-expr ::= expr:a PLUS expr:b 
-       | expr:l MULT expr:r 
-       | NUM:n 
-       ;
+
+//-------------------------------------------------------------------------------
+bloque_Strategy ::= bloque_Strategy strategy
+| strategy
+;
+
+strategy ::= STRATEGY ID ABRE_LLAVE strategy_Cuerpo CIERRA_LLAVE;
+
+strategy_Cuerpo ::= regla_Inicial reglas;
+
+regla_Inicial ::= INITIAL DOS_PUNTOS ACCION;
+
+reglas ::= RULES DOS_PUNTOS ABRE_CORCHETE lista_Reglas CIERRA_CORCHETE;
+
+lista_Reglas ::= lista_Reglas COMA IF if
+| condicional
+;
+
+if ::= IF 
+
+
+
+
+//-------------------------------------------------------------------------------
+bloque_Match
+
+
+
+
+
+
+//-------------------------------------------------------------------------------
+bloque_Match
+
+
+
+
+

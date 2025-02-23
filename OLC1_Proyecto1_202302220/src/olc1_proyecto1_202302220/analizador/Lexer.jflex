@@ -53,12 +53,9 @@ ID = [A-Za-z_][A-Za-z_0-9]*
 
 //Puntuacion
 "betrayal reward" { return new Symbol(sym.BETRAYAL_REWARD, yyline, (int) yychar, yytext()); } //Será entero
-"mutual cooperation" { return new Symbol(sym.MUTUAL_COOPERATION, yyline, (int) yychar, yytext()); } //Será entero
+"mutual cooperation" { return new Symbol(sym.BETRAYAL_REWARD yyline, (int) yychar, yytext()); } //Será entero
 "mutual defection" { return new Symbol(sym.MUTUAL_DEFECTION, yyline, (int) yychar, yytext()); } //Será entero
 "betrayal punishment" { return new Symbol(sym.BETRAYAL_PUNISHMENT, yyline, (int) yychar, yytext()); } //Será entero
-
-//Validacion Parametros
-"seed"  { return new Symbol(sym.SEED, yyline, (int) yychar, yytext()); } 
 
 //Estructurales
 "strategy"  { return new Symbol(sym.STRATEGY, yyline, (int) yychar, yytext()); }
@@ -109,7 +106,7 @@ ID = [A-Za-z_][A-Za-z_0-9]*
 "(" { return new Symbol(sym.ABRE_PARENTESIS, yyline, (int) yychar, yytext()); }
 ")" { return new Symbol(sym.CIERRA_PARENTESIS, yyline, (int) yychar, yytext()); }
 "," { return new Symbol(sym.COMA, yyline, (int) yychar, yytext()); }
-":" { return new Symbol(sym.DOBLEPUNTO, yyline, (int) yychar, yytext()); }
+":" { return new Symbol(sym.DOS_PUNTOS, yyline, (int) yychar, yytext()); }
 
 {WS}     { /* Ignorar espacios en blanco */ }
 
@@ -123,7 +120,7 @@ ID = [A-Za-z_][A-Za-z_0-9]*
 {FLOTANTE} { return new Symbol(sym.FLOTANTE, yyline, (int) yychar, yytext()); }
 {BOOLEANO} { return new Symbol(sym.BOOLEANO, yyline, (int) yychar, yytext()); }
 
-//IDENTIFICADORES-----
+//IDENTIFICADOR-----
 {ID} { return new Symbol(sym.ID, yyline, yycolumn, yytext()); }
 
 //SINO ENTONCES ESTO XD
