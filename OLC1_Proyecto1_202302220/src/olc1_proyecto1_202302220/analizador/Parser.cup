@@ -1,4 +1,4 @@
-package jflexcupexample.analyzers;
+package olc1_proyecto1_202302220.analizador;
 import java_cup.runtime.Symbol;
 
 terminal String NUM, PLUS, MULT;
