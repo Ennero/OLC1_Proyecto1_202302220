@@ -8,58 +8,60 @@ package olc1_proyecto1_202302220.analizador;
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int GET_MOVES_COUNT = 4;
-  public static final int RANDOM = 10;
-  public static final int WITH = 25;
-  public static final int ENTERO = 45;
-  public static final int CIERRA_PARENTESIS = 41;
-  public static final int SCORING = 23;
-  public static final int DOS_PUNTOS = 43;
-  public static final int ABRE_PARENTESIS = 40;
-  public static final int MATCH = 13;
-  public static final int RULES = 19;
-  public static final int ABRE_LLAVE = 38;
-  public static final int NOT = 29;
-  public static final int AND = 27;
-  public static final int IGUAL = 30;
-  public static final int GET_LAST_N_MOVES = 5;
-  public static final int OR = 28;
-  public static final int STRATEGIES = 17;
-  public static final int CIERRA_CORCHETE = 37;
-  public static final int MAIN = 14;
-  public static final int IF = 20;
-  public static final int ID = 48;
-  public static final int INITIAL = 18;
+  public static final int GET_MOVES_COUNT = 5;
+  public static final int RANDOM = 11;
+  public static final int WITH = 26;
+  public static final int ENTERO = 46;
+  public static final int CIERRA_PARENTESIS = 42;
+  public static final int SCORING = 24;
+  public static final int DOS_PUNTOS = 44;
+  public static final int ABRE_PARENTESIS = 41;
+  public static final int MATCH = 14;
+  public static final int RULES = 20;
+  public static final int ABRE_LLAVE = 39;
+  public static final int NOT = 30;
+  public static final int AND = 28;
+  public static final int IGUAL = 31;
+  public static final int GET_LAST_N_MOVES = 6;
+  public static final int OR = 29;
+  public static final int STRATEGIES = 18;
+  public static final int CIERRA_CORCHETE = 38;
+  public static final int MAIN = 15;
+  public static final int IF = 21;
+  public static final int ID = 49;
+  public static final int INITIAL = 19;
   public static final int EOF = 0;
-  public static final int ROUNDS = 16;
+  public static final int ROUNDS = 17;
   public static final int error = 1;
-  public static final int COMA = 42;
-  public static final int PLAYERS = 15;
-  public static final int TOTAL_ROUNDS = 9;
-  public static final int MENOR = 32;
-  public static final int ABRE_CORCHETE = 36;
-  public static final int STRATEGY = 12;
-  public static final int ACCION = 44;
-  public static final int NO_IGUAL = 31;
-  public static final int MAYOR = 33;
-  public static final int SELF_HISTORY = 8;
-  public static final int PUNTUACION = 11;
-  public static final int ROUND_NUMBER = 6;
-  public static final int LAST_MOVE = 3;
-  public static final int ELSE = 22;
-  public static final int GET_MOVE = 2;
-  public static final int MAYOR_IGUAL = 35;
-  public static final int THEN = 21;
-  public static final int BOOLEANO = 47;
-  public static final int SEED = 26;
-  public static final int MENOR_IGUAL = 34;
-  public static final int OPPONENT_HISTORY = 7;
-  public static final int CIERRA_LLAVE = 39;
-  public static final int RUN = 24;
-  public static final int FLOTANTE = 46;
+  public static final int COMA = 43;
+  public static final int PLAYERS = 16;
+  public static final int TOTAL_ROUNDS = 10;
+  public static final int MENOR = 33;
+  public static final int ABRE_CORCHETE = 37;
+  public static final int STRATEGY = 13;
+  public static final int ACCION = 45;
+  public static final int ERROR = 2;
+  public static final int NO_IGUAL = 32;
+  public static final int MAYOR = 34;
+  public static final int SELF_HISTORY = 9;
+  public static final int PUNTUACION = 12;
+  public static final int ROUND_NUMBER = 7;
+  public static final int LAST_MOVE = 4;
+  public static final int ELSE = 23;
+  public static final int GET_MOVE = 3;
+  public static final int MAYOR_IGUAL = 36;
+  public static final int THEN = 22;
+  public static final int BOOLEANO = 48;
+  public static final int SEED = 27;
+  public static final int MENOR_IGUAL = 35;
+  public static final int OPPONENT_HISTORY = 8;
+  public static final int CIERRA_LLAVE = 40;
+  public static final int RUN = 25;
+  public static final int FLOTANTE = 47;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
+  "ERROR",
   "GET_MOVE",
   "LAST_MOVE",
   "GET_MOVES_COUNT",

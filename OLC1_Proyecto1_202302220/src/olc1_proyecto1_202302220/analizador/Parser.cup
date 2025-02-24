@@ -3,6 +3,10 @@ import java_cup.runtime.Symbol;
 
 
 //----------------------------------------------------------------------------------
+
+//Para el error (yo en esta carrera)
+terminal ERROR;
+
 //Funciones del sistema
 terminal String GET_MOVE, LAST_MOVE, GET_MOVES_COUNT,GET_LAST_N_MOVES;
 

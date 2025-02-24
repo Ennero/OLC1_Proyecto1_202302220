@@ -214,6 +214,21 @@ public class GUI extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        OLC1_Proyecto1_202302220 analizador = new OLC1_Proyecto1_202302220();
+        
+        //Comienzo leyendo la entrada
+        String entrada=jTextArea2.getText();
+        System.out.println(entrada);
+        String tokensReconocidos = null;
+        try {
+            tokensReconocidos = analizador.analisisLexico(entrada);
+        } catch (IOException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println(tokensReconocidos);
+        jTextArea1.setText(tokensReconocidos);
+        
+        //jTextArea1.setEnabled(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
