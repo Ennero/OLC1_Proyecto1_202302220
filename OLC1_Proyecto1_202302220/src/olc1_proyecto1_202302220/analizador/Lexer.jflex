@@ -28,6 +28,9 @@ ENTERO = [0-9]+
 FLOTANTE = [0-9]+\.[0-9]*
 BOOLEANO = true|false
 
+//PUNTUACION
+PUNTUACION = betrayal reward | mutual cooperation | mutual defection | betrayal punishment
+
 //IDENTIFICADORES
 ID = [A-Za-z_][A-Za-z_0-9]*
 
@@ -37,7 +40,6 @@ ID = [A-Za-z_][A-Za-z_0-9]*
 %%
 
 //PALABRAS RESERVADAS-----
-
 //Funciones del Sistema
 "get_move" { return new Symbol(sym.GET_MOVE, yyline, (int) yychar, yytext()); }
 "last_move" { return new Symbol(sym.LAST_MOVE, yyline, (int) yychar, yytext()); }
@@ -52,10 +54,7 @@ ID = [A-Za-z_][A-Za-z_0-9]*
 "random" { return new Symbol(sym.RANDOM, yyline, (int) yychar, yytext()); } //Será float
 
 //Puntuacion
-"betrayal reward" { return new Symbol(sym.BETRAYAL_REWARD, yyline, (int) yychar, yytext()); } //Será entero
-"mutual cooperation" { return new Symbol(sym.BETRAYAL_REWARD yyline, (int) yychar, yytext()); } //Será entero
-"mutual defection" { return new Symbol(sym.MUTUAL_DEFECTION, yyline, (int) yychar, yytext()); } //Será entero
-"betrayal punishment" { return new Symbol(sym.BETRAYAL_PUNISHMENT, yyline, (int) yychar, yytext()); } //Será entero
+{PUNTUACION} { return new Symbol(sym.PUNTUACION, yyline, (int) yychar, yytext()); } 
 
 //Estructurales
 "strategy"  { return new Symbol(sym.STRATEGY, yyline, (int) yychar, yytext()); }
@@ -65,9 +64,8 @@ ID = [A-Za-z_][A-Za-z_0-9]*
 
 //definicionPartida+++
 "players" { return new Symbol(sym.PLAYERS, yyline, (int) yychar, yytext()); }
+"strategies"  { return new Symbol(sym.STRATEGIES, yyline, (int) yychar, yytext()); }
 "rounds" { return new Symbol(sym.ROUNDS, yyline, (int) yychar, yytext()); }
-"scoring" { return new Symbol(sym.SCORING, yyline, (int) yychar, yytext()); }
-
 
 //Secciones
 "initial"  { return new Symbol(sym.INITIAL, yyline, (int) yychar, yytext()); }
@@ -112,16 +110,16 @@ ID = [A-Za-z_][A-Za-z_0-9]*
 
 //Comentarios
 "//" .*  { /* Ignorar comentario de línea */ }
-"/*" ~ "*/" { /* Ignorar comentario de varias líneas */ }
+"/*" [^*]*\*+([^/*][^*]*\*+)* "/" { /* Ignorar comentario de varias líneas */ }
 
 //TIPOS-----
 {ACCION} { return new Symbol(sym.ACCION, yyline, (int) yychar, yytext()); }
-{ENTERO} { return new Symbol(sym.ENTERO, yyline, (int) yychar, yytext()); }
-{FLOTANTE} { return new Symbol(sym.FLOTANTE, yyline, (int) yychar, yytext()); }
-{BOOLEANO} { return new Symbol(sym.BOOLEANO, yyline, (int) yychar, yytext()); }
+{ENTERO} { return new Symbol(sym.ENTERO, yyline, (int) yychar, Integer.parseInt(yytext())); }
+{FLOTANTE} { return new Symbol(sym.FLOTANTE, yyline, (int) yychar, Float.parseFloat(yytext())); }
+{BOOLEANO} { return new Symbol(sym.BOOLEANO, yyline, (int) yychar, Boolean.parseBoolean(yytext())); }
 
 //IDENTIFICADOR-----
 {ID} { return new Symbol(sym.ID, yyline, yycolumn, yytext()); }
 
-//SINO ENTONCES ESTO XD
-.        { System.err.println("Error lexico en fila " + (yyline+1) + " columna " + (yycolumn+1);}
+//SINO ENTONCES ESTO XD DEBE DE LANZAR UN EXCPECION O ALGO MAS+++++6+2+5+5+52+252+652+6246+
+.        { throw new Error("Error lexico en fila " + (yyline+1) + " columna " + (yycolumn+1)); }

@@ -10,16 +10,13 @@ terminal String GET_MOVE, LAST_MOVE, GET_MOVES_COUNT,GET_LAST_N_MOVES;
 terminal String ROUND_NUMBER, OPPONENT_HISTORY, SELF_HISTORY,TOTAL_ROUNDS,RANDOM;
 
 //Puntuacion
-terminal String BETRAYAL_REWARD, BETRAYAL_REWARD, MUTUAL_DEFECTION,BETRAYAL_PUNISHMENT;
-
-//Validacion Parametros
-terminal String SEED;
+terminal String PUNTUACION;
 
 //Estructurales
 terminal String STRATEGY, MATCH, MAIN;
 
 //definicionPartida
-terminal String PLAYERS, ROUNDS, SCORING;
+terminal String PLAYERS, ROUNDS, STRATEGIES;
 
 //Secciones
 terminal String INITIAL, RULES;
@@ -49,21 +46,28 @@ terminal String ID;
 non terminal ini, bloque_Strategy, bloque_Match, bloque_Main;
 
 //Lo que vendrá con el bloque de strategy
-non terminal strategy_Cuerpo, regla_Inicial, reglas, lista_Reglas, if
+non terminal strategy, strategy_Cuerpo, regla_Inicial, reglas, lista_Reglas, if, reglas_Cuerpo;
 
 //Lo que vendra con el bloque de match
-
+non terminal match, match_Cuerpo, strategies_Lista, puntajes, puntuacion;
 
 //Lo que vendrá con el bloque de Main
+non terminal main_Cuerpo, run_Lista, run, match_Lista;
 
+//Otros
+non terminal booleano;
 
-
+//---------------------------------------------------------------------------------
+precedence left OR, AND;
+precedence nonassoc NOT;
+//-------------------------------------------------------------------------------
 start with ini;
 
 ini ::= bloque_Strategy bloque_Match bloque_Main ;
 
 
 //-------------------------------------------------------------------------------
+//Bloque de estrategias
 bloque_Strategy ::= bloque_Strategy strategy
 | strategy
 ;
@@ -74,29 +78,61 @@ strategy_Cuerpo ::= regla_Inicial reglas;
 
 regla_Inicial ::= INITIAL DOS_PUNTOS ACCION;
 
-reglas ::= RULES DOS_PUNTOS ABRE_CORCHETE lista_Reglas CIERRA_CORCHETE;
+reglas ::= RULES DOS_PUNTOS ABRE_CORCHETE reglas_Cuerpo CIERRA_CORCHETE;
 
-lista_Reglas ::= lista_Reglas COMA IF if
-| condicional
+reglas_Cuerpo ::= lista_Reglas COMA ELSE booleano;
+
+lista_Reglas ::= lista_Reglas COMA if
+| if
 ;
 
-if ::= IF 
-
-
-
-
-//-------------------------------------------------------------------------------
-bloque_Match
-
-
-
-
+if ::= IF booleano THEN ACCION;
 
 
 //-------------------------------------------------------------------------------
-bloque_Match
+//Bloque de Partidas
+bloque_Match ::= bloque_Match match
+| match
+;
+
+match ::= MATCH ID ABRE_LLAVE match_Cuerpo CIERRA_LLAVE;
+
+match_Cuerpo ::= PLAYERS STRATEGIES strategies_Lista
+            ROUNDS DOS_PUNTOS ENTERO
+            SCORING DOS_PUNTOS ABRE_LLAVE puntajes CIERRA_LLAVE
+;
+
+strategies_Lista ::= strategies_Lista COMA ID
+| ID
+;
+
+puntajes ::= puntuacion COMA puntuacion COMA puntuacion COMA puntuacion;
+
+puntuacion ::= PUNTUACION DOS_PUNTOS ENTERO;
+
+//-------------------------------------------------------------------------------
+//Bloque de Punto de Entrada
+bloque_Main ::= MAIN ABRE_CORCHETE main_Cuerpo CIERRA_CORCHETE;
+
+main_Cuerpo ::= run_Lista;
+
+run_Lista ::= run_Lista run
+| run 
+;
+
+run ::= RUN ABRE_CORCHETE match_Lista CIERRA_CORCHETE;
+
+match_Lista ::= match_Lista COMA ID
+| ID
+;
 
 
+//-------------------------------------------------------------------------------
+//Valores booleanos que tendré que solucionAR DESPUES LKFASLKFJ LSDAJMFASMDCFMADSKHFSLADUNLHADVS
 
-
+booleano ::= booleano OR booleano
+| booleano AND booleano
+| NOT booleano
+| BOOLEANO
+;
 
