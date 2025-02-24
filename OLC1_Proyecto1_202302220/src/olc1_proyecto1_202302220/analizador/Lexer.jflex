@@ -39,86 +39,85 @@ ID = [A-Za-z_][A-Za-z_0-9]*
 //REGLAS DE ACCIÓN----------------------------------------------------------------------------------------------------
 %%
 
-//PALABRAS RESERVADAS-----
-//Funciones del Sistema
-"get_move" { return new Symbol(sym.GET_MOVE, yyline + 1, (int) yychar + 1, yytext()); }
-"last_move" { return new Symbol(sym.LAST_MOVE, yyline + 1, (int) yychar + 1, yytext()); }
-"get_moves_count" { return new Symbol(sym.GET_MOVES_COUNT, yyline + 1, (int) yychar + 1, yytext()); }
-"get_last_n_moves" { return new Symbol(sym.GET_LAST_N_MOVES, yyline + 1, (int) yychar + 1, yytext()); }
+// PALABRAS RESERVADAS-----
+// Funciones del Sistema
+"get_move" { return new Symbol(sym.GET_MOVE, yyline + 1, (int) yycolumn + 1, yytext()); }
+"last_move" { return new Symbol(sym.LAST_MOVE, yyline + 1, (int) yycolumn + 1, yytext()); }
+"get_moves_count" { return new Symbol(sym.GET_MOVES_COUNT, yyline + 1, (int) yycolumn + 1, yytext()); }
+"get_last_n_moves" { return new Symbol(sym.GET_LAST_N_MOVES, yyline + 1, (int) yycolumn + 1, yytext()); }
 
-//Estados del Sistema
-"round_number" { return new Symbol(sym.ROUND_NUMBER, yyline + 1, (int) yychar + 1, yytext()); } // Será entero
-"opponent_history" { return new Symbol(sym.OPPONENT_HISTORY, yyline + 1, (int) yychar + 1, yytext()); } // Será lista
-"self_history" { return new Symbol(sym.SELF_HISTORY, yyline + 1, (int) yychar + 1, yytext()); } // Será lista
-"total_rounds"  { return new Symbol(sym.TOTAL_ROUNDS, yyline + 1, (int) yychar + 1, yytext()); } // Será entero
-"random" { return new Symbol(sym.RANDOM, yyline + 1, (int) yychar + 1, yytext()); } // Será float
+// Estados del Sistema
+"round_number" { return new Symbol(sym.ROUND_NUMBER, yyline + 1, (int) yycolumn + 1, yytext()); } // Será entero
+"opponent_history" { return new Symbol(sym.OPPONENT_HISTORY, yyline + 1, (int) yycolumn + 1, yytext()); } // Será lista
+"self_history" { return new Symbol(sym.SELF_HISTORY, yyline + 1, (int) yycolumn + 1, yytext()); } // Será lista
+"total_rounds"  { return new Symbol(sym.TOTAL_ROUNDS, yyline + 1, (int) yycolumn + 1, yytext()); } // Será entero
+"random" { return new Symbol(sym.RANDOM, yyline + 1, (int) yycolumn + 1, yytext()); } // Será float
 
-//Puntuacion
-{PUNTUACION} { return new Symbol(sym.PUNTUACION, yyline + 1, (int) yychar + 1, yytext()); } 
+// Puntuación
+{PUNTUACIÓN} { return new Symbol(sym.PUNTUACIÓN, yyline + 1, (int) yycolumn + 1, yytext()); } 
 
-//Estructurales
-"strategy"  { return new Symbol(sym.STRATEGY, yyline + 1, (int) yychar + 1, yytext()); }
-"match"  { return new Symbol(sym.MATCH, yyline + 1, (int) yychar + 1, yytext()); }
-"main"  { return new Symbol(sym.MAIN, yyline + 1, (int) yychar + 1, yytext()); }
+// Estructurales
+"strategy"  { return new Symbol(sym.STRATEGY, yyline + 1, (int) yycolumn + 1, yytext()); }
+"match"  { return new Symbol(sym.MATCH, yyline + 1, (int) yycolumn + 1, yytext()); }
+"main"  { return new Symbol(sym.MAIN, yyline + 1, (int) yycolumn + 1, yytext()); }
 
-//definicionPartida+++
-"players" { return new Symbol(sym.PLAYERS, yyline + 1, (int) yychar + 1, yytext()); }
-"strategies"  { return new Symbol(sym.STRATEGIES, yyline + 1, (int) yychar + 1, yytext()); }
-"rounds" { return new Symbol(sym.ROUNDS, yyline + 1, (int) yychar + 1, yytext()); }
+// definiciónPartida+++
+"players" { return new Symbol(sym.PLAYERS, yyline + 1, (int) yycolumn + 1, yytext()); }
+"strategies"  { return new Symbol(sym.STRATEGIES, yyline + 1, (int) yycolumn + 1, yytext()); }
+"rounds" { return new Symbol(sym.ROUNDS, yyline + 1, (int) yycolumn + 1, yytext()); }
 
-//Secciones
-"initial"  { return new Symbol(sym.INITIAL, yyline + 1, (int) yychar + 1, yytext()); }
-"rules"  { return new Symbol(sym.RULES, yyline + 1, (int) yychar + 1, yytext()); }
+// Secciones
+"initial"  { return new Symbol(sym.INITIAL, yyline + 1, (int) yycolumn + 1, yytext()); }
+"rules"  { return new Symbol(sym.RULES, yyline + 1, (int) yycolumn + 1, yytext()); }
 
-//Flujo
-"if"  { return new Symbol(sym.IF, yyline + 1, (int) yychar + 1, yytext()); }
-"then"  { return new Symbol(sym.THEN, yyline + 1, (int) yychar + 1, yytext()); }
-"else"  { return new Symbol(sym.ELSE, yyline + 1, (int) yychar + 1, yytext()); }
+// Flujo
+"if"  { return new Symbol(sym.IF, yyline + 1, (int) yycolumn + 1, yytext()); }
+"then"  { return new Symbol(sym.THEN, yyline + 1, (int) yycolumn + 1, yytext()); }
+"else"  { return new Symbol(sym.ELSE, yyline + 1, (int) yycolumn + 1, yytext()); }
 
-//Configuración
-"scoring"  { return new Symbol(sym.SCORING, yyline + 1, (int) yychar + 1, yytext()); }
-"run"  { return new Symbol(sym.RUN, yyline + 1, (int) yychar + 1, yytext()); }
-"with"  { return new Symbol(sym.WITH, yyline + 1, (int) yychar + 1, yytext()); }
-"seed"  { return new Symbol(sym.SEED, yyline + 1, (int) yychar + 1, yytext()); }
+// Configuración
+"scoring"  { return new Symbol(sym.SCORING, yyline + 1, (int) yycolumn + 1, yytext()); }
+"run"  { return new Symbol(sym.RUN, yyline + 1, (int) yycolumn + 1, yytext()); }
+"with"  { return new Symbol(sym.WITH, yyline + 1, (int) yycolumn + 1, yytext()); }
+"seed"  { return new Symbol(sym.SEED, yyline + 1, (int) yycolumn + 1, yytext()); }
 
-//OPERADORES--------
-//Logicas
-"&&"  { return new Symbol(sym.AND, yyline + 1, (int) yychar + 1, yytext()); }
-"||"  { return new Symbol(sym.OR, yyline + 1, (int) yychar + 1, yytext()); }
-"!"  { return new Symbol(sym.NOT, yyline + 1, (int) yychar + 1, yytext()); }
+// OPERADORES--------
+// Lógicas
+"&&"  { return new Symbol(sym.AND, yyline + 1, (int) yycolumn + 1, yytext()); }
+"||"  { return new Symbol(sym.OR, yyline + 1, (int) yycolumn + 1, yytext()); }
+"!"  { return new Symbol(sym.NOT, yyline + 1, (int) yycolumn + 1, yytext()); }
 
-//Comparadores
-"=="  { return new Symbol(sym.IGUAL, yyline + 1, (int) yychar + 1, yytext()); }
-"!="  { return new Symbol(sym.NO_IGUAL, yyline + 1, (int) yychar + 1, yytext()); }
-"<"  { return new Symbol(sym.MENOR, yyline + 1, (int) yychar + 1, yytext()); }
-">"  { return new Symbol(sym.MAYOR, yyline + 1, (int) yychar + 1, yytext()); }
-"<="  { return new Symbol(sym.MENOR_IGUAL, yyline + 1, (int) yychar + 1, yytext()); }
-">="  { return new Symbol(sym.MAYOR_IGUAL, yyline + 1, (int) yychar + 1, yytext()); }
+// Comparadores
+"=="  { return new Symbol(sym.IGUAL, yyline + 1, (int) yycolumn + 1, yytext()); }
+"!="  { return new Symbol(sym.NO_IGUAL, yyline + 1, (int) yycolumn + 1, yytext()); }
+"<"  { return new Symbol(sym.MENOR, yyline + 1, (int) yycolumn + 1, yytext()); }
+">"  { return new Symbol(sym.MAYOR, yyline + 1, (int) yycolumn + 1, yytext()); }
+"<="  { return new Symbol(sym.MENOR_IGUAL, yyline + 1, (int) yycolumn + 1, yytext()); }
+">="  { return new Symbol(sym.MAYOR_IGUAL, yyline + 1, (int) yycolumn + 1, yytext()); }
 
-//OTROS----------
-"[" { return new Symbol(sym.ABRE_CORCHETE, yyline + 1, (int) yychar + 1, yytext()); }
-"]" { return new Symbol(sym.CIERRA_CORCHETE, yyline + 1, (int) yychar + 1, yytext()); }
-"{" { return new Symbol(sym.ABRE_LLAVE, yyline + 1, (int) yychar + 1, yytext()); }
-"}" { return new Symbol(sym.CIERRA_LLAVE, yyline + 1, (int) yychar + 1, yytext()); }
-"(" { return new Symbol(sym.ABRE_PARENTESIS, yyline + 1, (int) yychar + 1, yytext()); }
-")" { return new Symbol(sym.CIERRA_PARENTESIS, yyline + 1, (int) yychar + 1, yytext()); }
-"," { return new Symbol(sym.COMA, yyline + 1, (int) yychar + 1, yytext()); }
-":" { return new Symbol(sym.DOS_PUNTOS, yyline + 1, (int) yychar + 1, yytext()); }
-
+// OTROS----------
+"[" { return new Symbol(sym.ABRE_CORCHETE, yyline + 1, (int) yycolumn + 1, yytext()); }
+"]" { return new Symbol(sym.CIERRA_CORCHETE, yyline + 1, (int) yycolumn + 1, yytext()); }
+"{" { return new Symbol(sym.ABRE_LLAVE, yyline + 1, (int) yycolumn + 1, yytext()); }
+"}" { return new Symbol(sym.CIERRA_LLAVE, yyline + 1, (int) yycolumn + 1, yytext()); }
+"(" { return new Symbol(sym.ABRE_PARENTESIS, yyline + 1, (int) yycolumn + 1, yytext()); }
+")" { return new Symbol(sym.CIERRA_PARENTESIS, yyline + 1, (int) yycolumn + 1, yytext()); }
+"," { return new Symbol(sym.COMA, yyline + 1, (int) yycolumn + 1, yytext()); }
+":" { return new Symbol(sym.DOS_PUNTOS, yyline + 1, (int) yycolumn + 1, yytext()); }
 {WS}     { /* Ignorar espacios en blanco */ }
 
-//Comentarios
+// Comentarios
 "//" .*  { /* Ignorar comentario de línea */ }
 "/*" [^*]*\*+([^/*][^*]*\*+)* "/" { /* Ignorar comentario de varias líneas */ }
 
-//TIPOS-----
-{ACCION} { return new Symbol(sym.ACCION, yyline + 1, (int) yychar + 1, yytext()); }
-{ENTERO} { return new Symbol(sym.ENTERO, yyline + 1, (int) yychar + 1, Integer.parseInt(yytext())); }
-{FLOTANTE} { return new Symbol(sym.FLOTANTE, yyline + 1, (int) yychar + 1, Float.parseFloat(yytext())); }
-{BOOLEANO} { return new Symbol(sym.BOOLEANO, yyline + 1, (int) yychar + 1, Boolean.parseBoolean(yytext())); }
+// TIPOS-----
+{ACCION} { return new Symbol(sym.ACCION, yyline + 1, (int) yycolumn + 1, yytext()); }
+{ENTERO} { return new Symbol(sym.ENTERO, yyline + 1, (int) yycolumn + 1, Integer.parseInt(yytext())); }
+{FLOTANTE} { return new Symbol(sym.FLOTANTE, yyline + 1, (int) yycolumn + 1, Float.parseFloat(yytext())); }
+{BOOLEANO} { return new Symbol(sym.BOOLEANO, yyline + 1, (int) yycolumn + 1, Boolean.parseBoolean(yytext())); }
 
-//IDENTIFICADOR-----
+// IDENTIFICADOR-----
 {ID} { return new Symbol(sym.ID, yyline + 1, yycolumn + 1, yytext()); }
 
-//SINO ENTONCES ESTO XD DEBE DE LANZAR UN EXCPECION O ALGO MAS+++++6+2+5+5+52+252+652+6246+
-.        { throw new Error("Error lexico en fila " + (yyline + 1) + " columna " + (yycolumn + 1)); }
+// SINO ENTONCES ESTO XD DEBE DE LANZAR UN EXCEPCION O ALGO MAS+++++6+2+5+5+52+252+652+6246+
+.        { throw new Error("Error léxico en fila " + (yyline + 1) + " columna " + (yycolumn + 1)); }
