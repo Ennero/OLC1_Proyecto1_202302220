@@ -6,6 +6,7 @@ import olc1_proyecto1_202302220.analizador.Lexer;
 import java_cup.runtime.Symbol;
 import olc1_proyecto1_202302220.analizador.sym;
 import java.util.LinkedList;
+import olc1_proyecto1_202302220.analizador.Parser;
 
 /**
  *
@@ -58,8 +59,31 @@ public class OLC1_Proyecto1_202302220 {
             }
         }
     }
+    
+
+    //Función para el análisis sintáctico
+    static public void analisisSintactico(String input) throws Exception{
+        Lexer lexer = new Lexer(new StringReader(input));
+        Parser parser = new Parser(lexer);
+        parser.parse();
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
 
+    
 
 
 

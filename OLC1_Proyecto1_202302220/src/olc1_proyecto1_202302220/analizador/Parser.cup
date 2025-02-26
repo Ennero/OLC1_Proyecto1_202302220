@@ -67,7 +67,7 @@ precedence nonassoc NOT;
 //-------------------------------------------------------------------------------
 start with ini;
 
-ini ::= bloque_Strategy bloque_Match bloque_Main ;
+ini ::= bloque_Strategy ;
 
 
 //-------------------------------------------------------------------------------
@@ -82,53 +82,17 @@ strategy_Cuerpo ::= regla_Inicial reglas;
 
 regla_Inicial ::= INITIAL DOS_PUNTOS ACCION;
 
-reglas ::= RULES DOS_PUNTOS ABRE_CORCHETE reglas_Cuerpo CIERRA_CORCHETE;
-
-reglas_Cuerpo ::= lista_Reglas COMA ELSE booleano;
+reglas ::= RULES DOS_PUNTOS ABRE_CORCHETE lista_Reglas CIERRA_CORCHETE;
 
 lista_Reglas ::= lista_Reglas COMA if
 | if
 ;
 
-if ::= IF booleano THEN ACCION;
-
-
-//-------------------------------------------------------------------------------
-//Bloque de Partidas
-bloque_Match ::= bloque_Match match
-| match
+if ::= IF booleano THEN ACCION
+| ELSE ACCION
 ;
 
-match ::= MATCH ID ABRE_LLAVE match_Cuerpo CIERRA_LLAVE;
 
-match_Cuerpo ::= PLAYERS STRATEGIES strategies_Lista
-            ROUNDS DOS_PUNTOS ENTERO
-            SCORING DOS_PUNTOS ABRE_LLAVE puntajes CIERRA_LLAVE
-;
-
-strategies_Lista ::= strategies_Lista COMA ID
-| ID
-;
-
-puntajes ::= puntuacion COMA puntuacion COMA puntuacion COMA puntuacion;
-
-puntuacion ::= PUNTUACION DOS_PUNTOS ENTERO;
-
-//-------------------------------------------------------------------------------
-//Bloque de Punto de Entrada
-bloque_Main ::= MAIN ABRE_CORCHETE main_Cuerpo CIERRA_CORCHETE;
-
-main_Cuerpo ::= run_Lista;
-
-run_Lista ::= run_Lista run
-| run 
-;
-
-run ::= RUN ABRE_CORCHETE match_Lista CIERRA_CORCHETE;
-
-match_Lista ::= match_Lista COMA ID
-| ID
-;
 
 
 //-------------------------------------------------------------------------------
@@ -136,7 +100,14 @@ match_Lista ::= match_Lista COMA ID
 
 booleano ::= booleano OR booleano
 | booleano AND booleano
+| booleano AND booleano
 | NOT booleano
-| BOOLEANO
+| booleano IGUAL booleano
+| booleano NO_IGUAL booleano
+| booleano MENOR booleano
+| booleano MAYOR booleano
+| booleano MENOR_IGUAL booleano
+| booleano MAYOR_IGUAL booleano
+| ROUND_NUMBER
+| 
 ;
-

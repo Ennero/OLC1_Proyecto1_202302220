@@ -246,11 +246,14 @@ public class GUI extends javax.swing.JFrame {
             // Verificar si hay tokens
             
             jTable1.setModel(model);
+            boolean errorLexico=false;
 
             if (!OLC1_Proyecto1_202302220.errores.isEmpty()) { //Si es que hay errores
                 System.out.println("No se encontraron tokens.");
                 for (String[] error : OLC1_Proyecto1_202302220.errores) {
                     model.addRow(error);
+                    JOptionPane.showMessageDialog(this, "Error en el análisis léxico");
+                    errorLexico=true;
                 }
             } else { //Si es que no hay errores
                 for (String[] token : OLC1_Proyecto1_202302220.tokens) {
@@ -261,12 +264,29 @@ public class GUI extends javax.swing.JFrame {
             
             //PARTE DEL ANÁLSIS LÉXICO -------------------------------------------------------------------------------------------
             
+            //PARTE DEL ANÁLISIS SINTÁCTICO -------------------------------------------------------------------------------------
+            boolean errorSintactico=false;
+            if (!errorLexico){
+                OLC1_Proyecto1_202302220.analisisSintactico(entrada);
+                System.out.println("Análisis sintáctico completo");
+            }
+            
+            
+            
+            
+            
+            
+            //PARTE DEL ANÁLISIS SINTÁCTICO -------------------------------------------------------------------------------------
+
             
             
 
             //jTextArea1.setEnabled(false);
         } catch (IOException ex) {
             Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Error en el análisis sintáctico");
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
