@@ -23,13 +23,15 @@ import java_cup.runtime.Symbol;
 WS = [ \t\r\n]+
 
 //TIPOS
-ACCION = C|D
-ENTERO = [0-9]+
-FLOTANTE = [0-9]+\.[0-9]*
+
+ENTERO = [0-9]+|round_number|total_rounds|get_moves_count
+FLOTANTE = [0-9]+\.[0-9]*|random
 BOOLEANO = true|false
+LISTA<ACCION> = get_last_n_moves|opponent_history|self_history
+ACCION = C|D|get_move|last_move
 
 //PUNTUACION
-PUNTUACION = betrayal reward | mutual cooperation | mutual defection | betrayal punishment
+PUNTUACION = betrayal reward|mutual cooperation|mutual defection|betrayal punishment
 
 //IDENTIFICADORES
 ID = [A-Za-z_][A-Za-z_0-9]*
@@ -40,19 +42,6 @@ ID = [A-Za-z_][A-Za-z_0-9]*
 %%
 
 // PALABRAS RESERVADAS-----
-// Funciones del Sistema
-"get_move" { return new Symbol(sym.GET_MOVE, yyline + 1, (int) yycolumn + 1, yytext()); }
-"last_move" { return new Symbol(sym.LAST_MOVE, yyline + 1, (int) yycolumn + 1, yytext()); }
-"get_moves_count" { return new Symbol(sym.GET_MOVES_COUNT, yyline + 1, (int) yycolumn + 1, yytext()); }
-"get_last_n_moves" { return new Symbol(sym.GET_LAST_N_MOVES, yyline + 1, (int) yycolumn + 1, yytext()); }
-
-// Estados del Sistema
-"round_number" { return new Symbol(sym.ROUND_NUMBER, yyline + 1, (int) yycolumn + 1, yytext()); } // Será entero
-"opponent_history" { return new Symbol(sym.OPPONENT_HISTORY, yyline + 1, (int) yycolumn + 1, yytext()); } // Será lista
-"self_history" { return new Symbol(sym.SELF_HISTORY, yyline + 1, (int) yycolumn + 1, yytext()); } // Será lista
-"total_rounds"  { return new Symbol(sym.TOTAL_ROUNDS, yyline + 1, (int) yycolumn + 1, yytext()); } // Será entero
-"random" { return new Symbol(sym.RANDOM, yyline + 1, (int) yycolumn + 1, yytext()); } // Será float
-
 // Puntuación
 {PUNTUACION} { return new Symbol(sym.PUNTUACION, yyline + 1, (int) yycolumn + 1, yytext()); } 
 
@@ -115,6 +104,7 @@ ID = [A-Za-z_][A-Za-z_0-9]*
 {ENTERO} { return new Symbol(sym.ENTERO, yyline + 1, (int) yycolumn + 1, Integer.parseInt(yytext())); }
 {FLOTANTE} { return new Symbol(sym.FLOTANTE, yyline + 1, (int) yycolumn + 1, Float.parseFloat(yytext())); }
 {BOOLEANO} { return new Symbol(sym.BOOLEANO, yyline + 1, (int) yycolumn + 1, Boolean.parseBoolean(yytext())); }
+{LISTA<ACCION>} { return new Symbol(sym.LISTA<ACCION>, yyline + 1, (int) yycolumn + 1, yytext()); }
 
 // IDENTIFICADOR-----
 {ID} { return new Symbol(sym.ID, yyline + 1, yycolumn + 1, yytext()); }

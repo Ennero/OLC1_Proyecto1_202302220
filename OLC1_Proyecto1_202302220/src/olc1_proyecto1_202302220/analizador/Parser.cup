@@ -7,12 +7,6 @@ import java_cup.runtime.Symbol;
 //Para el error (yo en esta carrera)
 terminal ERROR_LEXICO;
 
-//Funciones del sistema
-terminal String GET_MOVE, LAST_MOVE, GET_MOVES_COUNT,GET_LAST_N_MOVES;
-
-//Estados del sistema
-terminal String ROUND_NUMBER, OPPONENT_HISTORY, SELF_HISTORY,TOTAL_ROUNDS,RANDOM;
-
 //Puntuacion
 terminal String PUNTUACION;
 
@@ -89,7 +83,7 @@ lista_Reglas ::= lista_Reglas COMA if
 ;
 
 if ::= IF booleano THEN ACCION
-| ELSE ACCION
+| ELSE accion
 ;
 
 
@@ -100,14 +94,44 @@ if ::= IF booleano THEN ACCION
 
 booleano ::= booleano OR booleano
 | booleano AND booleano
-| booleano AND booleano
 | NOT booleano
-| booleano IGUAL booleano
-| booleano NO_IGUAL booleano
-| booleano MENOR booleano
-| booleano MAYOR booleano
-| booleano MENOR_IGUAL booleano
-| booleano MAYOR_IGUAL booleano
-| ROUND_NUMBER
-| 
+| entero IGUAL entero
+| entero NO_IGUAL entero
+| entero MENOR entero
+| entero MAYOR entero
+| entero MENOR_IGUAL entero
+| entero MAYOR_IGUAL entero
+| FLOTANTE IGUAL FLOTANTE
+| FLOTANTE NO_IGUAL FLOTANTE
+| FLOTANTE MENOR FLOTANTE
+| FLOTANTE MAYOR FLOTANTE
+| FLOTANTE MENOR_IGUAL FLOTANTE
+| FLOTANTE MAYOR_IGUAL FLOTANTE
+| lista_Listas IGUAL lista_Real
+;
+
+//LA PARTE DE LAS LISTAS
+
+lista_Listas ::= LISTA<ACCION> ABRE_PARENTESIS lista_Listas CIERRA_PARENTESIS
+| LISTA<ACCION> ABRE_PARENTESIS lista CIERRA_PARENTESIS
+;
+
+lista ::= LISTA<ACCION> COMA ENTERO;
+
+//Para las listas que de verdad tengo para estar usando
+
+lista_Real ::= ABRE_CORCHETE cuerpo_Lista CIERRA_CORCHETE
+
+cuerpo_Lista ::= cuerpo_Lista, ACCION
+| ACCION
+;
+
+//PARA LOS ENTEROS
+entero ::= ENTERO
+| ENTERO ABRE_PARENTESIS LISTA<ACCION> COMA ACCION CIERRA PARENTESIS
+;
+
+//PARA LAS ACCIONES
+accion ::= ACCION
+| ACCION ABRE_PARENTESIS LISTA<ACCION> CIERRA PARENTESIS
 ;
