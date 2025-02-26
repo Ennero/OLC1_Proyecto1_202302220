@@ -931,7 +931,7 @@ public class Lexer implements java_cup.runtime.Scanner {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
-            { throw new Error("Error lexico en fila " + (yyline + 1) + " columna " + (yycolumn + 1));
+            { return new Symbol(sym.ERROR_LEXICO, yyline + 1, yycolumn + 1, yytext());
             }
           // fall through
           case 52: break;
@@ -941,42 +941,42 @@ public class Lexer implements java_cup.runtime.Scanner {
           // fall through
           case 53: break;
           case 3:
-            { return new Symbol(sym.NOT, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.NOT, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 54: break;
           case 4:
-            { return new Symbol(sym.ABRE_PARENTESIS, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.ABRE_PARENTESIS, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 55: break;
           case 5:
-            { return new Symbol(sym.CIERRA_PARENTESIS, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.CIERRA_PARENTESIS, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 56: break;
           case 6:
-            { return new Symbol(sym.COMA, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.COMA, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 57: break;
           case 7:
-            { return new Symbol(sym.ENTERO, yyline + 1, (int) yychar + 1, Integer.parseInt(yytext()));
+            { return new Symbol(sym.ENTERO, yyline + 1, (int) yycolumn + 1, Integer.parseInt(yytext()));
             }
           // fall through
           case 58: break;
           case 8:
-            { return new Symbol(sym.DOS_PUNTOS, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.DOS_PUNTOS, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 59: break;
           case 9:
-            { return new Symbol(sym.MENOR, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.MENOR, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 60: break;
           case 10:
-            { return new Symbol(sym.MAYOR, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.MAYOR, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 61: break;
@@ -986,37 +986,37 @@ public class Lexer implements java_cup.runtime.Scanner {
           // fall through
           case 62: break;
           case 12:
-            { return new Symbol(sym.ACCION, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.ACCION, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 63: break;
           case 13:
-            { return new Symbol(sym.ABRE_CORCHETE, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.ABRE_CORCHETE, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 64: break;
           case 14:
-            { return new Symbol(sym.CIERRA_CORCHETE, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.CIERRA_CORCHETE, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 65: break;
           case 15:
-            { return new Symbol(sym.ABRE_LLAVE, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.ABRE_LLAVE, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 66: break;
           case 16:
-            { return new Symbol(sym.CIERRA_LLAVE, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.CIERRA_LLAVE, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 67: break;
           case 17:
-            { return new Symbol(sym.NO_IGUAL, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.NO_IGUAL, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 68: break;
           case 18:
-            { return new Symbol(sym.AND, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.AND, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 69: break;
@@ -1026,37 +1026,37 @@ public class Lexer implements java_cup.runtime.Scanner {
           // fall through
           case 70: break;
           case 20:
-            { return new Symbol(sym.FLOTANTE, yyline + 1, (int) yychar + 1, Float.parseFloat(yytext()));
+            { return new Symbol(sym.FLOTANTE, yyline + 1, (int) yycolumn + 1, Float.parseFloat(yytext()));
             }
           // fall through
           case 71: break;
           case 21:
-            { return new Symbol(sym.MENOR_IGUAL, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.MENOR_IGUAL, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 72: break;
           case 22:
-            { return new Symbol(sym.IGUAL, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.IGUAL, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 73: break;
           case 23:
-            { return new Symbol(sym.MAYOR_IGUAL, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.MAYOR_IGUAL, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 74: break;
           case 24:
-            { return new Symbol(sym.IF, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.IF, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 75: break;
           case 25:
-            { return new Symbol(sym.OR, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.OR, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 76: break;
           case 26:
-            { return new Symbol(sym.RUN, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.RUN, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 77: break;
@@ -1066,122 +1066,122 @@ public class Lexer implements java_cup.runtime.Scanner {
           // fall through
           case 78: break;
           case 28:
-            { return new Symbol(sym.ELSE, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.ELSE, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 79: break;
           case 29:
-            { return new Symbol(sym.MAIN, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.MAIN, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 80: break;
           case 30:
-            { return new Symbol(sym.SEED, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.SEED, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 81: break;
           case 31:
-            { return new Symbol(sym.THEN, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.THEN, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 82: break;
           case 32:
-            { return new Symbol(sym.BOOLEANO, yyline + 1, (int) yychar + 1, Boolean.parseBoolean(yytext()));
+            { return new Symbol(sym.BOOLEANO, yyline + 1, (int) yycolumn + 1, Boolean.parseBoolean(yytext()));
             }
           // fall through
           case 83: break;
           case 33:
-            { return new Symbol(sym.WITH, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.WITH, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 84: break;
           case 34:
-            { return new Symbol(sym.MATCH, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.MATCH, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 85: break;
           case 35:
-            { return new Symbol(sym.RULES, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.RULES, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 86: break;
           case 36:
-            { return new Symbol(sym.RANDOM, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.RANDOM, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 87: break;
           case 37:
-            { return new Symbol(sym.ROUNDS, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.ROUNDS, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 88: break;
           case 38:
-            { return new Symbol(sym.INITIAL, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.INITIAL, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 89: break;
           case 39:
-            { return new Symbol(sym.PLAYERS, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.PLAYERS, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 90: break;
           case 40:
-            { return new Symbol(sym.SCORING, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.SCORING, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 91: break;
           case 41:
-            { return new Symbol(sym.GET_MOVE, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.GET_MOVE, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 92: break;
           case 42:
-            { return new Symbol(sym.STRATEGY, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.STRATEGY, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 93: break;
           case 43:
-            { return new Symbol(sym.LAST_MOVE, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.LAST_MOVE, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 94: break;
           case 44:
-            { return new Symbol(sym.STRATEGIES, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.STRATEGIES, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 95: break;
           case 45:
-            { return new Symbol(sym.ROUND_NUMBER, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.ROUND_NUMBER, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 96: break;
           case 46:
-            { return new Symbol(sym.SELF_HISTORY, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.SELF_HISTORY, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 97: break;
           case 47:
-            { return new Symbol(sym.TOTAL_ROUNDS, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.TOTAL_ROUNDS, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 98: break;
           case 48:
-            { return new Symbol(sym.PUNTUACION, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.PUNTUACION, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 99: break;
           case 49:
-            { return new Symbol(sym.GET_MOVES_COUNT, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.GET_MOVES_COUNT, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 100: break;
           case 50:
-            { return new Symbol(sym.GET_LAST_N_MOVES, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.GET_LAST_N_MOVES, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 101: break;
           case 51:
-            { return new Symbol(sym.OPPONENT_HISTORY, yyline + 1, (int) yychar + 1, yytext());
+            { return new Symbol(sym.OPPONENT_HISTORY, yyline + 1, (int) yycolumn + 1, yytext());
             }
           // fall through
           case 102: break;

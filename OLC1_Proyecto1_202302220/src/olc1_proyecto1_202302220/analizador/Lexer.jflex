@@ -54,7 +54,7 @@ ID = [A-Za-z_][A-Za-z_0-9]*
 "random" { return new Symbol(sym.RANDOM, yyline + 1, (int) yycolumn + 1, yytext()); } // Será float
 
 // Puntuación
-{PUNTUACIÓN} { return new Symbol(sym.PUNTUACIÓN, yyline + 1, (int) yycolumn + 1, yytext()); } 
+{PUNTUACION} { return new Symbol(sym.PUNTUACION, yyline + 1, (int) yycolumn + 1, yytext()); } 
 
 // Estructurales
 "strategy"  { return new Symbol(sym.STRATEGY, yyline + 1, (int) yycolumn + 1, yytext()); }
@@ -120,4 +120,5 @@ ID = [A-Za-z_][A-Za-z_0-9]*
 {ID} { return new Symbol(sym.ID, yyline + 1, yycolumn + 1, yytext()); }
 
 // SINO ENTONCES ESTO XD DEBE DE LANZAR UN EXCEPCION O ALGO MAS+++++6+2+5+5+52+252+652+6246+
-.        { throw new Error("Error léxico en fila " + (yyline + 1) + " columna " + (yycolumn + 1)); }
+.    { return new Symbol(sym.ERROR_LEXICO, yyline + 1, yycolumn + 1, yytext()); }
+//{ throw new Error("Error léxico en fila " + (yyline + 1) + " columna " + (yycolumn + 1)); }

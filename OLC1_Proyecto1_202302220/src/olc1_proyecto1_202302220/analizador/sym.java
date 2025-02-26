@@ -40,7 +40,7 @@ public class sym {
   public static final int ABRE_CORCHETE = 37;
   public static final int STRATEGY = 13;
   public static final int ACCION = 45;
-  public static final int ERROR = 2;
+  public static final int ERROR_LEXICO = 2;
   public static final int NO_IGUAL = 32;
   public static final int MAYOR = 34;
   public static final int SELF_HISTORY = 9;
@@ -61,7 +61,7 @@ public class sym {
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
-  "ERROR",
+  "ERROR_LEXICO",
   "GET_MOVE",
   "LAST_MOVE",
   "GET_MOVES_COUNT",
