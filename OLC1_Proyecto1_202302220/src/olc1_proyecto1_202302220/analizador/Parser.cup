@@ -1,5 +1,6 @@
 package olc1_proyecto1_202302220.analizador;
 import java_cup.runtime.Symbol;
+import java.util.LinkedList;
 
 
 //----------------------------------------------------------------------------------
@@ -50,7 +51,8 @@ non terminal strategy, strategy_Cuerpo, regla_Inicial, reglas, lista_Reglas, if;
 non terminal match, match_Cuerpo, strategies_Lista, puntajes, puntuacion;
 
 //Lo que vendrá con el bloque de Main
-non terminal main_Cuerpo, run, match_Lista;
+non terminal main_Cuerpo, run;
+non terminal match_Lista;
 
 //Otros realacionado a los booleanos
 non terminal booleano, lista_Listas, lista, lista_Real, cuerpo_Lista;
@@ -78,14 +80,13 @@ strategy_Cuerpo ::= regla_Inicial reglas;
 
 regla_Inicial ::= INITIAL DOS_PUNTOS ACCION;
 
-reglas ::= RULES DOS_PUNTOS ABRE_CORCHETE lista_Reglas CIERRA_CORCHETE;
+reglas ::= RULES DOS_PUNTOS ABRE_CORCHETE lista_Reglas COMA ELSE accion CIERRA_CORCHETE;
 
 lista_Reglas ::= lista_Reglas COMA if
 | if
 ;
 
 if ::= IF booleano THEN accion
-| ELSE accion
 ;
 
 
@@ -122,7 +123,7 @@ run ::= RUN ABRE_CORCHETE match_Lista CIERRA_CORCHETE WITH
         ABRE_LLAVE SEED DOS_PUNTOS ENTERO CIERRA_LLAVE
 ;
 
-match_Lista ::= match_Lista COMA ID
+match_Lista ::= match_Lista COMA ID 
 | ID
 ;
 
