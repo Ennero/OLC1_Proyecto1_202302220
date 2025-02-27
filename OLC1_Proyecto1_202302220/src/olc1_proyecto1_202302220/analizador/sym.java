@@ -8,69 +8,52 @@ package olc1_proyecto1_202302220.analizador;
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int GET_MOVES_COUNT = 5;
-  public static final int RANDOM = 11;
-  public static final int WITH = 26;
-  public static final int ENTERO = 46;
-  public static final int CIERRA_PARENTESIS = 42;
-  public static final int SCORING = 24;
-  public static final int DOS_PUNTOS = 44;
-  public static final int ABRE_PARENTESIS = 41;
-  public static final int MATCH = 14;
-  public static final int RULES = 20;
-  public static final int ABRE_LLAVE = 39;
-  public static final int NOT = 30;
-  public static final int AND = 28;
-  public static final int IGUAL = 31;
-  public static final int GET_LAST_N_MOVES = 6;
-  public static final int OR = 29;
-  public static final int STRATEGIES = 18;
-  public static final int CIERRA_CORCHETE = 38;
-  public static final int MAIN = 15;
-  public static final int IF = 21;
-  public static final int ID = 49;
-  public static final int INITIAL = 19;
+  public static final int WITH = 17;
+  public static final int ENTERO = 37;
+  public static final int CIERRA_PARENTESIS = 33;
+  public static final int SCORING = 15;
+  public static final int DOS_PUNTOS = 35;
+  public static final int ABRE_PARENTESIS = 32;
+  public static final int MATCH = 5;
+  public static final int RULES = 11;
+  public static final int ABRE_LLAVE = 30;
+  public static final int NOT = 21;
+  public static final int AND = 19;
+  public static final int IGUAL = 22;
+  public static final int OR = 20;
+  public static final int STRATEGIES = 9;
+  public static final int CIERRA_CORCHETE = 29;
+  public static final int MAIN = 6;
+  public static final int IF = 12;
+  public static final int ID = 41;
+  public static final int LISTA = 40;
+  public static final int INITIAL = 10;
   public static final int EOF = 0;
-  public static final int ROUNDS = 17;
+  public static final int ROUNDS = 8;
   public static final int error = 1;
-  public static final int COMA = 43;
-  public static final int PLAYERS = 16;
-  public static final int TOTAL_ROUNDS = 10;
-  public static final int MENOR = 33;
-  public static final int ABRE_CORCHETE = 37;
-  public static final int STRATEGY = 13;
-  public static final int ACCION = 45;
+  public static final int COMA = 34;
+  public static final int PLAYERS = 7;
+  public static final int MENOR = 24;
+  public static final int ABRE_CORCHETE = 28;
+  public static final int STRATEGY = 4;
+  public static final int ACCION = 36;
   public static final int ERROR_LEXICO = 2;
-  public static final int NO_IGUAL = 32;
-  public static final int MAYOR = 34;
-  public static final int SELF_HISTORY = 9;
-  public static final int PUNTUACION = 12;
-  public static final int ROUND_NUMBER = 7;
-  public static final int LAST_MOVE = 4;
-  public static final int ELSE = 23;
-  public static final int GET_MOVE = 3;
-  public static final int MAYOR_IGUAL = 36;
-  public static final int THEN = 22;
-  public static final int BOOLEANO = 48;
-  public static final int SEED = 27;
-  public static final int MENOR_IGUAL = 35;
-  public static final int OPPONENT_HISTORY = 8;
-  public static final int CIERRA_LLAVE = 40;
-  public static final int RUN = 25;
-  public static final int FLOTANTE = 47;
+  public static final int NO_IGUAL = 23;
+  public static final int MAYOR = 25;
+  public static final int PUNTUACION = 3;
+  public static final int ELSE = 14;
+  public static final int MAYOR_IGUAL = 27;
+  public static final int THEN = 13;
+  public static final int BOOLEANO = 39;
+  public static final int SEED = 18;
+  public static final int MENOR_IGUAL = 26;
+  public static final int CIERRA_LLAVE = 31;
+  public static final int RUN = 16;
+  public static final int FLOTANTE = 38;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
   "ERROR_LEXICO",
-  "GET_MOVE",
-  "LAST_MOVE",
-  "GET_MOVES_COUNT",
-  "GET_LAST_N_MOVES",
-  "ROUND_NUMBER",
-  "OPPONENT_HISTORY",
-  "SELF_HISTORY",
-  "TOTAL_ROUNDS",
-  "RANDOM",
   "PUNTUACION",
   "STRATEGY",
   "MATCH",
@@ -108,6 +91,7 @@ public class sym {
   "ENTERO",
   "FLOTANTE",
   "BOOLEANO",
+  "LISTA",
   "ID"
   };
 }

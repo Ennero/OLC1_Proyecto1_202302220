@@ -35,7 +35,7 @@ terminal String IGUAL, NO_IGUAL, MENOR, MAYOR, MENOR_IGUAL, MAYOR_IGUAL;
 terminal String ABRE_CORCHETE, CIERRA_CORCHETE, ABRE_LLAVE, CIERRA_LLAVE, ABRE_PARENTESIS, CIERRA_PARENTESIS, COMA, DOS_PUNTOS;
 
 //Tipos
-terminal String ACCION, ENTERO, FLOTANTE, BOOLEANO;
+terminal String ACCION, ENTERO, FLOTANTE, BOOLEANO, LISTA;
 
 //Identificador
 terminal String ID;
@@ -44,16 +44,19 @@ terminal String ID;
 non terminal ini, bloque_Strategy, bloque_Match, bloque_Main;
 
 //Lo que vendrá con el bloque de strategy
-non terminal strategy, strategy_Cuerpo, regla_Inicial, reglas, lista_Reglas, if, reglas_Cuerpo;
+non terminal strategy, strategy_Cuerpo, regla_Inicial, reglas, lista_Reglas, if;
 
 //Lo que vendra con el bloque de match
 non terminal match, match_Cuerpo, strategies_Lista, puntajes, puntuacion;
 
 //Lo que vendrá con el bloque de Main
-non terminal main_Cuerpo, run_Lista, run, match_Lista;
+non terminal main_Cuerpo, run, match_Lista;
+
+//Otros realacionado a los booleanos
+non terminal booleano, lista_Listas, lista, lista_Real, cuerpo_Lista;
 
 //Otros
-non terminal booleano;
+non terminal accion,entero;
 
 //---------------------------------------------------------------------------------
 precedence left OR, AND;
@@ -61,11 +64,10 @@ precedence nonassoc NOT;
 //-------------------------------------------------------------------------------
 start with ini;
 
-ini ::= bloque_Strategy ;
-
+ini ::= bloque_Strategy bloque_Match bloque_Main;
 
 //-------------------------------------------------------------------------------
-//Bloque de estrategias
+//BLOQUE ESTRATEGIAS-------------------------------------------------------
 bloque_Strategy ::= bloque_Strategy strategy
 | strategy
 ;
@@ -82,16 +84,49 @@ lista_Reglas ::= lista_Reglas COMA if
 | if
 ;
 
-if ::= IF booleano THEN ACCION
+if ::= IF booleano THEN accion
 | ELSE accion
 ;
 
 
+//BLOQUE PARTIDAS-------------------------------------------------------------
 
+bloque_Match ::= bloque_Match match
+| match
+;
 
-//-------------------------------------------------------------------------------
-//Valores booleanos que tendré que solucionAR DESPUES LKFASLKFJ LSDAJMFASMDCFMADSKHFSLADUNLHADVS
+match ::= MATCH ID ABRE_LLAVE match_Cuerpo CIERRA_LLAVE;
 
+match_Cuerpo ::= PLAYERS STRATEGIES DOS_PUNTOS ABRE_CORCHETE 
+            strategies_Lista CIERRA_CORCHETE ROUNDS DOS_PUNTOS ENTERO
+            SCORING DOS_PUNTOS ABRE_LLAVE puntajes CIERRA_LLAVE
+;
+
+strategies_Lista ::= strategies_Lista COMA ID
+| ID
+;
+
+puntajes ::= puntuacion COMA puntuacion COMA puntuacion COMA puntuacion;
+
+puntuacion ::= PUNTUACION DOS_PUNTOS ENTERO;
+
+//BLOQUE MAIN------------------------------------------------------------------
+
+bloque_Main ::= MAIN ABRE_LLAVE main_Cuerpo CIERRA_LLAVE;
+
+main_Cuerpo ::= main_Cuerpo run
+| run
+;
+
+run ::= RUN ABRE_CORCHETE match_Lista CIERRA_CORCHETE WITH 
+        ABRE_LLAVE SEED DOS_PUNTOS ENTERO CIERRA_LLAVE
+;
+
+match_Lista ::= match_Lista COMA ID
+| ID
+;
+
+//PARA LOS BOOLEANOS-----------------------------------------------------
 booleano ::= booleano OR booleano
 | booleano AND booleano
 | NOT booleano
@@ -108,30 +143,34 @@ booleano ::= booleano OR booleano
 | FLOTANTE MENOR_IGUAL FLOTANTE
 | FLOTANTE MAYOR_IGUAL FLOTANTE
 | lista_Listas IGUAL lista_Real
-;
-
-//LA PARTE DE LAS LISTAS
-
-lista_Listas ::= LISTA<ACCION> ABRE_PARENTESIS lista_Listas CIERRA_PARENTESIS
-| LISTA<ACCION> ABRE_PARENTESIS lista CIERRA_PARENTESIS
-;
-
-lista ::= LISTA<ACCION> COMA ENTERO;
-
-//Para las listas que de verdad tengo para estar usando
-
-lista_Real ::= ABRE_CORCHETE cuerpo_Lista CIERRA_CORCHETE
-
-cuerpo_Lista ::= cuerpo_Lista, ACCION
-| ACCION
+| BOOLEANO
 ;
 
 //PARA LOS ENTEROS
-entero ::= ENTERO
-| ENTERO ABRE_PARENTESIS LISTA<ACCION> COMA ACCION CIERRA PARENTESIS
+entero ::= ENTERO ABRE_PARENTESIS LISTA COMA ACCION CIERRA_PARENTESIS
+| ENTERO
 ;
 
-//PARA LAS ACCIONES
-accion ::= ACCION
-| ACCION ABRE_PARENTESIS LISTA<ACCION> CIERRA PARENTESIS
+
+//PARA LAS ACCIONES----------------------------------------------------
+accion ::= ACCION ABRE_PARENTESIS LISTA CIERRA_PARENTESIS
+| ACCION
 ;
+
+
+//PARA LAS LISTAS------------------------------------------------------
+lista_Listas ::= LISTA ABRE_PARENTESIS lista_Listas CIERRA_PARENTESIS
+| LISTA ABRE_PARENTESIS lista CIERRA_PARENTESIS
+;
+
+lista ::= LISTA COMA ENTERO;
+
+
+//PARA LAS LISTAS REALES --------------------------------------------
+lista_Real ::= ABRE_CORCHETE cuerpo_Lista CIERRA_CORCHETE;
+
+cuerpo_Lista ::= cuerpo_Lista COMA ACCION
+| ACCION
+;
+
+

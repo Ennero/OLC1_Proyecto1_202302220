@@ -1,5 +1,4 @@
 package olc1_proyecto1_202302220.analizador;
-
 import java_cup.runtime.Symbol;
 
 %%
@@ -24,14 +23,14 @@ WS = [ \t\r\n]+
 
 //TIPOS
 
-ENTERO = [0-9]+|round_number|total_rounds|get_moves_count
-FLOTANTE = [0-9]+\.[0-9]*|random
-BOOLEANO = true|false
-LISTA<ACCION> = get_last_n_moves|opponent_history|self_history
-ACCION = C|D|get_move|last_move
+ENTERO = [0-9]+|"round_number"|"total_rounds"|"get_moves_count"
+FLOTANTE = {ENTERO}\.{ENTERO}|"random"
+BOOLEANO = "true"|"false"
+LISTA = "get_last_n_moves"|"opponent_history"|"self_history"
+ACCION = "C"|"D"|"get_move"|"last_move"
 
 //PUNTUACION
-PUNTUACION = betrayal reward|mutual cooperation|mutual defection|betrayal punishment
+PUNTUACION = "betrayal reward"|"mutual cooperation"|"mutual defection"|"betrayal punishment"
 
 //IDENTIFICADORES
 ID = [A-Za-z_][A-Za-z_0-9]*
@@ -40,6 +39,11 @@ ID = [A-Za-z_][A-Za-z_0-9]*
 
 //REGLAS DE ACCIÓN----------------------------------------------------------------------------------------------------
 %%
+
+// Comentarios y espacios en blanco -------
+"//" .*  { /* Ignorar comentario de línea */ }
+"/*" [^*]*\*+([^/*][^*]*\*+)* "/" { /* Ignorar comentario de varias líneas */ }
+{WS}     { /* Ignorar espacios en blanco */ }
 
 // PALABRAS RESERVADAS-----
 // Puntuación
@@ -93,18 +97,17 @@ ID = [A-Za-z_][A-Za-z_0-9]*
 ")" { return new Symbol(sym.CIERRA_PARENTESIS, yyline + 1, (int) yycolumn + 1, yytext()); }
 "," { return new Symbol(sym.COMA, yyline + 1, (int) yycolumn + 1, yytext()); }
 ":" { return new Symbol(sym.DOS_PUNTOS, yyline + 1, (int) yycolumn + 1, yytext()); }
-{WS}     { /* Ignorar espacios en blanco */ }
 
-// Comentarios
-"//" .*  { /* Ignorar comentario de línea */ }
-"/*" [^*]*\*+([^/*][^*]*\*+)* "/" { /* Ignorar comentario de varias líneas */ }
+
 
 // TIPOS-----
 {ACCION} { return new Symbol(sym.ACCION, yyline + 1, (int) yycolumn + 1, yytext()); }
-{ENTERO} { return new Symbol(sym.ENTERO, yyline + 1, (int) yycolumn + 1, Integer.parseInt(yytext())); }
-{FLOTANTE} { return new Symbol(sym.FLOTANTE, yyline + 1, (int) yycolumn + 1, Float.parseFloat(yytext())); }
+{ENTERO} { return new Symbol(sym.ENTERO, yyline + 1, (int) yycolumn + 1, (yytext())); }   //parsear despues
+{FLOTANTE} { return new Symbol(sym.FLOTANTE, yyline + 1, (int) yycolumn + 1, (yytext())); }  //parsear despues
 {BOOLEANO} { return new Symbol(sym.BOOLEANO, yyline + 1, (int) yycolumn + 1, Boolean.parseBoolean(yytext())); }
-{LISTA<ACCION>} { return new Symbol(sym.LISTA<ACCION>, yyline + 1, (int) yycolumn + 1, yytext()); }
+{PUNTUACION} { return new Symbol(sym.PUNTUACION, yyline + 1, (int) yycolumn + 1, yytext()); }
+
+{LISTA} { return new Symbol(sym.LISTA, yyline + 1, (int) yycolumn + 1, yytext()); }
 
 // IDENTIFICADOR-----
 {ID} { return new Symbol(sym.ID, yyline + 1, yycolumn + 1, yytext()); }
