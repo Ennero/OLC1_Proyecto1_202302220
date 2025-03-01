@@ -1,6 +1,7 @@
+/* 1. Package e importaciones*/
 package olc1_proyecto1_202302220.analizador;
 import java_cup.runtime.Symbol;
-
+// Directivas
 %%
 //CONFIGURACIÓN DEL ANALIZADOR LEXICO---------------------------------------------------------
 %class Lexer
@@ -12,67 +13,88 @@ import java_cup.runtime.Symbol;
 %char
 
 %{
-  //Entiendo que es para el código de java
+  //Entiendo que es para el código de java que no pondré xd
 %}
 
+//REGEX ------------------------------------------------------------------
 
-//DEFINICIÓN DE TOKENS------------------------------------------------------------------
-
-//GENERALES
+//PARA IGNORAR
 WS = [ \t\r\n]+
 
-//TIPOS
+//NUMEROS
+ENTERO = [0-9]+
+FLOTANTE = {ENTERO}\.{ENTERO}
 
-ENTERO = [0-9]+|"round_number"|"total_rounds"|"get_moves_count"
-FLOTANTE = {ENTERO}\.{ENTERO}|"random"
-BOOLEANO = "true"|"false"
-LISTA = "get_last_n_moves"|"opponent_history"|"self_history"
-ACCION = "C"|"D"|"get_move"|"last_move"
-
-//PUNTUACION
-PUNTUACION = "betrayal reward"|"mutual cooperation"|"mutual defection"|"betrayal punishment"
+// Comentarios y espacios en blanco -------
+COMENTARIOS = "//"([^\r\n]*)?
+COMENTARIOS_MULTILINEA = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 
 //IDENTIFICADORES
 ID = [A-Za-z_][A-Za-z_0-9]*
 
-//Aquí también debería de haber algo de la lista que no entiendo aun
-
 //REGLAS DE ACCIÓN----------------------------------------------------------------------------------------------------
 %%
 
-// Comentarios y espacios en blanco -------
-"//" .*  { /* Ignorar comentario de línea */ }
-"/*" [^*]*\*+([^/*][^*]*\*+)* "/" { /* Ignorar comentario de varias líneas */ }
 {WS}     { /* Ignorar espacios en blanco */ }
 
 // PALABRAS RESERVADAS-----
-// Puntuación
-{PUNTUACION} { return new Symbol(sym.PUNTUACION, yyline + 1, (int) yycolumn + 1, yytext()); } 
 
-// Estructurales
+//BLOQUES PRINCIPALES
 "strategy"  { return new Symbol(sym.STRATEGY, yyline + 1, (int) yycolumn + 1, yytext()); }
+"initial"  { return new Symbol(sym.INITIAL, yyline + 1, (int) yycolumn + 1, yytext()); }
 "match"  { return new Symbol(sym.MATCH, yyline + 1, (int) yycolumn + 1, yytext()); }
 "main"  { return new Symbol(sym.MAIN, yyline + 1, (int) yycolumn + 1, yytext()); }
 
-// definiciónPartida+++
-"players" { return new Symbol(sym.PLAYERS, yyline + 1, (int) yycolumn + 1, yytext()); }
-"strategies"  { return new Symbol(sym.STRATEGIES, yyline + 1, (int) yycolumn + 1, yytext()); }
-"rounds" { return new Symbol(sym.ROUNDS, yyline + 1, (int) yycolumn + 1, yytext()); }
+//ACCIONES
+"C" { return new Symbol(sym.C, yyline + 1, (int) yycolumn + 1, yytext()); }
+"D" { return new Symbol(sym.D, yyline + 1, (int) yycolumn + 1, yytext()); }
 
-// Secciones
-"initial"  { return new Symbol(sym.INITIAL, yyline + 1, (int) yycolumn + 1, yytext()); }
+//RELACIONADO A STRATEGY
 "rules"  { return new Symbol(sym.RULES, yyline + 1, (int) yycolumn + 1, yytext()); }
-
-// Flujo
 "if"  { return new Symbol(sym.IF, yyline + 1, (int) yycolumn + 1, yytext()); }
 "then"  { return new Symbol(sym.THEN, yyline + 1, (int) yycolumn + 1, yytext()); }
 "else"  { return new Symbol(sym.ELSE, yyline + 1, (int) yycolumn + 1, yytext()); }
 
-// Configuración
+//funciones especiales dentro de strategy
+"get_move" { return new Symbol(sym.GET_MOVE, yyline + 1, (int) yycolumn + 1, yytext()); }
+"last_move" { return new Symbol(sym.LAST_MOVE, yyline + 1, (int) yycolumn + 1, yytext()); }
+"get_moves_count" { return new Symbol(sym.GET_MOVES_COUNT, yyline + 1, (int) yycolumn + 1, yytext()); }
+"get_last_n_moves" { return new Symbol(sym.GET_LAST_N_MOVES, yyline + 1, (int) yycolumn + 1, yytext()); }
+
+//RELACIONADO A MATCH
+"round_number"  { return new Symbol(sym.ROUND_NUMBER, yyline + 1, (int) yycolumn + 1, yytext()); }
+"players" { return new Symbol(sym.PLAYERS, yyline + 1, (int) yycolumn + 1, yytext()); }
+"strategies"  { return new Symbol(sym.STRATEGIES, yyline + 1, (int) yycolumn + 1, yytext()); }
+"rounds" { return new Symbol(sym.ROUNDS, yyline + 1, (int) yycolumn + 1, yytext()); }
 "scoring"  { return new Symbol(sym.SCORING, yyline + 1, (int) yycolumn + 1, yytext()); }
+
+
+//RELACIONADO A MAIN
 "run"  { return new Symbol(sym.RUN, yyline + 1, (int) yycolumn + 1, yytext()); }
 "with"  { return new Symbol(sym.WITH, yyline + 1, (int) yycolumn + 1, yytext()); }
 "seed"  { return new Symbol(sym.SEED, yyline + 1, (int) yycolumn + 1, yytext()); }
+
+//PUNTAJES
+"mutual cooperation" { return new Symbol(sym.MUTUAL_COOPERATION, yyline + 1, (int) yycolumn + 1, yytext()); }
+"mutual defection" { return new Symbol(sym.MUTUAL_DEFECTION, yyline + 1, (int) yycolumn + 1, yytext()); }
+"betrayal reward" { return new Symbol(sym.BETRAYAL_REWARD, yyline + 1, (int) yycolumn + 1, yytext()); }
+"betrayal punishment"  { return new Symbol(sym.BETRAYAL_PUNISHMENT, yyline + 1, (int) yycolumn + 1, yytext()); }
+
+"random" { return new Symbol(sym.RANDOM, yyline + 1, (int) yycolumn + 1, yytext()); }
+
+//LISTA DE HISTORIAL
+"opponent_history" { return new Symbol(sym.OPPONENT_HISTORY, yyline + 1, (int) yycolumn + 1, yytext()); }
+"self_history" { return new Symbol(sym.SELF_HISTORY, yyline + 1, (int) yycolumn + 1, yytext()); }
+
+//BOOLEANOS
+"true" { return new Symbol(sym.TRUE, yyline + 1, (int) yycolumn + 1, yytext()); }
+"false" { return new Symbol(sym.FALSE, yyline + 1, (int) yycolumn + 1, yytext()); }
+
+//VALORES
+{ENTERO} { return new Symbol(sym.ENTERO, yyline + 1, (int) yycolumn + 1, (yytext())); }   //parsear despues
+{FLOTANTE} { return new Symbol(sym.FLOTANTE, yyline + 1, (int) yycolumn + 1, (yytext())); }  //parsear despues
+{ID} { return new Symbol(sym.ID, yyline + 1, yycolumn + 1, yytext()); }
+
 
 // OPERADORES--------
 // Lógicas
@@ -98,19 +120,8 @@ ID = [A-Za-z_][A-Za-z_0-9]*
 "," { return new Symbol(sym.COMA, yyline + 1, (int) yycolumn + 1, yytext()); }
 ":" { return new Symbol(sym.DOS_PUNTOS, yyline + 1, (int) yycolumn + 1, yytext()); }
 
-
-
-// TIPOS-----
-{ACCION} { return new Symbol(sym.ACCION, yyline + 1, (int) yycolumn + 1, yytext()); }
-{ENTERO} { return new Symbol(sym.ENTERO, yyline + 1, (int) yycolumn + 1, (yytext())); }   //parsear despues
-{FLOTANTE} { return new Symbol(sym.FLOTANTE, yyline + 1, (int) yycolumn + 1, (yytext())); }  //parsear despues
-{BOOLEANO} { return new Symbol(sym.BOOLEANO, yyline + 1, (int) yycolumn + 1, Boolean.parseBoolean(yytext())); }
-{PUNTUACION} { return new Symbol(sym.PUNTUACION, yyline + 1, (int) yycolumn + 1, yytext()); }
-
-{LISTA} { return new Symbol(sym.LISTA, yyline + 1, (int) yycolumn + 1, yytext()); }
-
-// IDENTIFICADOR-----
-{ID} { return new Symbol(sym.ID, yyline + 1, yycolumn + 1, yytext()); }
+{COMENTARIOS} { /* Ignorar comentario de línea */ }
+{COMENTARIOS_MULTILINEA} { /* Ignorar comentario de varias líneas */ }
 
 // SINO ENTONCES ESTO XD DEBE DE LANZAR UN EXCEPCION O ALGO MAS+++++6+2+5+5+52+252+652+6246+
 .    { return new Symbol(sym.ERROR_LEXICO, yyline + 1, yycolumn + 1, yytext()); }

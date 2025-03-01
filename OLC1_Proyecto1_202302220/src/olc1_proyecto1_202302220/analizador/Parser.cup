@@ -1,27 +1,39 @@
+/* 1. Package e importaciones */
 package olc1_proyecto1_202302220.analizador;
 import java_cup.runtime.Symbol;
 import java.util.LinkedList;
-
 
 //----------------------------------------------------------------------------------
 
 //Para el error (yo en esta carrera)
 terminal ERROR_LEXICO;
 
-//Puntuacion
-terminal String PUNTUACION;
-
 //Estructurales
 terminal String STRATEGY, MATCH, MAIN;
 
-//definicionPartida
-terminal String PLAYERS, ROUNDS, STRATEGIES;
+//Acciones
+terminal String C, D;
 
 //Secciones
 terminal String INITIAL, RULES;
 
 //Flujo
 terminal String IF, THEN, ELSE;
+
+//Funciones especiales dentro de strategy
+terminal String GET_MOVE, LAST_MOVE, GET_LAST_N_MOVES, GET_MOVES_COUNT;
+
+//Funciones relacionada a match
+terminal String ROUND_NUMBER, PLAYERS, STRATEGIES, ROUNDS;
+
+//Historiales
+terminal String OPPONENT_HISTORY, SELF_HISTORY;
+
+//Booleanos
+terminal String TRUE, FALSE;
+
+//Puntajes
+terminal String MUTUAL_COOPERATION, MUTUAL_DEFECTION, BETRAYAL_REWARD, BETRAYAL_PUNISHMENT;
 
 //Configuración
 terminal String SCORING, RUN, WITH, SEED;
@@ -36,142 +48,155 @@ terminal String IGUAL, NO_IGUAL, MENOR, MAYOR, MENOR_IGUAL, MAYOR_IGUAL;
 terminal String ABRE_CORCHETE, CIERRA_CORCHETE, ABRE_LLAVE, CIERRA_LLAVE, ABRE_PARENTESIS, CIERRA_PARENTESIS, COMA, DOS_PUNTOS;
 
 //Tipos
-terminal String ACCION, ENTERO, FLOTANTE, BOOLEANO, LISTA;
+terminal String ENTERO, FLOTANTE;
 
 //Identificador
 terminal String ID;
+
+//Otros
+terminal String RANDOM;
+
 //----------------------------------------------------------------------------------
+
 //Init y bloques
 non terminal ini, bloque_Strategy, bloque_Match, bloque_Main;
 
 //Lo que vendrá con el bloque de strategy
-non terminal strategy, strategy_Cuerpo, regla_Inicial, reglas, lista_Reglas, if;
+non terminal  strategy_Cuerpo, regla_Inicial, reglas, lista_Reglas;
 
 //Lo que vendra con el bloque de match
-non terminal match, match_Cuerpo, strategies_Lista, puntajes, puntuacion;
+non terminal match_Cuerpo, puntuacion;
 
 //Lo que vendrá con el bloque de Main
-non terminal main_Cuerpo, run;
+non terminal main_Cuerpo;
 non terminal match_Lista;
 
-//Otros realacionado a los booleanos
-non terminal booleano, lista_Listas, lista, lista_Real, cuerpo_Lista;
+//Intrucciones
+non terminal instruccion;
 
-//Otros
-non terminal accion,entero;
+//Expresiones
+non terminal comparacion, logica, desicion, funcion, lista, elemento, expresion;
+
+//Para la partida
+non terminal jugadores, rondas, puntuaciones, puntos;
+
+
 
 //---------------------------------------------------------------------------------
-precedence left OR, AND;
+precedence left OR, AND, IGUAL, NO_IGUAL, MENOR, MAYOR, MENOR_IGUAL, MAYOR_IGUAL;
 precedence nonassoc NOT;
 //-------------------------------------------------------------------------------
+
 start with ini;
 
-ini ::= bloque_Strategy bloque_Match bloque_Main;
-
-//-------------------------------------------------------------------------------
-//BLOQUE ESTRATEGIAS-------------------------------------------------------
-bloque_Strategy ::= bloque_Strategy strategy
-| strategy
+ini ::= instruccion ini 
+| instruccion
 ;
 
-strategy ::= STRATEGY ID ABRE_LLAVE strategy_Cuerpo CIERRA_LLAVE;
+instruccion ::= bloque_Strategy
+| bloque_Match
+| bloque_Main
+;
+
+
+//-------------------------------------
+//BLOQUE DE STRATEGIAS
+
+bloque_Strategy ::= STRATEGY ID ABRE_LLAVE strategy_Cuerpo CIERRA_LLAVE;
 
 strategy_Cuerpo ::= regla_Inicial reglas;
 
-regla_Inicial ::= INITIAL DOS_PUNTOS ACCION;
+regla_Inicial ::= INITIAL DOS_PUNTOS desicion;
 
-reglas ::= RULES DOS_PUNTOS ABRE_CORCHETE lista_Reglas COMA ELSE accion CIERRA_CORCHETE;
+reglas ::= RULES DOS_PUNTOS ABRE_CORCHETE lista_Reglas CIERRA_CORCHETE;
 
-lista_Reglas ::= lista_Reglas COMA if
-| if
+lista_Reglas::= IF expresion THEN expresion COMA lista_Reglas
+| IF expresion THEN expresion
+| ELSE expresion
 ;
 
-if ::= IF booleano THEN accion
+//-------------------------------------
+//BLOQUE DE PARTIDAS
+
+bloque_Match ::= MATCH ID ABRE_LLAVE match_Cuerpo CIERRA_LLAVE;
+
+match_Cuerpo ::= jugadores rondas puntuaciones;
+
+jugadores ::= PLAYERS STRATEGIES DOS_PUNTOS ABRE_CORCHETE ID COMA
+                ID CIERRA_CORCHETE;
+
+rondas ::= ROUNDS DOS_PUNTOS expresion;
+
+puntuaciones ::= SCORING DOS_PUNTOS ABRE_LLAVE puntos CIERRA_LLAVE;
+
+puntos ::= puntuacion COMA puntuacion COMA puntuacion COMA puntuacion;
+
+puntuacion ::= MUTUAL_COOPERATION DOS_PUNTOS expresion
+| MUTUAL_DEFECTION DOS_PUNTOS expresion
+| BETRAYAL_REWARD DOS_PUNTOS expresion
+| BETRAYAL_PUNISHMENT DOS_PUNTOS expresion
 ;
 
-
-//BLOQUE PARTIDAS-------------------------------------------------------------
-
-bloque_Match ::= bloque_Match match
-| match
-;
-
-match ::= MATCH ID ABRE_LLAVE match_Cuerpo CIERRA_LLAVE;
-
-match_Cuerpo ::= PLAYERS STRATEGIES DOS_PUNTOS ABRE_CORCHETE 
-            strategies_Lista CIERRA_CORCHETE ROUNDS DOS_PUNTOS ENTERO
-            SCORING DOS_PUNTOS ABRE_LLAVE puntajes CIERRA_LLAVE
-;
-
-strategies_Lista ::= strategies_Lista COMA ID
-| ID
-;
-
-puntajes ::= puntuacion COMA puntuacion COMA puntuacion COMA puntuacion;
-
-puntuacion ::= PUNTUACION DOS_PUNTOS ENTERO;
-
-//BLOQUE MAIN------------------------------------------------------------------
+//-------------------------------------
+//BLOQUE DE INICIO
 
 bloque_Main ::= MAIN ABRE_LLAVE main_Cuerpo CIERRA_LLAVE;
 
-main_Cuerpo ::= main_Cuerpo run
-| run
+main_Cuerpo ::= RUN ABRE_CORCHETE match_Lista CIERRA_CORCHETE WITH 
+        ABRE_LLAVE SEED DOS_PUNTOS expresion CIERRA_LLAVE
 ;
 
-run ::= RUN ABRE_CORCHETE match_Lista CIERRA_CORCHETE WITH 
-        ABRE_LLAVE SEED DOS_PUNTOS ENTERO CIERRA_LLAVE
-;
+//Aqui el auxiliar colocó que no se "reproducía la lista" ****
+//Así que lo probaré como si sí y luego veo si es viable tal y como lo ando haciendo ****
 
 match_Lista ::= match_Lista COMA ID 
 | ID
 ;
 
-//PARA LOS BOOLEANOS-----------------------------------------------------
-booleano ::= booleano OR booleano
-| booleano AND booleano
-| NOT booleano
-| entero IGUAL entero
-| entero NO_IGUAL entero
-| entero MENOR entero
-| entero MAYOR entero
-| entero MENOR_IGUAL entero
-| entero MAYOR_IGUAL entero
-| FLOTANTE IGUAL FLOTANTE
-| FLOTANTE NO_IGUAL FLOTANTE
-| FLOTANTE MENOR FLOTANTE
-| FLOTANTE MAYOR FLOTANTE
-| FLOTANTE MENOR_IGUAL FLOTANTE
-| FLOTANTE MAYOR_IGUAL FLOTANTE
-| lista_Listas IGUAL lista_Real
-| BOOLEANO
+
+//-------------------------------------
+//PARTES COMPLEMENTARIAS DEL CODIGO :)
+
+desicion ::= C
+| D
 ;
 
-//PARA LOS ENTEROS
-entero ::= ENTERO ABRE_PARENTESIS LISTA COMA ACCION CIERRA_PARENTESIS
+expresion ::= comparacion
+| logica
+| desicion
+| funcion
+| lista
+| RANDOM
+| OPPONENT_HISTORY
+| SELF_HISTORY
+| ROUND_NUMBER
+| TRUE
+| FALSE
 | ENTERO
+| FLOTANTE
 ;
 
-
-//PARA LAS ACCIONES----------------------------------------------------
-accion ::= ACCION ABRE_PARENTESIS LISTA CIERRA_PARENTESIS
-| ACCION
+comparacion ::= expresion IGUAL expresion
+| expresion NO_IGUAL expresion 
+| expresion MENOR expresion
+| expresion MAYOR expresion
+| expresion MENOR_IGUAL expresion
+| expresion MAYOR_IGUAL expresion
 ;
 
-
-//PARA LAS LISTAS------------------------------------------------------
-lista_Listas ::= LISTA ABRE_PARENTESIS lista_Listas CIERRA_PARENTESIS
-| LISTA ABRE_PARENTESIS lista CIERRA_PARENTESIS
+logica ::= expresion AND expresion
+| expresion OR expresion
+| NOT expresion
 ;
 
-lista ::= LISTA COMA ENTERO;
-
-
-//PARA LAS LISTAS REALES --------------------------------------------
-lista_Real ::= ABRE_CORCHETE cuerpo_Lista CIERRA_CORCHETE;
-
-cuerpo_Lista ::= cuerpo_Lista COMA ACCION
-| ACCION
+funcion ::= GET_MOVE ABRE_PARENTESIS expresion COMA expresion CIERRA_PARENTESIS
+| LAST_MOVE ABRE_PARENTESIS expresion CIERRA_PARENTESIS
+| GET_MOVES_COUNT ABRE_PARENTESIS expresion COMA expresion CIERRA_PARENTESIS
+| GET_LAST_N_MOVES ABRE_PARENTESIS expresion COMA expresion CIERRA_PARENTESIS
 ;
 
+lista ::= ABRE_CORCHETE elemento CIERRA_CORCHETE ;
 
+elemento ::= elemento COMA expresion
+| expresion
+;
