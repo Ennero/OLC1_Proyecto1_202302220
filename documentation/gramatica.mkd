@@ -8,88 +8,208 @@ P = Producciones
 
 E = {
 ```
-    accion
-    entero
-    flotante
-    booleano
-    lista
+    ERROR_LEXICO
 
-    strategy
-    nombre
-    initial
-    :
-    {
-    }
-    rules
-
-
-    random
-    get_moves_count
-    round_number
-    get_last_n_moves
-    
-    comparador
-
-
-
-
-
-
-
-    main
+    STRATEGY
+    MAIN
+    MATCH
+    C
+    D
+    INITIAL
+    RULES
+    IF
+    THEN 
+    ELSE 
+    GET_MOVE 
+    LAST_MOVE 
+    GET_LAST_N_MOVES
+    GET_MOVES_COUNT
+    ROUND_NUMBER
+    PLAYERS
+    STRATEGIES
+    ROUNDS
+    OPPONENT_HISTORY
+    SELF_HISTORY
+    TRUE
+    FALSE
+    MUTUAL_COOPERATION
+    MUTUAL_DEFECTION
+    BETRAYAL_REWARD
+    BETRAYAL_PUNISHMENT
+    SCORING
+    RUN 
+    WITH
+    SEED 
+    AND 
+    OR   
+    NOT   
+    IGUAL
+    NO_IGUAL
+    MENOR
+    MAYOR
+    MENOR_IGUAL
+    MAYOR_IGUAL
+    ABRE_CORCHETE
+    CIERRA_CORCHETE
+    ABRE_LLAVE
+    CIERRA_LLAVE
+    ABRE_PARENTESIS
+    CIERRA_PARENTESIS
+    COMA
+    DOS_PUNTOS
+    ENTERO
+    FLOTANTE
+    ID
+    RANDOM
 
 ```
 }
 
 N = {
 ```
-    Estrategias
-    AccionInicial
-    Reglas
-
-
-
-    Partidas
-
-
-
-
-
-    Entrada
-    PartidaEjecutar
-    SemillaAleatoria
-
-
-    
-
-
+    ini
+    bloque_Strategy
+    bloque_Match
+    bloque_Main
+    strategy_Cuerpo
+    regla_Incial
+    reglas
+    lista_Reglas
+    match_Cuerpo
+    puntuacion
+    main_Cuerpo
+    match_Lista
+    instruccion
+    comparacion
+    logica
+    desicion
+    funcion
+    lista
+    elemento
+    expresion
+    jugadores
+    rondas
+    puntuaciones
+    puntos
 ```
 }
 
 ## Representación de la gramática
-```
-S ::=  Estrategias Partidas Entrada
-```
-```
-Estrategias ::= 'strategy' nombre '{' AccionInicial Reglas '}'
 
-AccionInicial ::= 'initial' ':' accion
-
-Reglas ::= 'rules' ':' '[' Condicional ']'
-
-Condicional ::= 'if' condicionBooleana 'then' accion
-
-
+### Inicio del análisis
 
 ```
+start with ini;
 
+ini ::= instruccion ini 
+| instruccion
+;
 
+instruccion ::= bloque_Strategy
+| bloque_Match
+| bloque_Main
+;
 ```
 
+### Bloque se estrategias
+```
+bloque_Strategy ::= STRATEGY ID ABRE_LLAVE strategy_Cuerpo CIERRA_LLAVE;
 
+strategy_Cuerpo ::= regla_Inicial reglas;
+
+regla_Inicial ::= INITIAL DOS_PUNTOS desicion;
+
+reglas ::= RULES DOS_PUNTOS ABRE_CORCHETE lista_Reglas CIERRA_CORCHETE;
+
+lista_Reglas::= IF expresion THEN expresion COMA lista_Reglas
+| IF expresion THEN expresion
+| ELSE expresion
+;
 ```
 
-```
-Entrada ::= 'main' '{' PartidaEjecutar SemillaAleatoria '}'
+### Bloque se partidas
 
+```
+bloque_Match ::= MATCH ID ABRE_LLAVE match_Cuerpo CIERRA_LLAVE;
+
+match_Cuerpo ::= jugadores rondas puntuaciones;
+
+jugadores ::= PLAYERS STRATEGIES DOS_PUNTOS ABRE_CORCHETE ID COMA
+                ID CIERRA_CORCHETE;
+
+rondas ::= ROUNDS DOS_PUNTOS expresion;
+
+puntuaciones ::= SCORING DOS_PUNTOS ABRE_LLAVE puntos CIERRA_LLAVE;
+
+puntos ::= puntuacion COMA puntuacion COMA puntuacion COMA puntuacion;
+
+puntuacion ::= MUTUAL_COOPERATION DOS_PUNTOS expresion
+| MUTUAL_DEFECTION DOS_PUNTOS expresion
+| BETRAYAL_REWARD DOS_PUNTOS expresion
+| BETRAYAL_PUNISHMENT DOS_PUNTOS expresion
+;
+```
+### Bloque de inicio
+
+```
+bloque_Main ::= MAIN ABRE_LLAVE main_Cuerpo CIERRA_LLAVE;
+
+main_Cuerpo ::= RUN ABRE_CORCHETE match_Lista CIERRA_CORCHETE WITH 
+        ABRE_LLAVE SEED DOS_PUNTOS expresion CIERRA_LLAVE
+;
+
+//Aqui el auxiliar colocó que no se "reproducía la lista" ****
+//Así que lo probaré como si sí y luego veo si es viable tal y como lo ando haciendo ****
+
+match_Lista ::= match_Lista COMA ID 
+| ID
+;
+```
+
+### Funciones
+
+```
+desicion ::= C
+| D
+;
+
+expresion ::= comparacion
+| logica
+| desicion
+| funcion
+| lista
+| RANDOM
+| OPPONENT_HISTORY
+| SELF_HISTORY
+| ROUND_NUMBER
+| TRUE
+| FALSE
+| ENTERO
+| FLOTANTE
+;
+
+comparacion ::= expresion IGUAL expresion
+| expresion NO_IGUAL expresion 
+| expresion MENOR expresion
+| expresion MAYOR expresion
+| expresion MENOR_IGUAL expresion
+| expresion MAYOR_IGUAL expresion
+;
+
+logica ::= expresion AND expresion
+| expresion OR expresion
+| NOT expresion
+;
+
+funcion ::= GET_MOVE ABRE_PARENTESIS expresion COMA expresion CIERRA_PARENTESIS
+| LAST_MOVE ABRE_PARENTESIS expresion CIERRA_PARENTESIS
+| GET_MOVES_COUNT ABRE_PARENTESIS expresion COMA expresion CIERRA_PARENTESIS
+| GET_LAST_N_MOVES ABRE_PARENTESIS expresion COMA expresion CIERRA_PARENTESIS
+;
+
+lista ::= ABRE_CORCHETE elemento CIERRA_CORCHETE ;
+
+elemento ::= elemento COMA expresion
+| expresion
+;
 ```
