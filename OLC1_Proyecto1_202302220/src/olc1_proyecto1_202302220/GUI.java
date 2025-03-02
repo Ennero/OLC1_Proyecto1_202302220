@@ -188,13 +188,14 @@ public class GUI extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton2)
-                    .addComponent(jButton5)
-                    .addComponent(jButton6)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4)
-                    .addComponent(jButton3))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton5)
+                        .addComponent(jButton6)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButton4)
+                        .addComponent(jButton3)))
                 .addGap(9, 9, 9)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
@@ -228,69 +229,27 @@ public class GUI extends javax.swing.JFrame {
 
     static public String[] columnas = {"No.", "Tipo:", "Lexema:", "Linea:", "Columna"};
     static public DefaultTableModel model = new DefaultTableModel(columnas, 0);
+    static boolean errorLexico = false;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            //Comienzo leyendo la entrada
-            String entrada = jTextArea2.getText();
-            System.out.println(entrada);
-            
-            //Esta parte es para limpiar la lista de tokenes y la tablita
-            model.setRowCount(0);
-            while (!OLC1_Proyecto1_202302220.tokens.isEmpty()) {
-                OLC1_Proyecto1_202302220.tokens.remove();
-            }
-            while (!OLC1_Proyecto1_202302220.errores.isEmpty()) {
-                OLC1_Proyecto1_202302220.errores.remove();
-            }
-            
-            //PARTE DEL ANÁLSIS LÉXICO -------------------------------------------------------------------------------------------
-            OLC1_Proyecto1_202302220.analisisLexico(entrada);
-            // Verificar si hay tokens
-            
-            jTable1.setModel(model);
-            boolean errorLexico=false;
 
-            if (!OLC1_Proyecto1_202302220.errores.isEmpty()) { //Si es que hay errores
-                System.out.println("No se encontraron tokens.");
-                for (String[] error : OLC1_Proyecto1_202302220.errores) {
-                    model.addRow(error);
-                    JOptionPane.showMessageDialog(this, "Error en el análisis léxico");
-                    errorLexico=true;
-                }
-            } else { //Si es que no hay errores
-                for (String[] token : OLC1_Proyecto1_202302220.tokens) {
-                    model.addRow(token);
-                }
-            }
-            System.out.println("Análisis lexico completado");
-            
-            //PARTE DEL ANÁLSIS LÉXICO -------------------------------------------------------------------------------------------
-            
-            //PARTE DEL ANÁLISIS SINTÁCTICO -------------------------------------------------------------------------------------
-            boolean errorSintactico=false;
-            if (!errorLexico){
+        String entrada = jTextArea2.getText();
+        System.out.println(entrada);
+
+        if (!errorLexico) {
+            try {
                 OLC1_Proyecto1_202302220.analisisSintactico(entrada);
-                System.out.println("Análisis sintáctico completo");
+                JOptionPane.showMessageDialog(this, "Análisis sintáctico completado");
+
+                //Aquí deber de colocarse que se escriba todo lo que se pida
+            } catch (Exception ex) {
+                Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
             }
-            
-            
-            
-            
-            
-            
-            //PARTE DEL ANÁLISIS SINTÁCTICO -------------------------------------------------------------------------------------
-
-            
-            
-
-            //jTextArea1.setEnabled(false);
-        } catch (IOException ex) {
-            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, "Error en el análisis sintáctico");
+        } else {
+            JOptionPane.showMessageDialog(this, "Error léxico, solucionar antes de continuar");
         }
+
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -385,10 +344,82 @@ public class GUI extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+
+        //Esta parte es para limpiar la lista de tokenes y la tablita
+        model.setRowCount(0);
+        while (!OLC1_Proyecto1_202302220.tokens.isEmpty()) {
+            OLC1_Proyecto1_202302220.tokens.remove();
+        }
+        while (!OLC1_Proyecto1_202302220.errores.isEmpty()) {
+            OLC1_Proyecto1_202302220.errores.remove();
+        }
+        jTable1.setModel(model);
+        errorLexico = false;
+
+        try {
+            //Comienzo leyendo la entrada
+            String entrada = jTextArea2.getText();
+            System.out.println(entrada);
+
+            //PARTE DEL ANÁLSIS LÉXICO -------------------------------------------------------------------------------------------
+            OLC1_Proyecto1_202302220.analisisLexico(entrada);
+            // Verificar si hay tokens
+
+            if (!OLC1_Proyecto1_202302220.errores.isEmpty()) { //Si es que hay errores
+                JOptionPane.showMessageDialog(this, "Hay errores léxicos");
+                errorLexico = true;
+            } else { //Si es que no hay errores
+                for (String[] token : OLC1_Proyecto1_202302220.tokens) {
+                    model.addRow(token);
+                }
+            }
+            System.out.println("Análisis lexico completado");
+
+        } catch (IOException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
         // TODO add your handling code here:
+
+        //Esta parte es para limpiar la lista de tokenes y la tablita
+        model.setRowCount(0);
+        while (!OLC1_Proyecto1_202302220.tokens.isEmpty()) {
+            OLC1_Proyecto1_202302220.tokens.remove();
+        }
+        while (!OLC1_Proyecto1_202302220.errores.isEmpty()) {
+            OLC1_Proyecto1_202302220.errores.remove();
+        }
+
+        jTable1.setModel(model);
+        errorLexico = false;
+
+        try {
+            //Comienzo leyendo la entrada
+            String entrada = jTextArea2.getText();
+            System.out.println(entrada);
+
+            //PARTE DEL ANÁLSIS LÉXICO -------------------------------------------------------------------------------------------
+            OLC1_Proyecto1_202302220.analisisLexico(entrada);
+            // Verificar si hay tokens
+
+            if (!OLC1_Proyecto1_202302220.errores.isEmpty()) { //Si es que hay errores
+                for (String[] error : OLC1_Proyecto1_202302220.errores) {
+                    model.addRow(error);
+                    errorLexico = true;
+                }
+            } else { //Si es que no hay errores
+                JOptionPane.showMessageDialog(this, "No hay errores lexico para colocar en la tabla");
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
     }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
