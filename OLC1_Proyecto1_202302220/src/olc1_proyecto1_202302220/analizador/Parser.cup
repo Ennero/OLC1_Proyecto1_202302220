@@ -1,14 +1,18 @@
 /* 1. Package e importaciones */
 
 package olc1_proyecto1_202302220.analizador;
+
 import java_cup.runtime.Symbol;
 import java.util.LinkedList;
+import olc1_proyecto1_202302220.*;
 import utilidades.*;
 import expresion.*;
 import abstractas.*;
 import instruccion.*;
+import objetos.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+
 
 
 
@@ -70,27 +74,38 @@ terminal String RANDOM;
 //----------------------------------------------------------------------------------
 
 //Init y bloques
-non terminal ini, bloque_Strategy, bloque_Match, bloque_Main;
+non terminal ArrayList<Instruccion> ini;
+non terminal Instruccion instruccion;
 
-//Lo que vendrá con el bloque de strategy
-non terminal  strategy_Cuerpo, regla_Inicial, reglas, lista_Reglas;
+//Lo del bloque strategy
+non terminal CrearEstrategia bloque_Strategy;
+non terminal InstruccionEstrategia strategy_Cuerpo;
+non terminal Expresion regla_Inicial;
+non terminal ArrayList<Regla> reglas;
+non terminal ArrayList<Regla> lista_Reglas;
 
-//Lo que vendra con el bloque de match
-non terminal match_Cuerpo, puntuacion;
+//Lo que va en el bloque match
+non terminal Instruccion bloque_Match;
+non terminal InstruccionPartida match_Cuerpo;
+non terminal Jugadores jugadores;
+non terminal Expresion rondas;
+non terminal Puntos puntuaciones;
+non terminal Puntos puntos;
+non terminal Expresion puntuacion;
 
-//Lo que vendrá con el bloque de Main
+//Lo que va en el bloque main
+non terminal Instruccion bloque_Main;
 non terminal main_Cuerpo;
 non terminal match_Lista;
 
-//Intrucciones
-non terminal instruccion;
-
-//Expresiones
-non terminal comparacion, logica, desicion, funcion, lista, elemento, expresion;
-
-//Para la partida
-non terminal jugadores, rondas, puntuaciones, puntos;
-
+//PARTES COMPLEMENTARIAS DEL CODIGO :)
+non terminal Expresion expresion;
+non terminal Expresion comparacion;
+non terminal logica;
+non terminal funcion;
+non terminal lista;
+non terminal elemento;
+non terminal Expresion decision;
 
 
 //---------------------------------------------------------------------------------
@@ -100,99 +115,103 @@ precedence nonassoc NOT;
 
 start with ini;
 
-ini ::= instruccion ini 
-| instruccion
+ini ::= ini:l instruccion:i     {: RESULT = l; RESULT.add(i); :}
+| instruccion:i                 {: RESULT = new ArrayList<>(Arrays.asList(i));  :}
 ;
 
-instruccion ::= bloque_Strategy
-| bloque_Match
-| bloque_Main
+instruccion ::= bloque_Strategy:e   {: RESULT = e; :}
+| bloque_Match:e                    {: RESULT = e; :}
+| bloque_Main:e                     {: RESULT = e; :}
 ;
 
 
 //-------------------------------------
 //BLOQUE DE STRATEGIAS
 
-bloque_Strategy ::= STRATEGY ID ABRE_LLAVE strategy_Cuerpo CIERRA_LLAVE;
+bloque_Strategy ::= STRATEGY ID:n ABRE_LLAVE strategy_Cuerpo:inst CIERRA_LLAVE {: RESULT = new CrearEstrategia(n, inst);      System.out.println("Se leyó todooooooooooo"); :} ;
 
 strategy_Cuerpo ::= regla_Inicial:i reglas:r  {: RESULT= new InstruccionEstrategia(i,r); :};
 
-regla_Inicial ::= INITIAL DOS_PUNTOS desicion:d {: RESULT= d; :};
+regla_Inicial ::= INITIAL DOS_PUNTOS decision:d {: RESULT= d; :};
 
 reglas ::= RULES DOS_PUNTOS ABRE_CORCHETE lista_Reglas:l CIERRA_CORCHETE {:RESULT=l; :};
 
-lista_Reglas::= IF expresion:c THEN expresion:a COMA lista_Reglas:l {: RESULT = l; RESULT.add(new Regla(c, a) ); :} 
-| IF expresion:c THEN expresion:a {: RESULT = new ArrayList<Regla>(Arrays.asList(new Regla(c, a))); :}
-| ELSE expresion:a {: RESULT = new ArrayList<Regla>(Arrays.asList(new Regla(null, a))); :}
+lista_Reglas::= IF expresion:c THEN expresion:a COMA lista_Reglas:l     {: RESULT = l; RESULT.add(new Regla(c, a)); :} 
+| IF expresion:c THEN expresion:a                                      {: RESULT = new ArrayList<Regla>(Arrays.asList(new Regla(c, a))); :}
+| ELSE expresion:a                                                     {: RESULT = new ArrayList<Regla>(Arrays.asList(new Regla(null, a))); :}
 ;
 
 //-------------------------------------
 //BLOQUE DE PARTIDAS
 
-bloque_Match ::= MATCH ID ABRE_LLAVE match_Cuerpo CIERRA_LLAVE;
+bloque_Match ::= MATCH ID:n ABRE_LLAVE match_Cuerpo:inst CIERRA_LLAVE {: RESULT = new CrearPartida(n, inst); :} ;
 
-match_Cuerpo ::= jugadores rondas puntuaciones;
+match_Cuerpo ::= jugadores:j rondas:r puntuaciones:p {: RESULT = new InstruccionPartida(j, r, p); :};
 
-jugadores ::= PLAYERS STRATEGIES DOS_PUNTOS ABRE_CORCHETE ID COMA
-                ID CIERRA_CORCHETE;
+jugadores ::= PLAYERS STRATEGIES DOS_PUNTOS ABRE_CORCHETE ID:j1 COMA
+                ID:j2 CIERRA_CORCHETE   {: RESULT = new Jugadores(j1, j2); :} ;
 
-rondas ::= ROUNDS DOS_PUNTOS expresion;
+rondas ::= ROUNDS DOS_PUNTOS expresion:exp {: RESULT = exp; :} ;
 
-puntuaciones ::= SCORING DOS_PUNTOS ABRE_LLAVE puntos CIERRA_LLAVE;
+puntuaciones ::= SCORING DOS_PUNTOS ABRE_LLAVE puntos:p CIERRA_LLAVE {: RESULT = p; :} ;
 
-puntos ::= puntuacion COMA puntuacion COMA puntuacion COMA puntuacion;
+puntos ::= puntuacion:c COMA puntuacion:d COMA puntuacion:tr COMA puntuacion:ta  {: RESULT = new Puntos(c, d, tr, ta); :} ;
 
-puntuacion ::= MUTUAL_COOPERATION DOS_PUNTOS expresion
-| MUTUAL_DEFECTION DOS_PUNTOS expresion
-| BETRAYAL_REWARD DOS_PUNTOS expresion
-| BETRAYAL_PUNISHMENT DOS_PUNTOS expresion
+puntuacion ::= MUTUAL_COOPERATION DOS_PUNTOS expresion:exp {: RESULT =  exp; :}
+| MUTUAL_DEFECTION DOS_PUNTOS expresion:exp {: RESULT =  exp; :}
+| BETRAYAL_REWARD DOS_PUNTOS expresion:exp {: RESULT =  exp; :}
+| BETRAYAL_PUNISHMENT DOS_PUNTOS expresion:exp {: RESULT =  exp; :}
 ;
 
 //-------------------------------------
 //BLOQUE DE INICIO
 
-bloque_Main ::= MAIN ABRE_LLAVE main_Cuerpo CIERRA_LLAVE;
+bloque_Main ::= MAIN ABRE_LLAVE main_Cuerpo:p CIERRA_LLAVE {: RESULT = new Inicio(p); :} ;
 
-main_Cuerpo ::= RUN ABRE_CORCHETE match_Lista CIERRA_CORCHETE WITH 
-        ABRE_LLAVE SEED DOS_PUNTOS expresion CIERRA_LLAVE
-;
+main_Cuerpo ::= RUN ABRE_CORCHETE ID:id CIERRA_CORCHETE WITH 
+        ABRE_LLAVE SEED DOS_PUNTOS expresion CIERRA_LLAVE {: RESULT = id; :} ;
 
 //Aqui el auxiliar colocó que no se "reproducía la lista" ****
 //Así que lo probaré como si sí y luego veo si es viable tal y como lo ando haciendo ****
 
-match_Lista ::= match_Lista COMA ID 
-| ID
-;
+//match_Lista ::= match_Lista COMA ID 
+//| ID:id {:  RESULT = :}
+//;
+
+
+
+//Aqui el auxiliar colocó que no se "reproducía la lista" ****
+//Así que lo probaré como si sí y luego veo si es viable tal y como lo ando haciendo ****
 
 
 //-------------------------------------
 //PARTES COMPLEMENTARIAS DEL CODIGO :)
 
-desicion ::= C:d {: RESULT = new Primitiva(d, TipoTipo.DECISION); :}
+decision ::= C:d {: RESULT = new Primitiva(d, TipoTipo.DECISION); :}
 | D:d {: RESULT = new Primitiva(d, TipoTipo.DECISION); :}
 ;
 
-expresion ::= comparacion
+expresion ::= comparacion:r {: RESULT =r; :}
 | logica
-| desicion:d {: RESULT = d; :}
+| decision:d {: RESULT = d; :}
 | funcion
 | lista
 | RANDOM
 | OPPONENT_HISTORY
 | SELF_HISTORY
-| ROUND_NUMBER
-| TRUE:p {: RESULT = new Primitiva(p,TipoTipo.BOOLEANO); :}
-| FALSE:p {: RESULT = new Primitiva(p,TipoTipo.BOOLEANO); :}
-| ENTERO:p {: RESULT = new Primitiva(p,TipoTipo.ENTERO); :}
-| FLOTANTE:p {: RESULT = new Primitiva(p,TipoTipo.FLOTANTE); :}
+| ROUND_NUMBER:r {: RESULT =new RondaActual(); :}
+| TRUE:p         {: RESULT = new Primitiva(p,TipoTipo.BOOLEANO); :}
+| FALSE:p        {: RESULT = new Primitiva(p,TipoTipo.BOOLEANO); :}
+| ENTERO:p       {: RESULT = new Primitiva(p,TipoTipo.ENTERO); :}
+| FLOTANTE:p     {: RESULT = new Primitiva(p,TipoTipo.FLOTANTE); :}
 ;
 
-comparacion ::= expresion IGUAL expresion
-| expresion NO_IGUAL expresion 
-| expresion MENOR expresion
-| expresion MAYOR expresion
-| expresion MENOR_IGUAL expresion
-| expresion MAYOR_IGUAL expresion
+comparacion ::= expresion:exp1 IGUAL:op expresion:exp2                  {: RESULT = new Comparacion(exp1,op,exp2); :}
+| expresion:exp1 NO_IGUAL:op expresion:exp2                              {: RESULT = new Comparacion(exp1,op,exp2); :}
+| expresion:exp1 MENOR:op expresion:exp2                                 {: RESULT = new Comparacion(exp1,op,exp2); :}
+| expresion:exp1 MAYOR:op expresion:exp2                                 {: RESULT = new Comparacion(exp1,op,exp2); :}
+| expresion:exp1 MENOR_IGUAL:op expresion:exp2                           {: RESULT = new Comparacion(exp1,op,exp2); :}
+| expresion:exp1 MAYOR_IGUAL:op expresion:exp2                           {: RESULT = new Comparacion(exp1,op,exp2); :}
 ;
 
 logica ::= expresion AND expresion
