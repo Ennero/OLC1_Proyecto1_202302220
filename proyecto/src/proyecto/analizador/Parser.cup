@@ -6,9 +6,6 @@ import java.util.LinkedList;
 import utilidades.*;
 import expresion.*;
 import abstractas.*;
-import instruccion.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 
 
@@ -119,7 +116,7 @@ strategy_Cuerpo ::= regla_Inicial:i reglas:r  {: RESULT= new InstruccionEstrateg
 
 regla_Inicial ::= INITIAL DOS_PUNTOS desicion:d {: RESULT= d; :};
 
-reglas ::= RULES DOS_PUNTOS ABRE_CORCHETE lista_Reglas:l CIERRA_CORCHETE {:RESULT=l; :};
+reglas ::= RULES DOS_PUNTOS ABRE_CORCHETE lista_Reglas:l CIERRA_CORCHETE; {:RESULT=l; :}
 
 lista_Reglas::= IF expresion:c THEN expresion:a COMA lista_Reglas:l {: RESULT = l; RESULT.add(new Regla(c, a) ); :} 
 | IF expresion:c THEN expresion:a {: RESULT = new ArrayList<Regla>(Arrays.asList(new Regla(c, a))); :}
@@ -211,3 +208,4 @@ lista ::= ABRE_CORCHETE elemento CIERRA_CORCHETE ;
 elemento ::= elemento COMA expresion
 | expresion
 ;
+
