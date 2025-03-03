@@ -14,28 +14,27 @@ import objetos.Partida;
  * @author Enner
  */
 public class Entorno {
-    public String nombre;
     
+    public String nombre;
     public Map<String, Estrategia> estrategias = new TreeMap<>();
     public Map<String, Partida> partidas = new TreeMap<>();
-    
-    
+
     Partida partidaActual;
     int rondaActual;
-    
-    
-    public Entorno (String nombre){
-        this.nombre=nombre;
+
+    public Entorno(String nombre) {
+        this.nombre = nombre;
     }
-    
-    public boolean guardarEstrategia(String nombre, Estrategia estrategia){
-        if (this.estrategias.containsKey(nombre)){
+
+    public boolean guardarEstrategia(String nombre, Estrategia estrategia) {
+        if (!this.estrategias.containsKey(nombre)) {
+            // System.out.println("ESTR: " + nombre);
             this.estrategias.put(nombre, estrategia);
             return true;
         }
         return false;
     }
-    
+
     public boolean guardarPartida(String nombre, Partida partida) {
         if (!this.partidas.containsKey(nombre)) {
             this.partidas.put(nombre, partida);
@@ -44,7 +43,7 @@ public class Entorno {
         }
         return false;
     }
-    
+
     public Partida obtenerPartida(String nombre){
         if (partidas.containsKey(nombre)) {
             // System.out.println("Encuentra la partida");
@@ -52,7 +51,7 @@ public class Entorno {
         }
         return null;
     }
-    
+
     public Estrategia obtenerEstrategia(String nombre){
         if (estrategias.containsKey(nombre)) {
             // System.out.println("Encuentra la estrategia");
@@ -60,7 +59,7 @@ public class Entorno {
         }
         return null;
     }
-    
+
     // === ESTADOS DEL SISTEMA ===
     // === RONDA ACTUAL ===
     public void setPartidaActual(Partida partida) {
@@ -78,7 +77,6 @@ public class Entorno {
     public int getRondaActual() {
         return this.rondaActual;
     }
-    
     
     
     

@@ -16,31 +16,36 @@ import utilidades.TipoTipo;
  */
 public class Comparacion extends Expresion{
     
-    public Expresion exp1;
-    public Expresion exp2;
-    
-    public String operador;
-    
+    Expresion exp1;
+    Expresion exp2;
+    String operador;
     public Comparacion(Expresion exp1, String operador, Expresion exp2) {
         super(TipoExpresion.COMPARATIVO);
         this.exp1 = exp1;
         this.exp2 = exp2;
         this.operador = operador;
     }
-    
-    @Override
+
     public TipoRetorno jugar(Entorno entorno) {
-        return switch (this.operador) {
-            case "==" -> igual(entorno);
-            case "!=" -> null;
-            case ">" -> null;
-            case "<" -> null;
-            case ">=" -> null;
-            case "<=" -> null;
-            default -> new TipoRetorno(-1, null);
-        }; // Igualdad
+        switch (this.operador) {
+            case "==":
+                // Igualdad
+                return igual(entorno);
+            case "!=":
+                return null;
+            case ">":
+                return null;
+            case "<":
+            return null;
+            case ">=":
+            return null;
+            case "<=":
+            return null;
+            default:
+                return new TipoRetorno(-1, null);
+        }
     }
-    
+
     public TipoRetorno igual(Entorno entorno) {
         TipoRetorno valor1 = exp1.jugar(entorno);
         TipoRetorno valor2 = exp2.jugar(entorno);

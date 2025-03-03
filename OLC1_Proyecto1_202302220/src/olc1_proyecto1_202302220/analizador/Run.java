@@ -2,18 +2,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package abstractas;
-
-import utilidades.TipoSentencia;
+package olc1_proyecto1_202302220.analizador;
 
 /**
  *
  * @author Enner
  */
-
-public abstract class Sentencia {
-    TipoSentencia tipoSetencia;
-    public Sentencia(TipoSentencia tipoSetencia) {
-        this.tipoSetencia = tipoSetencia;
+public class Run {
+    
+    public String matches;
+    public int seed;
+    public Run(String matches, int seed){
+        this.matches=matches;
+        this.seed=seed;
     }
 }

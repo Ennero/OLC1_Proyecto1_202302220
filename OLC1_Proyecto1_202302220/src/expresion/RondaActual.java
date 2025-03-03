@@ -14,14 +14,14 @@ import utilidades.TipoTipo;
  *
  * @author Enner
  */
-public class RondaActual extends Expresion{
-    public RondaActual(){
+
+public class RondaActual extends Expresion {
+    public RondaActual() {
         super(TipoExpresion.PRIMITIVO);
     }
-    
+
     @Override
-    public TipoRetorno jugar(Entorno entorno){
+    public TipoRetorno jugar(Entorno entorno) {
         return new TipoRetorno(entorno.getRondaActual(), TipoTipo.ENTERO);
     }
-    
 }

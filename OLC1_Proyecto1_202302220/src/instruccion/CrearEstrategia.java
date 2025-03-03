@@ -15,16 +15,16 @@ import utilidades.TipoInstruccion;
  */
 
 public class CrearEstrategia extends Instruccion {
-    public String nombre;
-    public InstruccionEstrategia instrucciones;
+    String nombre;
+    InstruccionEstrategia instrucciones;
     public CrearEstrategia(String nombre, InstruccionEstrategia instrucciones) {
         super(TipoInstruccion.ESTRATEGIA);
-        this.nombre=nombre;
-        this.instrucciones=instrucciones;
+        this.nombre = nombre;
+        this.instrucciones = instrucciones;
     }
-    
+
     @Override
-    public void jugar(Entorno entorno){
+    public void jugar(Entorno entorno) {
         Estrategia estrategia = new Estrategia(nombre, instrucciones);
         entorno.guardarEstrategia(nombre, estrategia);
     }

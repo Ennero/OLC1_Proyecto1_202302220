@@ -14,17 +14,16 @@ import utilidades.TipoRetorno;
  *
  * @author Enner
  */
-public class CrearPartida extends Instruccion{
-    
-    public String nombre;
-    public InstruccionPartida instrucciones;
-    
+
+public class CrearPartida extends Instruccion {
+    String nombre;
+    InstruccionPartida instrucciones;
     public CrearPartida(String nombre, InstruccionPartida instrucciones) {
         super(TipoInstruccion.PARTIDA);
         this.nombre = nombre;
         this.instrucciones = instrucciones;
     }
-    
+
     @Override
     public void jugar(Entorno entorno) {
         String jugador1 = instrucciones.jugadores.jugador1;
@@ -33,6 +32,4 @@ public class CrearPartida extends Instruccion{
         Partida partida = new Partida(nombre, jugador1, jugador2, rondas.valor, instrucciones.puntos);
         entorno.guardarPartida(nombre, partida);
     }
-    
-    
 }

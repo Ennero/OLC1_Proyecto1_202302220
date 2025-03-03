@@ -1,7 +1,5 @@
 /* 1. Package e importaciones */
-
 package olc1_proyecto1_202302220.analizador;
-
 import java_cup.runtime.Symbol;
 import java.util.LinkedList;
 import olc1_proyecto1_202302220.*;
@@ -14,76 +12,61 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
+/* 2. Codigo para el parser, variables y metodos */
+parser code
+{:
+    // Codigo Java
+    public ArrayList<Instruccion> sentencias;
 
-
+:}
 
 
 //----------------------------------------------------------------------------------
-
 //Para el error (yo en esta carrera)
 terminal ERROR_LEXICO;
-
 //Estructurales
 terminal String STRATEGY, MATCH, MAIN;
-
 //Acciones
 terminal String C, D;
-
 //Secciones
 terminal String INITIAL, RULES;
-
 //Flujo
 terminal String IF, THEN, ELSE;
-
 //Funciones especiales dentro de strategy
 terminal String GET_MOVE, LAST_MOVE, GET_LAST_N_MOVES, GET_MOVES_COUNT;
-
 //Funciones relacionada a match
 terminal String ROUND_NUMBER, PLAYERS, STRATEGIES, ROUNDS;
-
 //Historiales
 terminal String OPPONENT_HISTORY, SELF_HISTORY;
-
 //Booleanos
 terminal String TRUE, FALSE;
-
 //Puntajes
 terminal String MUTUAL_COOPERATION, MUTUAL_DEFECTION, BETRAYAL_REWARD, BETRAYAL_PUNISHMENT;
-
 //Configuración
 terminal String SCORING, RUN, WITH, SEED;
-
 //Logicas
 terminal String AND, OR, NOT;
-
 //Comparadores
 terminal String IGUAL, NO_IGUAL, MENOR, MAYOR, MENOR_IGUAL, MAYOR_IGUAL;
-
 //Otros
 terminal String ABRE_CORCHETE, CIERRA_CORCHETE, ABRE_LLAVE, CIERRA_LLAVE, ABRE_PARENTESIS, CIERRA_PARENTESIS, COMA, DOS_PUNTOS;
-
 //Tipos
 terminal String ENTERO, FLOTANTE;
-
 //Identificador
 terminal String ID;
-
 //Otros
 terminal String RANDOM;
-
 //----------------------------------------------------------------------------------
-
 //Init y bloques
-non terminal ArrayList<Instruccion> ini;
+non terminal ini;
+non terminal ArrayList<Instruccion> iniciar;
 non terminal Instruccion instruccion;
-
 //Lo del bloque strategy
 non terminal CrearEstrategia bloque_Strategy;
 non terminal InstruccionEstrategia strategy_Cuerpo;
 non terminal Expresion regla_Inicial;
 non terminal ArrayList<Regla> reglas;
 non terminal ArrayList<Regla> lista_Reglas;
-
 //Lo que va en el bloque match
 non terminal Instruccion bloque_Match;
 non terminal InstruccionPartida match_Cuerpo;
@@ -92,12 +75,10 @@ non terminal Expresion rondas;
 non terminal Puntos puntuaciones;
 non terminal Puntos puntos;
 non terminal Expresion puntuacion;
-
 //Lo que va en el bloque main
 non terminal Instruccion bloque_Main;
 non terminal main_Cuerpo;
 non terminal match_Lista;
-
 //PARTES COMPLEMENTARIAS DEL CODIGO :)
 non terminal Expresion expresion;
 non terminal Expresion comparacion;
@@ -106,91 +87,61 @@ non terminal funcion;
 non terminal lista;
 non terminal elemento;
 non terminal Expresion decision;
-
-
 //---------------------------------------------------------------------------------
 precedence left OR, AND, IGUAL, NO_IGUAL, MENOR, MAYOR, MENOR_IGUAL, MAYOR_IGUAL;
 precedence nonassoc NOT;
 //-------------------------------------------------------------------------------
-
 start with ini;
+ini ::= iniciar:iniciar {: sentencias = iniciar; :};
 
-ini ::= ini:l instruccion:i     {: RESULT = l; RESULT.add(i); :}
+iniciar ::= iniciar:l instruccion:i     {: RESULT = l; RESULT.add(i); :}
 | instruccion:i                 {: RESULT = new ArrayList<>(Arrays.asList(i));  :}
 ;
-
 instruccion ::= bloque_Strategy:e   {: RESULT = e; :}
 | bloque_Match:e                    {: RESULT = e; :}
 | bloque_Main:e                     {: RESULT = e; :}
 ;
-
-
 //-------------------------------------
 //BLOQUE DE STRATEGIAS
-
 bloque_Strategy ::= STRATEGY ID:n ABRE_LLAVE strategy_Cuerpo:inst CIERRA_LLAVE {: RESULT = new CrearEstrategia(n, inst);      System.out.println("Se leyó todooooooooooo"); :} ;
-
 strategy_Cuerpo ::= regla_Inicial:i reglas:r  {: RESULT= new InstruccionEstrategia(i,r); :};
-
 regla_Inicial ::= INITIAL DOS_PUNTOS decision:d {: RESULT= d; :};
-
 reglas ::= RULES DOS_PUNTOS ABRE_CORCHETE lista_Reglas:l CIERRA_CORCHETE {:RESULT=l; :};
-
 lista_Reglas::= IF expresion:c THEN expresion:a COMA lista_Reglas:l     {: RESULT = l; RESULT.add(new Regla(c, a)); :} 
 | IF expresion:c THEN expresion:a                                      {: RESULT = new ArrayList<Regla>(Arrays.asList(new Regla(c, a))); :}
 | ELSE expresion:a                                                     {: RESULT = new ArrayList<Regla>(Arrays.asList(new Regla(null, a))); :}
 ;
-
 //-------------------------------------
 //BLOQUE DE PARTIDAS
-
 bloque_Match ::= MATCH ID:n ABRE_LLAVE match_Cuerpo:inst CIERRA_LLAVE {: RESULT = new CrearPartida(n, inst); :} ;
-
 match_Cuerpo ::= jugadores:j rondas:r puntuaciones:p {: RESULT = new InstruccionPartida(j, r, p); :};
-
 jugadores ::= PLAYERS STRATEGIES DOS_PUNTOS ABRE_CORCHETE ID:j1 COMA
                 ID:j2 CIERRA_CORCHETE   {: RESULT = new Jugadores(j1, j2); :} ;
-
 rondas ::= ROUNDS DOS_PUNTOS expresion:exp {: RESULT = exp; :} ;
-
 puntuaciones ::= SCORING DOS_PUNTOS ABRE_LLAVE puntos:p CIERRA_LLAVE {: RESULT = p; :} ;
-
 puntos ::= puntuacion:c COMA puntuacion:d COMA puntuacion:tr COMA puntuacion:ta  {: RESULT = new Puntos(c, d, tr, ta); :} ;
-
 puntuacion ::= MUTUAL_COOPERATION DOS_PUNTOS expresion:exp {: RESULT =  exp; :}
 | MUTUAL_DEFECTION DOS_PUNTOS expresion:exp {: RESULT =  exp; :}
 | BETRAYAL_REWARD DOS_PUNTOS expresion:exp {: RESULT =  exp; :}
 | BETRAYAL_PUNISHMENT DOS_PUNTOS expresion:exp {: RESULT =  exp; :}
 ;
-
 //-------------------------------------
 //BLOQUE DE INICIO
-
 bloque_Main ::= MAIN ABRE_LLAVE main_Cuerpo:p CIERRA_LLAVE {: RESULT = new Inicio(p); :} ;
-
 main_Cuerpo ::= RUN ABRE_CORCHETE ID:id CIERRA_CORCHETE WITH 
         ABRE_LLAVE SEED DOS_PUNTOS expresion CIERRA_LLAVE {: RESULT = id; :} ;
-
 //Aqui el auxiliar colocó que no se "reproducía la lista" ****
 //Así que lo probaré como si sí y luego veo si es viable tal y como lo ando haciendo ****
-
 //match_Lista ::= match_Lista COMA ID 
 //| ID:id {:  RESULT = :}
 //;
-
-
-
 //Aqui el auxiliar colocó que no se "reproducía la lista" ****
 //Así que lo probaré como si sí y luego veo si es viable tal y como lo ando haciendo ****
-
-
 //-------------------------------------
 //PARTES COMPLEMENTARIAS DEL CODIGO :)
-
 decision ::= C:d {: RESULT = new Primitiva(d, TipoTipo.DECISION); :}
 | D:d {: RESULT = new Primitiva(d, TipoTipo.DECISION); :}
 ;
-
 expresion ::= comparacion:r {: RESULT =r; :}
 | logica
 | decision:d {: RESULT = d; :}
@@ -205,7 +156,6 @@ expresion ::= comparacion:r {: RESULT =r; :}
 | ENTERO:p       {: RESULT = new Primitiva(p,TipoTipo.ENTERO); :}
 | FLOTANTE:p     {: RESULT = new Primitiva(p,TipoTipo.FLOTANTE); :}
 ;
-
 comparacion ::= expresion:exp1 IGUAL:op expresion:exp2                  {: RESULT = new Comparacion(exp1,op,exp2); :}
 | expresion:exp1 NO_IGUAL:op expresion:exp2                              {: RESULT = new Comparacion(exp1,op,exp2); :}
 | expresion:exp1 MENOR:op expresion:exp2                                 {: RESULT = new Comparacion(exp1,op,exp2); :}
@@ -213,20 +163,16 @@ comparacion ::= expresion:exp1 IGUAL:op expresion:exp2                  {: RESUL
 | expresion:exp1 MENOR_IGUAL:op expresion:exp2                           {: RESULT = new Comparacion(exp1,op,exp2); :}
 | expresion:exp1 MAYOR_IGUAL:op expresion:exp2                           {: RESULT = new Comparacion(exp1,op,exp2); :}
 ;
-
 logica ::= expresion AND expresion
 | expresion OR expresion
 | NOT expresion
 ;
-
 funcion ::= GET_MOVE ABRE_PARENTESIS expresion COMA expresion CIERRA_PARENTESIS
 | LAST_MOVE ABRE_PARENTESIS expresion CIERRA_PARENTESIS
 | GET_MOVES_COUNT ABRE_PARENTESIS expresion COMA expresion CIERRA_PARENTESIS
 | GET_LAST_N_MOVES ABRE_PARENTESIS expresion COMA expresion CIERRA_PARENTESIS
 ;
-
 lista ::= ABRE_CORCHETE elemento CIERRA_CORCHETE ;
-
 elemento ::= elemento COMA expresion
 | expresion
 ;

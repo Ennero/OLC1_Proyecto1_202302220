@@ -14,6 +14,7 @@ import utilidades.TipoTipo;
  *
  * @author Enner
  */
+
 public class Primitiva extends Expresion{
     Object valor;
     TipoTipo tipo;
@@ -23,28 +24,19 @@ public class Primitiva extends Expresion{
         this.tipo = tipo;
     }
 
-    /**
-     *
-     * @param entorno
-     * @return
-     */
     @Override
     public TipoRetorno jugar(Entorno entorno) {
         switch (tipo) {
-            case ENTERO -> {
-                return new TipoRetorno(Integer.valueOf(valor.toString()), tipo);
-            }
-            case FLOTANTE -> {
-                return new TipoRetorno(Double.valueOf(valor.toString()), tipo);
-            }
-            case BOOLEANO -> {
+            case ENTERO:
+                return new TipoRetorno(Integer.parseInt(valor.toString()), tipo);
+            case FLOTANTE:
+                return new TipoRetorno(Double.parseDouble(valor.toString()), tipo);
+            case BOOLEANO:
                 return new TipoRetorno(valor.toString().equals("true"), tipo);
-            }
-            case DECISION -> {
+            case DECISION:
                 return new TipoRetorno(valor.toString().equals("C"), tipo);
-            }
-            default -> {
-            }
+            default:
+                break;
         }
         return null;
     }

@@ -24,17 +24,15 @@ public class Inicio extends Instruccion{
     int traicionado = 0;
     int puntuacion1 = 0;
     int puntuacion2 = 0;
-    
+
     Estrategia estrategia1;
     Estrategia estrategia2;
-    public Inicio(Object partida){
+    public Inicio(Object partida) {
         super(TipoInstruccion.MAIN);
         this.partida = partida;
     }
-    
-    
-    @Override
-    public void jugar(Entorno entorno){
+
+    public void jugar(Entorno entorno) {
         Partida partida = entorno.obtenerPartida(this.partida.toString());
         if (partida != null) {
             this.rondas = (int) partida.rondas;
@@ -75,28 +73,26 @@ public class Inicio extends Instruccion{
         Salida.salidaConsola.add("\t-> Puntuación " + estrategia1.nombre + ": " + puntuacion1);
         Salida.salidaConsola.add("\t-> Puntuación " + estrategia2.nombre + ": " + puntuacion2);
     }
-    
+
     public boolean decisionInicial(Entorno entorno, Estrategia estrategia) {
         Expresion decisionInicial = estrategia.instrucciones.inicio;
         return (boolean) decisionInicial.jugar(entorno).valor;
     }
-    
-    
+
     public Object validarRegla(Entorno entorno, Estrategia estrategia) {
         Object decisonDefault = null;
 
         for (Regla regla : estrategia.instrucciones.reglas) {
             if (regla.condicion != null && (boolean) regla.condicion.jugar(entorno).valor) {
                 // regla if CONDICION then ACCION 
-                return regla.accion.jugar(entorno).valor;
+                return regla.acion.jugar(entorno).valor;
             } else if (regla.condicion == null) {
-                decisonDefault = regla.accion.jugar(entorno).valor;
+                decisonDefault = regla.acion.jugar(entorno).valor;
             }
         }
         return decisonDefault;
     }
-    
-    
+
     public void formato(int i, String estrategia1, String estrategia2) {
         if (decision1 && decision2) { // Cooperacon mutua
             Salida.salidaConsola.add("\t-> Ronda: " + i + ": " + estrategia1 + " = COOPERATE" + " , " + estrategia2 + " = COOPERATE (" + cooperacion + "-" + cooperacion + ")");
@@ -116,6 +112,4 @@ public class Inicio extends Instruccion{
             puntuacion2 += traidor;
         }
     }
-    
-    
 }

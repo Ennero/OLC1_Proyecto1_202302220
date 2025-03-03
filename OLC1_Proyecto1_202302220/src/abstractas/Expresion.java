@@ -14,7 +14,7 @@ import utilidades.TipoSentencia;
  * @author Enner
  */
 public abstract class Expresion extends Sentencia{
-    public TipoExpresion tipoExpresion;
+    TipoExpresion tipoExpresion;
     public Expresion(TipoExpresion tipoExpresion) {
         super(TipoSentencia.EXPRESION);
         this.tipoExpresion = tipoExpresion;

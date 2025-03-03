@@ -14,7 +14,7 @@ import utilidades.TipoSentencia;
  */
 public abstract class Instruccion extends Sentencia {
     
-    public TipoInstruccion tipoInstruccion;
+    TipoInstruccion tipoInstruccion;
     public Instruccion(TipoInstruccion tipoInstruccion) {
         super(TipoSentencia.INSTRUCCION);
         this.tipoInstruccion = tipoInstruccion;

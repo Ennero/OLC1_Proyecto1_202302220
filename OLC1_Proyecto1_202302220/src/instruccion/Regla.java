@@ -13,24 +13,20 @@ import utilidades.TipoInstruccion;
  *
  * @author Enner
  */
-public class Regla extends Instruccion{
-    
-    public Expresion condicion;
-    public Expresion accion;
-    
-    public Regla(Expresion condicion, Expresion accion){
+public class Regla extends Instruccion {
+    Expresion condicion;
+    Expresion acion;
+    public Regla(Expresion condicion, Expresion acion) {
         super(TipoInstruccion.REGLA);
-        this.condicion=condicion;
-        this.accion=accion;
+        this.condicion = condicion;
+        this.acion = acion;
     }
-    
 
     @Override
-    public void jugar(Entorno entorno){
-        if (condicion!=null){
+    public void jugar(Entorno entorno) {
+        if (condicion != null) {
             condicion.jugar(entorno);
         }
-        accion.jugar(entorno);
+        acion.jugar(entorno);
     }
-    
 }

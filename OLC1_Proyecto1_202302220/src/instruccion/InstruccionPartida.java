@@ -15,12 +15,11 @@ import utilidades.TipoInstruccion;
  *
  * @author Enner
  */
+
 public class InstruccionPartida extends Instruccion{
-    
     Jugadores jugadores; 
     Expresion rondas; 
     Puntos puntos;
-    
     public InstruccionPartida(Jugadores jugadores, Expresion rondas, Puntos puntos) {
         super(TipoInstruccion.PARTIDA);
         this.jugadores = jugadores;
