@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package expresion;
+package objetos;
 
-import abstractas.Expresion;
+import utilidades.Expresion;
 import olc1_proyecto1_202302220.Entorno;
-import utilidades.TipoExpresion;
-import utilidades.TipoRetorno;
-import utilidades.TipoTipo;
+import utilidades.T_Expresion;
+import utilidades.T_Retorno;
+import utilidades.T_Tipo;
 
 /**
  *
@@ -20,14 +20,14 @@ public class Comparacion extends Expresion{
     Expresion exp2;
     String operador;
     public Comparacion(Expresion exp1, String operador, Expresion exp2) {
-        super(TipoExpresion.COMPARATIVO);
+        super(T_Expresion.COMPARATIVO);
         this.exp1 = exp1;
         this.exp2 = exp2;
         this.operador = operador;
     }
 
     @Override
-    public TipoRetorno jugar(Entorno entorno) {
+    public T_Retorno jugar(Entorno entorno) {
         switch (this.operador) {
             case "==":
                 // Igualdad
@@ -43,17 +43,17 @@ public class Comparacion extends Expresion{
             case "<=":
             return null;
             default:
-                return new TipoRetorno(-1, null);
+                return new T_Retorno(-1, null);
         }
     }
 
-    public TipoRetorno igual(Entorno entorno) {
-        TipoRetorno valor1 = exp1.jugar(entorno);
-        TipoRetorno valor2 = exp2.jugar(entorno);
-        if (valor1.tipo == TipoTipo.ENTERO || valor1.tipo == TipoTipo.FLOTANTE) {
-            if (valor2.tipo == TipoTipo.ENTERO || valor2.tipo == TipoTipo.FLOTANTE) {
+    public T_Retorno igual(Entorno entorno) {
+        T_Retorno valor1 = exp1.jugar(entorno);
+        T_Retorno valor2 = exp2.jugar(entorno);
+        if (valor1.tipo == T_Tipo.ENTERO || valor1.tipo == T_Tipo.FLOTANTE) {
+            if (valor2.tipo == T_Tipo.ENTERO || valor2.tipo == T_Tipo.FLOTANTE) {
                 // 12.0 == 12 -> true | false
-                return new TipoRetorno(Double.parseDouble(valor1.valor.toString()) == Double.parseDouble(valor2.valor.toString()), TipoTipo.BOOLEANO);
+                return new T_Retorno(Double.parseDouble(valor1.valor.toString()) == Double.parseDouble(valor2.valor.toString()), T_Tipo.BOOLEANO);
             }
         }
         return null;

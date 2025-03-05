@@ -2,11 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package abstractas;
+package utilidades;
 
 import olc1_proyecto1_202302220.Entorno;
-import utilidades.TipoInstruccion;
-import utilidades.TipoSentencia;
+import utilidades.T_Instruccion;
+import utilidades.T_Sentencia;
 
 /**
  *
@@ -14,9 +14,9 @@ import utilidades.TipoSentencia;
  */
 public abstract class Instruccion extends Sentencia {
     
-    TipoInstruccion tipoInstruccion;
-    public Instruccion(TipoInstruccion tipoInstruccion) {
-        super(TipoSentencia.INSTRUCCION);
+    T_Instruccion tipoInstruccion;
+    public Instruccion(T_Instruccion tipoInstruccion) {
+        super(T_Sentencia.INSTRUCCION);
         this.tipoInstruccion = tipoInstruccion;
     }
     public abstract void jugar(Entorno entorno);

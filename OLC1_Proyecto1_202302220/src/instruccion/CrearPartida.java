@@ -4,11 +4,11 @@
  */
 package instruccion;
 
-import abstractas.Instruccion;
+import utilidades.Instruccion;
 import objetos.Partida;
 import olc1_proyecto1_202302220.Entorno;
-import utilidades.TipoInstruccion;
-import utilidades.TipoRetorno;
+import utilidades.T_Instruccion;
+import utilidades.T_Retorno;
 
 /**
  *
@@ -19,7 +19,7 @@ public class CrearPartida extends Instruccion {
     String nombre;
     InstruccionPartida instrucciones;
     public CrearPartida(String nombre, InstruccionPartida instrucciones) {
-        super(TipoInstruccion.PARTIDA);
+        super(T_Instruccion.PARTIDA);
         this.nombre = nombre;
         this.instrucciones = instrucciones;
     }
@@ -28,7 +28,7 @@ public class CrearPartida extends Instruccion {
     public void jugar(Entorno entorno) {
         String jugador1 = instrucciones.jugadores.jugador1;
         String jugador2 = instrucciones.jugadores.jugador2;
-        TipoRetorno rondas = instrucciones.rondas.jugar(entorno);
+        T_Retorno rondas = instrucciones.rondas.jugar(entorno);
         Partida partida = new Partida(nombre, jugador1, jugador2, rondas.valor, instrucciones.puntos);
         entorno.guardarPartida(nombre, partida);
     }

@@ -4,18 +4,16 @@
  */
 package utilidades;
 
+import utilidades.T_Sentencia;
+
 /**
  *
  * @author Enner
  */
-public class TipoRetorno {
-    public TipoTipo tipo;
-    public Object valor;
-    public TipoRetorno(Object valor, TipoTipo tipo){
-        this.tipo=tipo;
-        this.valor=valor;
-        
-        
+
+public abstract class Sentencia {
+    T_Sentencia tipoSetencia;
+    public Sentencia(T_Sentencia tipoSetencia) {
+        this.tipoSetencia = tipoSetencia;
     }
-    
 }

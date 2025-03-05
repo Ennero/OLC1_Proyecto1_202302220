@@ -1,6 +1,6 @@
 package olc1_proyecto1_202302220;
 
-import abstractas.Instruccion;
+import utilidades.Instruccion;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
