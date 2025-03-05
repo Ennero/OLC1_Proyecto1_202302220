@@ -25,6 +25,7 @@ public class InstruccionEstrategia extends Instruccion{
         this.reglas = reglas;
     }
 
+    @Override
     public void jugar(Entorno entorno) {
         inicio.jugar(entorno);
         for (Regla regla : reglas) {

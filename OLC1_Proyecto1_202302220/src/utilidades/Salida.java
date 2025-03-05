@@ -11,6 +11,6 @@ import java.util.ArrayList;
  * @author Enner
  */
 public class Salida {
-    public static ArrayList<String> salidaConsola = new ArrayList<>();
+    public static ArrayList<String> salidaInfo = new ArrayList<>();
     
 }

@@ -26,6 +26,7 @@ public class Comparacion extends Expresion{
         this.operador = operador;
     }
 
+    @Override
     public TipoRetorno jugar(Entorno entorno) {
         switch (this.operador) {
             case "==":

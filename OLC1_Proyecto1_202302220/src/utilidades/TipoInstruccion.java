@@ -14,6 +14,5 @@ public enum TipoInstruccion {
     REGLA,
     PARTIDA,
     MAIN,
-    
-    
+
 }

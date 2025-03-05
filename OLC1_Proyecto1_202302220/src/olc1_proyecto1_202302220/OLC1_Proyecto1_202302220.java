@@ -13,7 +13,6 @@ import olc1_proyecto1_202302220.analizador.sym;
 import java.util.LinkedList;
 import java_cup.runtime.Scanner;
 import olc1_proyecto1_202302220.analizador.Parser;
-import olc1_proyecto1_202302220.analizador.Strategy;
 import random.DeterministicRandomGenerator;
 
 /**
@@ -29,6 +28,7 @@ public class OLC1_Proyecto1_202302220 {
     //Creo la linkedList que tendrá todo los datos de los tokens
     static public LinkedList<String[]> tokens = new LinkedList<>();
     static public LinkedList<String[]> errores = new LinkedList<>();
+    public static String salidita="";
 
     public static void main(String[] args) throws Exception {
         //Inicio el programa con la interfaz gráfica
@@ -79,6 +79,9 @@ public class OLC1_Proyecto1_202302220 {
             }
         }
     }
+    
+    
+
 
     //Función para el análisis sintáctico
     static public void analisisSintactico(String input) throws Exception {
@@ -95,18 +98,19 @@ public class OLC1_Proyecto1_202302220 {
         
         //Aquí entiendo que hago para que comience a funcionar
         Entorno global=new Entorno("global");
-        String salida_ ="";
+        String SALIDA ="";
         for (Instruccion instruccion : parser.sentencias) {
                 try {
                     instruccion.jugar(global);
-                    for (String salida : utilidades.Salida.salidaConsola) {
-                        salida_ += salida + "\n";
+                    for (String salida : utilidades.Salida.salidaInfo) {
+                        SALIDA += salida + "\n";
                     }
                 } catch (Exception e) {
                     System.out.println(e);
                 }
             }
-        System.out.println(salida_);      
+        System.out.println(SALIDA);
+        salidita=SALIDA;
     }
     
     
@@ -115,69 +119,6 @@ public class OLC1_Proyecto1_202302220 {
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    /*
-    public static void iniciar(){
-        
-        System.out.println("Iniciando mi mega proyecto chafa xd");
-        LinkedList<Object> strategies= new LinkedList();
-        LinkedList<Object> matches= new LinkedList();
-        LinkedList<Object> main= new LinkedList();
-        
-        //Comienzo contando la cantidad de strategies
-        int contador=0;
-        for (String[] token : tokens) {
-            if(token[2].equals("strategy")){
-                contador++;
-            }
-        }
-        System.out.println(contador);
-        
-        //Ahora guardo en la lista la cantidad de estrategies que obtuve
-        LinkedList<Strategy> listaStrategies= new LinkedList();
-        for (int i = 0; i < contador; i++) {
-            for (String[] token : tokens) {
-                if(token[2].equals("initial")){
-                    
-                    valorInicial=token[2];
-                    Strategy strategy= new Strategy();
-                    listaStrategies.add(strategy);
-
-                }
-                if(token[2].equals("rules")){
-                    String rules="";
-                    for (String[] token1 : tokens) {
-                        
-                        if(token1[2].equals("]")){
-                            rules=token1[2];
-                        }
-                    }
-                    valorStrategy=token[2];
-                    Strategy strategy= new Strategy();
-                    listaStrategies.add(strategy);
-                }
-            }
-
-
-            Strategy strategy= new Strategy();
-            listaStrategies.add(strategy);
-        }
-
-        
-        
-    }*/
     
     
     

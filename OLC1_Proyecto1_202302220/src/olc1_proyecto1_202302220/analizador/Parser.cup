@@ -103,7 +103,7 @@ instruccion ::= bloque_Strategy:e   {: RESULT = e; :}
 ;
 //-------------------------------------
 //BLOQUE DE STRATEGIAS
-bloque_Strategy ::= STRATEGY ID:n ABRE_LLAVE strategy_Cuerpo:inst CIERRA_LLAVE {: RESULT = new CrearEstrategia(n, inst);      System.out.println("Se leyó todooooooooooo"); :} ;
+bloque_Strategy ::= STRATEGY ID:n ABRE_LLAVE strategy_Cuerpo:inst CIERRA_LLAVE {: RESULT = new CrearEstrategia(n, inst); :} ;
 strategy_Cuerpo ::= regla_Inicial:i reglas:r  {: RESULT= new InstruccionEstrategia(i,r); :};
 regla_Inicial ::= INITIAL DOS_PUNTOS decision:d {: RESULT= d; :};
 reglas ::= RULES DOS_PUNTOS ABRE_CORCHETE lista_Reglas:l CIERRA_CORCHETE {:RESULT=l; :};
