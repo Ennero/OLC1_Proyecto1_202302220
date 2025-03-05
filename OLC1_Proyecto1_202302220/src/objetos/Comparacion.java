@@ -26,6 +26,12 @@ public class Comparacion extends Expresion{
         this.operador = operador;
     }
 
+<<<<<<< HEAD
+=======
+    @Override
+    public TipoRetorno jugar(Entorno entorno) {
+=======
+>>>>>>> 89ae929 (Oa)
     @Override
     public T_Retorno jugar(Entorno entorno) {
         switch (this.operador) {
