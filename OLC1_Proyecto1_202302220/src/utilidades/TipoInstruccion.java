@@ -8,9 +8,11 @@ package utilidades;
  *
  * @author Enner
  */
-public enum T_Tipo {
-    DECISION,
-    ENTERO,
-    FLOTANTE,
-    BOOLEANO,
+public enum TipoInstruccion {
+    ESTRATEGIA,
+    INICIAL,
+    REGLA,
+    PARTIDA,
+    MAIN,
+
 }

@@ -5,11 +5,11 @@
 package instruccion;
 
 import objetos.Jugadores;
-import utilidades.Expresion;
-import utilidades.Instruccion;
+import abstractas.Expresion;
+import abstractas.Instruccion;
 import objetos.Puntos;
 import olc1_proyecto1_202302220.Entorno;
-import utilidades.T_Instruccion;
+import utilidades.TipoInstruccion;
 
 /**
  *
@@ -21,7 +21,7 @@ public class InstruccionPartida extends Instruccion{
     Expresion rondas; 
     Puntos puntos;
     public InstruccionPartida(Jugadores jugadores, Expresion rondas, Puntos puntos) {
-        super(T_Instruccion.PARTIDA);
+        super(TipoInstruccion.PARTIDA);
         this.jugadores = jugadores;
         this.rondas = rondas;
         this.puntos = puntos;

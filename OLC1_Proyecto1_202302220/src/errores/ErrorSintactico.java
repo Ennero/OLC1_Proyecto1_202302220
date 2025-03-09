@@ -26,7 +26,6 @@ public class ErrorSintactico {
         this.error = error;
     }
 
-    @Override
     public String toString() {
         if (error != null) {
             return error;

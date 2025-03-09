@@ -8,14 +8,9 @@ package utilidades;
  *
  * @author Enner
  */
-public class T_Retorno {
-    public T_Tipo tipo;
-    public Object valor;
-    public T_Retorno(Object valor, T_Tipo tipo){
-        this.tipo=tipo;
-        this.valor=valor;
-        
-        
-    }
-    
+
+//Ahora entiendo que es como un indice
+public enum TipoSentencia {
+        EXPRESION,
+        INSTRUCCION
 }

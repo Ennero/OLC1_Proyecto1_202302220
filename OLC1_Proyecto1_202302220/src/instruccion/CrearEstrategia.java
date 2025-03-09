@@ -5,9 +5,9 @@
 package instruccion;
 
 import objetos.Estrategia;
-import utilidades.Instruccion;
+import abstractas.Instruccion;
 import olc1_proyecto1_202302220.Entorno;
-import utilidades.T_Instruccion;
+import utilidades.TipoInstruccion;
 
 /**
  *
@@ -18,7 +18,7 @@ public class CrearEstrategia extends Instruccion {
     String nombre;
     InstruccionEstrategia instrucciones;
     public CrearEstrategia(String nombre, InstruccionEstrategia instrucciones) {
-        super(T_Instruccion.ESTRATEGIA);
+        super(TipoInstruccion.ESTRATEGIA);
         this.nombre = nombre;
         this.instrucciones = instrucciones;
     }

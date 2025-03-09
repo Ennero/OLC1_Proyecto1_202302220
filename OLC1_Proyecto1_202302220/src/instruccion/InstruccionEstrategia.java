@@ -4,11 +4,11 @@
  */
 package instruccion;
 
-import utilidades.Expresion;
-import utilidades.Instruccion;
+import abstractas.Expresion;
+import abstractas.Instruccion;
 import java.util.ArrayList;
 import olc1_proyecto1_202302220.Entorno;
-import utilidades.T_Instruccion;
+import utilidades.TipoInstruccion;
 
 /**
  *
@@ -20,7 +20,7 @@ public class InstruccionEstrategia extends Instruccion{
     Expresion inicio;
     public ArrayList<Regla> reglas;
     public InstruccionEstrategia (Expresion inicio, ArrayList<Regla> reglas) {
-        super(T_Instruccion.ESTRATEGIA);
+        super(TipoInstruccion.ESTRATEGIA);
         this.inicio = inicio;
         this.reglas = reglas;
     }

@@ -4,7 +4,7 @@
  */
 package objetos;
 
-import utilidades.Expresion;
+import abstractas.Expresion;
 
 /**
  *

@@ -8,11 +8,10 @@ package utilidades;
  *
  * @author Enner
  */
-public enum T_Instruccion {
-    ESTRATEGIA,
-    INICIAL,
-    REGLA,
-    PARTIDA,
-    MAIN,
-
+public enum TipoExpresion {
+    PRIMITIVO,
+    COMPARATIVO,
+    LOGICO,
+    FUNCION,
+    PUNTEO
 }

@@ -8,10 +8,9 @@ package utilidades;
  *
  * @author Enner
  */
-public enum T_Expresion {
-    PRIMITIVO,
-    COMPARATIVO,
-    LOGICO,
-    FUNCION,
-    PUNTEO
+public enum TipoTipo {
+    DECISION,
+    ENTERO,
+    FLOTANTE,
+    BOOLEANO,
 }

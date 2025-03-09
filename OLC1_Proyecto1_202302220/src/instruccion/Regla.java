@@ -4,10 +4,10 @@
  */
 package instruccion;
 
-import utilidades.Expresion;
-import utilidades.Instruccion;
+import abstractas.Expresion;
+import abstractas.Instruccion;
 import olc1_proyecto1_202302220.Entorno;
-import utilidades.T_Instruccion;
+import utilidades.TipoInstruccion;
 
 /**
  *
@@ -17,7 +17,7 @@ public class Regla extends Instruccion {
     Expresion condicion;
     Expresion acion;
     public Regla(Expresion condicion, Expresion acion) {
-        super(T_Instruccion.REGLA);
+        super(TipoInstruccion.REGLA);
         this.condicion = condicion;
         this.acion = acion;
     }

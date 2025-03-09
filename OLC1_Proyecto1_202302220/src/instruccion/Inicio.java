@@ -1,13 +1,13 @@
 
 package instruccion;
 
-import utilidades.Expresion;
-import utilidades.Instruccion;
+import abstractas.Expresion;
+import abstractas.Instruccion;
 import objetos.Estrategia;
 import objetos.Partida;
 import olc1_proyecto1_202302220.Entorno;
 import utilidades.Salida;
-import utilidades.T_Instruccion;
+import utilidades.TipoInstruccion;
 
 /**
  *
@@ -30,7 +30,7 @@ public class Inicio extends Instruccion{
     Estrategia estrategia1;
     Estrategia estrategia2;
     public Inicio(Object partida) {
-        super(T_Instruccion.MAIN);
+        super(TipoInstruccion.MAIN);
         this.partida = partida;
     }
 
