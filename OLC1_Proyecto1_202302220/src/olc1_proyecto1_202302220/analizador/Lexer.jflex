@@ -63,6 +63,7 @@ ID = [A-Za-z_][A-Za-z_0-9]*
 
 //RELACIONADO A MATCH
 "round_number"  { return new Symbol(sym.ROUND_NUMBER, yyline + 1, (int) yycolumn + 1, yytext()); }
+"total_rounds"  { return new Symbol(sym.TOTAL_ROUNDS, yyline + 1, (int) yycolumn + 1, yytext()); }
 "players" { return new Symbol(sym.PLAYERS, yyline + 1, (int) yycolumn + 1, yytext()); }
 "strategies"  { return new Symbol(sym.STRATEGIES, yyline + 1, (int) yycolumn + 1, yytext()); }
 "rounds" { return new Symbol(sym.ROUNDS, yyline + 1, (int) yycolumn + 1, yytext()); }

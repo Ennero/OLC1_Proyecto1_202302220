@@ -1,0 +1,88 @@
+strategy TitForTat {
+    initial: C
+    rules: [
+        else last_move(opponent_history)
+    ]
+}
+
+strategy TesterFriedman {
+    initial: D
+    rules: [
+        if round_number >= 1 && get_moves_count(opponent_history, D) >= 1 then D,
+        else C
+    ]
+}
+
+strategy Tester {
+    initial: D
+    rules: [
+        if round_number == 1 && last_move(opponent_history) == C then C,
+        if round_number == 1 && last_move(opponent_history) == D then D,
+        if round_number > 1 && get_moves_count(opponent_history, C) >= 1 then last_move(opponent_history),
+        else D
+    ]
+}
+
+strategy Joss {
+    initial: C
+    rules: [
+        if random() < 0.1 then D,
+        else last_move(opponent_history)
+    ]
+}
+
+strategy Downing {
+    initial: C
+    rules: [
+        if round_number == 1 then C,
+        if get_moves_count(opponent_history, D) > get_moves_count(opponent_history, C) then D,
+        else C
+    ]
+}
+
+match BestTester {
+    players strategies: [Tester, TesterFriedman]
+    rounds: 10
+    scoring: {
+        mutual cooperation: 2, 
+        mutual defection: 1, 
+        betrayal reward: 4, 
+        betrayal punishment: 0 
+    }
+}
+
+
+match LastMoveOpponent {
+    players strategies: [TitForTat, Joss]
+    rounds: 28
+    scoring: {
+        mutual cooperation: 3, 
+        mutual defection: 2, 
+        betrayal reward: 6, 
+        betrayal punishment: 1 
+    }
+}
+
+
+match Break {
+    players strategies: [Joss, Downing]
+    rounds: 13
+    scoring: {
+        mutual cooperation: 6, 
+        mutual defection: 4, 
+        betrayal reward: 9, 
+        betrayal punishment: 1 
+    }
+}
+
+main {
+    run [BestTester, LastMoveOpponent] with {
+        seed: 80
+    }
+    run [LastMoveOpponent, Break] with {
+        seed: 31
+    }
+    run [LastMoveOpponent] with {
+        seed: 2
+    }
+}

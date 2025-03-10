@@ -8,6 +8,6 @@ package random;
  *
  * @author Enner
  */
-interface RandomoGenerator {
+public interface RandomGenerator {
     double nextDouble();
 }

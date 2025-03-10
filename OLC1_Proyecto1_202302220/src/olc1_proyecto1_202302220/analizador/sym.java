@@ -8,60 +8,61 @@ package olc1_proyecto1_202302220.analizador;
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
-  public static final int MUTUAL_COOPERATION = 25;
-  public static final int MUTUAL_DEFECTION = 26;
+  public static final int MUTUAL_COOPERATION = 26;
+  public static final int MUTUAL_DEFECTION = 27;
   public static final int GET_MOVES_COUNT = 16;
-  public static final int RANDOM = 53;
-  public static final int WITH = 31;
-  public static final int ENTERO = 50;
-  public static final int CIERRA_PARENTESIS = 47;
-  public static final int SCORING = 29;
-  public static final int DOS_PUNTOS = 49;
-  public static final int ABRE_PARENTESIS = 46;
+  public static final int RANDOM = 54;
+  public static final int WITH = 32;
+  public static final int ENTERO = 51;
+  public static final int CIERRA_PARENTESIS = 48;
+  public static final int SCORING = 30;
+  public static final int DOS_PUNTOS = 50;
+  public static final int ABRE_PARENTESIS = 47;
   public static final int MATCH = 4;
   public static final int RULES = 9;
   public static final int D = 7;
   public static final int C = 6;
-  public static final int ABRE_LLAVE = 44;
-  public static final int NOT = 35;
-  public static final int AND = 33;
-  public static final int IGUAL = 36;
+  public static final int ABRE_LLAVE = 45;
+  public static final int NOT = 36;
+  public static final int AND = 34;
+  public static final int IGUAL = 37;
   public static final int GET_LAST_N_MOVES = 15;
-  public static final int OR = 34;
+  public static final int OR = 35;
   public static final int STRATEGIES = 19;
-  public static final int CIERRA_CORCHETE = 43;
+  public static final int CIERRA_CORCHETE = 44;
   public static final int MAIN = 5;
   public static final int IF = 10;
-  public static final int ID = 52;
+  public static final int ID = 53;
   public static final int INITIAL = 8;
   public static final int EOF = 0;
   public static final int ROUNDS = 20;
-  public static final int TRUE = 23;
-  public static final int BETRAYAL_PUNISHMENT = 28;
+  public static final int TRUE = 24;
+  public static final int BETRAYAL_PUNISHMENT = 29;
   public static final int error = 1;
-  public static final int COMA = 48;
+  public static final int COMA = 49;
   public static final int PLAYERS = 18;
-  public static final int MENOR = 38;
-  public static final int ABRE_CORCHETE = 42;
+  public static final int TOTAL_ROUNDS = 21;
+  public static final int MENOR = 39;
+  public static final int ABRE_CORCHETE = 43;
   public static final int STRATEGY = 3;
   public static final int ERROR_LEXICO = 2;
-  public static final int NO_IGUAL = 37;
-  public static final int BETRAYAL_REWARD = 27;
-  public static final int MAYOR = 39;
-  public static final int SELF_HISTORY = 22;
+  public static final int NO_IGUAL = 38;
+  public static final int BETRAYAL_REWARD = 28;
+  public static final int MAYOR = 40;
+  public static final int SELF_HISTORY = 23;
   public static final int ROUND_NUMBER = 17;
   public static final int LAST_MOVE = 14;
   public static final int ELSE = 12;
   public static final int GET_MOVE = 13;
-  public static final int MAYOR_IGUAL = 41;
+  public static final int MAYOR_IGUAL = 42;
   public static final int THEN = 11;
-  public static final int SEED = 32;
-  public static final int MENOR_IGUAL = 40;
-  public static final int OPPONENT_HISTORY = 21;
-  public static final int FALSE = 24;
-  public static final int CIERRA_LLAVE = 45;
-  public static final int RUN = 30;
-  public static final int FLOTANTE = 51;
+  public static final int SEED = 33;
+  public static final int MENOR_IGUAL = 41;
+  public static final int OPPONENT_HISTORY = 22;
+  public static final int FALSE = 25;
+  public static final int CIERRA_LLAVE = 46;
+  public static final int RUN = 31;
+  public static final int FLOTANTE = 52;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
@@ -84,6 +85,7 @@ public class sym {
   "PLAYERS",
   "STRATEGIES",
   "ROUNDS",
+  "TOTAL_ROUNDS",
   "OPPONENT_HISTORY",
   "SELF_HISTORY",
   "TRUE",

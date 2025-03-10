@@ -40,6 +40,7 @@ public class Inicio extends Instruccion{
         if (partida != null) {
             this.rondas = (int) partida.rondas;
             entorno.setPartidaActual(partida);
+            entorno.setTotalRondas(rondas);
 
             estrategia1 = entorno.obtenerEstrategia(partida.jugador1);
             estrategia2 = entorno.obtenerEstrategia(partida.jugador2);
@@ -95,17 +96,17 @@ public class Inicio extends Instruccion{
     }
 
     public Object validarRegla(Entorno entorno, Estrategia estrategia) {
-        Object decisonDefault = null;
+        Object determinada = null;
 
         for (Regla regla : estrategia.instrucciones.reglas) {
             if (regla.condicion != null && (boolean) regla.condicion.jugar(entorno).valor) {
                 // regla if CONDICION then ACCION 
                 return regla.acion.jugar(entorno).valor;
             } else if (regla.condicion == null) {
-                decisonDefault = regla.acion.jugar(entorno).valor;
+                determinada = regla.acion.jugar(entorno).valor;
             }
         }
-        return decisonDefault;
+        return determinada;
     }
 
     

@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java_cup.runtime.Scanner;
 import olc1_proyecto1_202302220.analizador.Parser;
 import random.DeterministicRandomGenerator;
+import random.RandomGenerator;
 
 /**
  *
@@ -36,8 +37,7 @@ public class OLC1_Proyecto1_202302220 {
         GUI gui = new GUI();
         gui.setVisible(true);
         gui.setLocationRelativeTo(null);
-        
-        
+
         
 
     }
@@ -87,6 +87,7 @@ public class OLC1_Proyecto1_202302220 {
     static public void analisisSintactico(String input) throws Exception {
         Lexer lexer = new Lexer(new StringReader(input));
         
+        salidita="";
         while (!tokens.isEmpty()) {
             tokens.remove();
         }

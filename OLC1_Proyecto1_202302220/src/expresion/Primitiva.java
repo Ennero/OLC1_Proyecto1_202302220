@@ -27,16 +27,20 @@ public class Primitiva extends Expresion{
     @Override
     public TipoRetorno jugar(Entorno entorno) {
         switch (tipo) {
-            case ENTERO:
+            case ENTERO -> {
                 return new TipoRetorno(Integer.parseInt(valor.toString()), tipo);
-            case FLOTANTE:
+            }
+            case FLOTANTE -> {
                 return new TipoRetorno(Double.parseDouble(valor.toString()), tipo);
-            case BOOLEANO:
+            }
+            case BOOLEANO -> {
                 return new TipoRetorno(valor.toString().equals("true"), tipo);
-            case DECISION:
+            }
+            case DECISION -> {
                 return new TipoRetorno(valor.toString().equals("C"), tipo);
-            default:
-                break;
+            }
+            default -> {
+            }
         }
         return null;
     }

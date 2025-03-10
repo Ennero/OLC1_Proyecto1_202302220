@@ -10,6 +10,8 @@ import instruccion.*;
 import objetos.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import random.DeterministicRandomGenerator;
+import random.RandomGenerator;
 
 
 /* 2. Codigo para el parser, variables y metodos */
@@ -35,7 +37,7 @@ terminal String IF, THEN, ELSE;
 //Funciones especiales dentro de strategy
 terminal String GET_MOVE, LAST_MOVE, GET_LAST_N_MOVES, GET_MOVES_COUNT;
 //Funciones relacionada a match
-terminal String ROUND_NUMBER, PLAYERS, STRATEGIES, ROUNDS;
+terminal String ROUND_NUMBER, PLAYERS, STRATEGIES, ROUNDS, TOTAL_ROUNDS;
 //Historiales
 terminal String OPPONENT_HISTORY, SELF_HISTORY;
 //Booleanos
@@ -147,10 +149,11 @@ expresion ::= comparacion:r {: RESULT =r; :}
 | decision:d {: RESULT = d; :}
 | funcion
 | lista
-| RANDOM
+| RANDOM:p {: RESULT = new RandomNumber(); :}
 | OPPONENT_HISTORY
 | SELF_HISTORY
 | ROUND_NUMBER:r {: RESULT =new RondaActual(); :}
+| TOTAL_ROUNDS:R {: RESULT =new TotalRondas(); :}
 | TRUE:p         {: RESULT = new Primitiva(p,TipoTipo.BOOLEANO); :}
 | FALSE:p        {: RESULT = new Primitiva(p,TipoTipo.BOOLEANO); :}
 | ENTERO:p       {: RESULT = new Primitiva(p,TipoTipo.ENTERO); :}

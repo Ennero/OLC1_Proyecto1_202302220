@@ -21,10 +21,13 @@ public class Entorno {
 
     Partida partidaActual;
     int rondaActual;
+    int totalRondas;
 
     public Entorno(String nombre) {
         this.nombre = nombre;
     }
+    
+    
 
     public boolean guardarEstrategia(String nombre, Estrategia estrategia) {
         if (!this.estrategias.containsKey(nombre)) {
@@ -76,6 +79,17 @@ public class Entorno {
 
     public int getRondaActual() {
         return this.rondaActual;
+    }
+    
+    
+    public void setTotalRondas(int ronda) {
+        this.totalRondas = ronda;
+    }
+    
+    
+    //RONDAS TOTALES
+    public int getTotalRondas(){
+        return this.totalRondas;
     }
     
     

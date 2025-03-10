@@ -5,6 +5,7 @@
 package objetos;
 
 import instruccion.InstruccionEstrategia;
+import java.util.ArrayList;
 
 /**
  *
@@ -13,6 +14,7 @@ import instruccion.InstruccionEstrategia;
 public class Estrategia {
     
     public String nombre;
+    public ArrayList<Object> historial;
     public InstruccionEstrategia instrucciones;
     public Estrategia (String nombre, InstruccionEstrategia instrucciones){
         this.nombre = nombre;
