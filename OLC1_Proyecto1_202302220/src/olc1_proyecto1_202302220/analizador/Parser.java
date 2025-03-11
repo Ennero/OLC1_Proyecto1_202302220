@@ -416,8 +416,24 @@ public class Parser extends java_cup.runtime.lr_parser {
 
 
 
-    // Codigo Java
+ 
     public ArrayList<Instruccion> sentencias;
+    public static LinkedList<String[]> erroresSintacticos = new LinkedList<>();
+
+    @Override
+    public void syntax_error(Symbol s) {
+        String[] error = new String[5];
+        OLC1_Proyecto1_202302220.contador1++;
+        error[0] = Integer.toString(OLC1_Proyecto1_202302220.contador1); // Número de error
+        error[1] = "ERROR_SINTACTICO";
+        error[2] = (s.value != null) ? s.value.toString() : "null";
+        error[3] = Integer.toString(s.left);
+        error[4] = Integer.toString(s.right);
+
+        // Agregar a la lista de errores sintácticos
+        erroresSintacticos.add(error);
+    }
+
 
 
 
@@ -880,10 +896,7 @@ class CUP$Parser$actions {
 		int pleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int pright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		String p = (String)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		
-      RandomGenerator gen1 = DeterministicRandomGenerator.create(Long.parseLong(p));
-      RESULT=new Primitiva(gen1.nextDouble(),TipoTipo.FLOTANTE); 
-
+		 RESULT = new RandomNumber(); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("expresion",18, ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1117,6 +1130,12 @@ class CUP$Parser$actions {
           case 51: // funcion ::= GET_MOVE ABRE_PARENTESIS expresion COMA expresion CIERRA_PARENTESIS 
             {
               Object RESULT =null;
+		int listaleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).left;
+		int listaright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).right;
+		Expresion lista = (Expresion)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-3)).value;
+		int accionleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
+		int accionright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
+		Expresion accion = (Expresion)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("funcion",21, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }

@@ -28,32 +28,30 @@ Una vez ejecutado, el programa genera una salida en un área designada, mostrand
 
 ## Flujo de funcionalidades del programa
 
-
-1. 
+1. El programa se inicia con el archivo .jar
    ![1](./img/1.png)
-2. 
+2. Al dar doble click al archivo .jar se abre la siguiente interfaz en donde se encuentra la salida, la entrada, los reportes y lo botones que permiten interactuar con todo en el programa.
    ![2](./img/2.png)
-3. 
+3. En el área de entrada se puede escrbir lo que se desee que se anailice respetando la gramática del programa.
    ![3](./img/3.png)
-4. 
+4. Al presionar el botón "Nuevo Archivo", se borrará todo lo que se encuentre en todas la ventanas para iniciar un nuevo archivo.
    ![4](./img/4.png)
-5. 
+5. Al dar click en "Abrir Archivo", se abrirá el explorador de archivos que permitirá escoger un archivo para que se abra en el programa.
+   ![5](./img/5.png)
+6. Una vez se escoge el archivo con extensión .cmp, se visualiza de la siguiente forma en la sección de entrada del programa.
    ![6](./img/6.png)
-6. 
+7. Ahora si se desea guardar el archivo, se presiona el botón "Guardar Archivo" el cual abrirá el explorador de archivos para escoger donde se guardará este.
    ![7](./img/7.png)
-7. 
-   ![9](./img/9.png)
-8. 
-   ![10](./img/10.png)
-9.  
-    ![11](./img/11.png) 
-10. 
-    ![12](./img/12.png) 
-11. 
+8. Regresando a lo que se tenía con el archivo nuevo, si se presiona la opción de "Reporte de Errores", se lograrán visualizar todos los errores de tipo léxico que hay en el archivo de entrada. En este caso no hay errores.
+   ![8](./img/8.png)
+9.  Ahora si se colocan errores y se presiona la opción de "Reporte de Errores", se mostrarán los errores y su ubicación.
+    ![9](./img/9.png) 
+10. Y si se presiona la opción de "Reporte de tokens", se mostrarán todos los tokens que hay en el archivo de entrada. En este caso no se muestran porque hay errores léxico.
+    ![10](./img/10.png) 
+11. Si se eliminan los errores, se mostrarán de la siguiente manera
+    ![11](./img/11.png)
+12. Por último, si se da a ejecutar, se realizará un análisis sintáctico para corroborar que todo esté correctamente estructurado.
+    ![12](./img/12.png)
+13. Una vez que se revisa que esté correctamente estructurado, se muestra la salida correspondiente.
     ![13](./img/13.png)
-12. 
-    ![14](./img/14.png)
-13. 
-    ![15](./img/15.png)
-14. 
-    ![16](./img/16.png)
+Y con esto se muestra todo lo conciernente al programa :)

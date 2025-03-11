@@ -17,6 +17,8 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import static olc1_proyecto1_202302220.OLC1_Proyecto1_202302220.errores;
+import static olc1_proyecto1_202302220.OLC1_Proyecto1_202302220.tokens;
 
 /**
  *
@@ -168,7 +170,7 @@ public class GUI extends javax.swing.JFrame {
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 568, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton6)
@@ -178,7 +180,7 @@ public class GUI extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(205, 205, 205)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 372, Short.MAX_VALUE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(175, 175, 175))))
         );
@@ -234,17 +236,21 @@ public class GUI extends javax.swing.JFrame {
                 OLC1_Proyecto1_202302220.analisisSintactico(entrada);
                 JOptionPane.showMessageDialog(this, "Análisis sintáctico completado");
                 jTextArea3.setText(OLC1_Proyecto1_202302220.salidita);
-
-                //Aquí deber de colocarse que se escriba todo lo que se pida
             } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "No se puede continuar con la ejecución debido a errores sintácticos o léxicos.", "Error", JOptionPane.ERROR_MESSAGE);
                 Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Error léxico, solucionar antes de continuar");
+            JOptionPane.showMessageDialog(this, "No se puede continuar debido a errores léxicos.", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    public void SintacError() {
+        JOptionPane.showMessageDialog(this, "Error Sintáctico, solucionar antes de continuar");
+    }
+
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
@@ -313,7 +319,7 @@ public class GUI extends javax.swing.JFrame {
         JFileChooser explorador = new JFileChooser();
 
         //Configuro el filtro para que solo se muestren los archivos con extensiones .cmp
-        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo de texto (.cmp)", ".cmp");
+        FileNameExtensionFilter filtro = new FileNameExtensionFilter("Archivo de texto (.cmp)", "cmp");
         explorador.setFileFilter(filtro);
 
         //Muestro el explorador
@@ -372,48 +378,38 @@ public class GUI extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+        model.setRowCount(0); // Limpiar tabla
 
-        //Esta parte es para limpiar la lista de tokenes y la tablita
-        model.setRowCount(0);
-        while (!OLC1_Proyecto1_202302220.tokens.isEmpty()) {
-            OLC1_Proyecto1_202302220.tokens.remove();
-        }
-        while (!OLC1_Proyecto1_202302220.errores.isEmpty()) {
-            OLC1_Proyecto1_202302220.errores.remove();
-        }
+        tokens.clear();
+        errores.clear();
 
         jTable1.setModel(model);
         errorLexico = false;
+        OLC1_Proyecto1_202302220.contador1=0;
 
         try {
-            //Comienzo leyendo la entrada
+            // Leer entrada del área de texto
             String entrada = jTextArea2.getText();
             System.out.println(entrada);
 
-            //PARTE DEL ANÁLSIS LÉXICO -------------------------------------------------------------------------------------------
-            OLC1_Proyecto1_202302220.analisisLexico(entrada);
-            // Verificar si hay tokens
+            // Ejecutar análisis (léxico + sintáctico)
+            OLC1_Proyecto1_202302220.analisito(entrada);
 
-            if (!OLC1_Proyecto1_202302220.errores.isEmpty()) { //Si es que hay errores
+            // Verificar si hay errores (léxicos o sintácticos)
+            if (!OLC1_Proyecto1_202302220.errores.isEmpty()) {
                 for (String[] error : OLC1_Proyecto1_202302220.errores) {
                     model.addRow(error);
                     errorLexico = true;
                 }
-            } else { //Si es que no hay errores
-                JOptionPane.showMessageDialog(this, "No hay errores lexico para colocar en la tabla");
+            } else {
+                JOptionPane.showMessageDialog(this, "No hay errores léxicos ni sintácticos para colocar en la tabla");
             }
-
-        } catch (IOException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
     }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
@@ -445,6 +441,7 @@ public class GUI extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 new GUI().setVisible(true);
             }

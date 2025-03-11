@@ -29,4 +29,413 @@ Con esta información se espera garantizar un mantenimiento adecuado del softwar
 - Tener instalado JDK
 ## Lógica y descripción de la solución
 
+### Main
+Para la ejecución de todo el código dentro de este archivo se colocaron las funciones principales para el manejo de tablas en las cuales se guaradarían todo los tokesn y lo errores, así como las funciones que llamarían el análisis sintáctico y lexico.
 
+#### Main
+En esta función se inicializa toda la interfaz gráfica
+```java
+    public static void main(String[] args) throws Exception {
+        //Inicio el programa con la interfaz gráfica
+        System.out.println("Iniciando el programa");
+
+        gui.setVisible(true);
+        gui.setLocationRelativeTo(null);
+
+    }
+```
+#### Variables globales
+Estas se usaron para manejar de una forma más práctica todas las funciones del programa.
+```java
+    static public LinkedList<String[]> tokens = new LinkedList<>();
+    static public LinkedList<String[]> errores = new LinkedList<>();
+    public static String salidita = "";
+    public static GUI gui = new GUI();
+
+        public static int contador1 = 0;
+        public static int contador2 = 0;
+```
+
+#### Función análisisLexico
+Esta se encarga de realizar el análisis léxico para poder genrar la tabla de tokens, esta directamente crea arreglos y los coloca dentro de la tabla de tokens.
+
+```
+static public void analisisLexico(String input) throws IOException {
+        Lexer lexer = new Lexer(new StringReader(input));
+        Symbol token;
+        contador2 = 0;
+        while ((token = lexer.next_token()).sym != sym.EOF) {
+            // Incrementa el contador
+
+            // Si es un error, agregar al arreglo de errores
+            if (sym.terminalNames[token.sym].equals("ERROR_LEXICO")) {
+                // Crea un nuevo arreglo para el token
+                contador1++;
+                String[] arreglo = new String[5];
+                arreglo[0] = Integer.toString(contador1);
+                arreglo[1] = sym.terminalNames[token.sym];
+                arreglo[2] = token.value.toString();
+                arreglo[3] = Integer.toString(token.left);
+                arreglo[4] = Integer.toString(token.right);
+
+                errores.add(arreglo);
+                //break;
+            } else {
+                contador2++;
+                // Crea un nuevo arreglo para el token
+                String[] arreglo = new String[5];
+                arreglo[0] = Integer.toString(contador2);
+                arreglo[1] = sym.terminalNames[token.sym];
+                arreglo[2] = token.value.toString();
+                arreglo[3] = Integer.toString(token.left);
+                arreglo[4] = Integer.toString(token.right);
+
+                // Si no es un error, agregar al arreglo de tokens
+                tokens.add(arreglo);
+            }
+        }
+    }
+```
+
+#### Función analisisSintactico
+Esta función se utiliza para poder realizar el funcionamiento del programa y ejecutar la partida con todo lo que esto conlleva.
+```java
+    static public void analisisSintactico(String input) throws Exception {
+        Lexer lexer = new Lexer(new StringReader(input));
+        salidita = "";
+
+        tokens.clear();
+        errores.clear();
+        Parser.erroresSintacticos.clear();
+
+        analisisLexico(input);
+        Parser parser = new Parser(lexer);
+
+        try {
+            parser.parse();
+        } catch (Exception e) {
+            System.err.println("Error durante el análisis sintáctico: " + e.getMessage());
+        }
+
+        // Si hay errores sintácticos, detener la ejecución
+        if (!Parser.erroresSintacticos.isEmpty()) {
+            errores.addAll(Parser.erroresSintacticos);
+            throw new Exception("Errores sintácticos detectados. No se puede continuar con la ejecución.");
+        }
+
+        // Si no hay errores, continuar con la ejecución
+        Entorno global = new Entorno("global");
+        String SALIDA = "";
+        for (Instruccion instruccion : parser.sentencias) {
+            try {
+                instruccion.jugar(global);
+                for (String salida : utilidades.Salida.salidaInfo) {
+                    SALIDA += salida + "\n";
+                }
+            } catch (Exception e) {
+                gui.SintacError();
+            }
+        }
+        System.out.println(SALIDA);
+        salidita = SALIDA;
+    }
+```
+
+#### Función analisito
+Esta función, al igual que la anterior, realiza un análisis sintáctico, con la diferencia de que no inicia la partida, por lo que se utiliza unicamente para poder crear la tabla de errores, añadiendo los errores sintácticos.
+
+### Interfaz gráfica
+La interfaz gráfica se creó con Swing y contiene textArea y botones para interactuar con esta
+
+#### Botones
+El botón *jButton1ActionPerformed* se encarga de iniciar la ejecución del programa en el que se realiza un análisis sintáctico para verificar si es que se cumple con la sintaxis y lo muestra.
+
+```java
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+
+        String entrada = jTextArea2.getText();
+        System.out.println(entrada);
+
+        if (!errorLexico) {
+            try {
+                OLC1_Proyecto1_202302220.analisisSintactico(entrada);
+                JOptionPane.showMessageDialog(this, "Análisis sintáctico completado");
+                jTextArea3.setText(OLC1_Proyecto1_202302220.salidita);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "No se puede continuar con la ejecución debido a errores sintácticos o léxicos.", "Error", JOptionPane.ERROR_MESSAGE);
+                Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No se puede continuar debido a errores léxicos.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }   
+```
+El botón *jButton5ActionPerformed* Se encarga de realizar el análisis léxico para que se muestre a posterior la tabla de tokens dentro de la interfaz gráfica.
+
+```java
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        // TODO add your handling code here:
+
+        //Esta parte es para limpiar la lista de tokenes y la tablita
+        model.setRowCount(0);
+        while (!OLC1_Proyecto1_202302220.tokens.isEmpty()) {
+            OLC1_Proyecto1_202302220.tokens.remove();
+        }
+        while (!OLC1_Proyecto1_202302220.errores.isEmpty()) {
+            OLC1_Proyecto1_202302220.errores.remove();
+        }
+        jTable1.setModel(model);
+        errorLexico = false;
+
+        try {
+            //Comienzo leyendo la entrada
+            String entrada = jTextArea2.getText();
+            System.out.println(entrada);
+
+            //PARTE DEL ANÁLSIS LÉXICO -------------------------------------------------------------------------------------------
+            OLC1_Proyecto1_202302220.analisisLexico(entrada);
+            // Verificar si hay tokens
+
+            if (!OLC1_Proyecto1_202302220.errores.isEmpty()) { //Si es que hay errores
+                JOptionPane.showMessageDialog(this, "Hay errores léxicos");
+                errorLexico = true;
+            } else { //Si es que no hay errores
+                for (String[] token : OLC1_Proyecto1_202302220.tokens) {
+                    model.addRow(token);
+                }
+            }
+            System.out.println("Análisis lexico completado");
+
+        } catch (IOException ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }  
+
+```
+El botón *jButton6ActionPerformed* se encarga de, igualmente que el botón previamente descrito, realizar el análisis pero para poder mostrar los errores que hay y mostrarlos en la tabla, volvéndose esta en esta ocasión tabla de errores.
+```java
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {                                         
+        model.setRowCount(0); // Limpiar tabla
+
+        tokens.clear();
+        errores.clear();
+
+        jTable1.setModel(model);
+        errorLexico = false;
+        OLC1_Proyecto1_202302220.contador1=0;
+
+        try {
+            // Leer entrada del área de texto
+            String entrada = jTextArea2.getText();
+            System.out.println(entrada);
+
+            // Ejecutar análisis (léxico + sintáctico)
+            OLC1_Proyecto1_202302220.analisito(entrada);
+
+            // Verificar si hay errores (léxicos o sintácticos)
+            if (!OLC1_Proyecto1_202302220.errores.isEmpty()) {
+                for (String[] error : OLC1_Proyecto1_202302220.errores) {
+                    model.addRow(error);
+                    errorLexico = true;
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "No hay errores léxicos ni sintácticos para colocar en la tabla");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }      
+```
+Todo esto se logra manejar gracias a variables globales dentro de la clase que son las siguientes:
+
+```java
+    static public String[] columnas = {"No.", "Tipo:", "Lexema:", "Linea:", "Columna"};
+    static public DefaultTableModel model = new DefaultTableModel(columnas, 0);
+    static boolean errorLexico = false;
+    String nombreArchivo = "";
+    boolean guardado = false;
+    File archivoSeleccionado;
+
+```
+#### Bibliotecas
+Las bibliotecas que se utilizaron para la creación de la interfaz gráfica son las siguientes:
+```java
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import static olc1_proyecto1_202302220.OLC1_Proyecto1_202302220.errores;
+import static olc1_proyecto1_202302220.OLC1_Proyecto1_202302220.tokens;
+```
+### Análisis Léxico
+Para conseguir el análisis léxico se utilizó la herramienta *jflex*, la cual permite realizarlo de forma sencilla dentro de java y se puede unir con cup, la cual se utilizó también para el análisis sintáctico.
+
+#### Importaciones
+```java
+package olc1_proyecto1_202302220.analizador;
+import java_cup.runtime.Symbol;
+```
+
+#### Configuración de jflex
+```java
+%class Lexer
+%public
+%unicode
+%cup
+%line
+%column
+%char
+```
+Esta configuración deliminta el inicio de estas, especifica el nombre de la clase que se va a generar, hará que la clase sea pública, habilita el soporte para caracteres Unicode, indica que será compatible con CUP y hará un seguimiento de la línea, columan y posición de los caracteres.
+#### Expresiones Regulares
+```java
+//PARA IGNORAR
+WS = [ \t\r\n]+
+
+//NUMEROS
+ENTERO = [0-9]+
+FLOTANTE = {ENTERO}\.{ENTERO}
+
+// Comentarios y espacios en blanco -------
+COMENTARIOS = "//"([^\r\n]*)?
+COMENTARIOS_MULTILINEA = [/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
+
+//IDENTIFICADORES
+ID = [A-Za-z_][A-Za-z_0-9]*
+
+```
+
+#### Reglas de acción 
+En estas se asocia cada expresión regular con una acción que se ejecutará cuando se encuentre coincidencia, creancon un objeto *Symbol* que representa los tokens y los devuelve al analizador sintáctico.
+
+```java
+//REGLAS DE ACCIÓN----------------------------------------------------------------------------------------------------
+%%
+
+{WS}     { /* Ignorar espacios en blanco */ }
+
+// PALABRAS RESERVADAS-----
+
+//BLOQUES PRINCIPALES
+"strategy"  { return new Symbol(sym.STRATEGY, yyline + 1, (int) yycolumn + 1, yytext()); }
+"initial"  { return new Symbol(sym.INITIAL, yyline + 1, (int) yycolumn + 1, yytext()); }
+"match"  { return new Symbol(sym.MATCH, yyline + 1, (int) yycolumn + 1, yytext()); }
+"main"  { return new Symbol(sym.MAIN, yyline + 1, (int) yycolumn + 1, yytext()); }
+
+//ACCIONES
+"C" { return new Symbol(sym.C, yyline + 1, (int) yycolumn + 1, yytext()); }
+"D" { return new Symbol(sym.D, yyline + 1, (int) yycolumn + 1, yytext()); }
+
+//RELACIONADO A STRATEGY
+"rules"  { return new Symbol(sym.RULES, yyline + 1, (int) yycolumn + 1, yytext()); }
+"if"  { return new Symbol(sym.IF, yyline + 1, (int) yycolumn + 1, yytext()); }
+"then"  { return new Symbol(sym.THEN, yyline + 1, (int) yycolumn + 1, yytext()); }
+"else"  { return new Symbol(sym.ELSE, yyline + 1, (int) yycolumn + 1, yytext()); }
+
+//funciones especiales dentro de strategy
+"get_move" { return new Symbol(sym.GET_MOVE, yyline + 1, (int) yycolumn + 1, yytext()); }
+"last_move" { return new Symbol(sym.LAST_MOVE, yyline + 1, (int) yycolumn + 1, yytext()); }
+"get_moves_count" { return new Symbol(sym.GET_MOVES_COUNT, yyline + 1, (int) yycolumn + 1, yytext()); }
+"get_last_n_moves" { return new Symbol(sym.GET_LAST_N_MOVES, yyline + 1, (int) yycolumn + 1, yytext()); }
+
+//RELACIONADO A MATCH
+"round_number"  { return new Symbol(sym.ROUND_NUMBER, yyline + 1, (int) yycolumn + 1, yytext()); }
+"total_rounds"  { return new Symbol(sym.TOTAL_ROUNDS, yyline + 1, (int) yycolumn + 1, yytext()); }
+"players" { return new Symbol(sym.PLAYERS, yyline + 1, (int) yycolumn + 1, yytext()); }
+"strategies"  { return new Symbol(sym.STRATEGIES, yyline + 1, (int) yycolumn + 1, yytext()); }
+"rounds" { return new Symbol(sym.ROUNDS, yyline + 1, (int) yycolumn + 1, yytext()); }
+"scoring"  { return new Symbol(sym.SCORING, yyline + 1, (int) yycolumn + 1, yytext()); }
+
+
+//RELACIONADO A MAIN
+"run"  { return new Symbol(sym.RUN, yyline + 1, (int) yycolumn + 1, yytext()); }
+"with"  { return new Symbol(sym.WITH, yyline + 1, (int) yycolumn + 1, yytext()); }
+"seed"  { return new Symbol(sym.SEED, yyline + 1, (int) yycolumn + 1, yytext()); }
+
+//PUNTAJES
+"mutual cooperation" { return new Symbol(sym.MUTUAL_COOPERATION, yyline + 1, (int) yycolumn + 1, yytext()); }
+"mutual defection" { return new Symbol(sym.MUTUAL_DEFECTION, yyline + 1, (int) yycolumn + 1, yytext()); }
+"betrayal reward" { return new Symbol(sym.BETRAYAL_REWARD, yyline + 1, (int) yycolumn + 1, yytext()); }
+"betrayal punishment"  { return new Symbol(sym.BETRAYAL_PUNISHMENT, yyline + 1, (int) yycolumn + 1, yytext()); }
+
+"random" { return new Symbol(sym.RANDOM, yyline + 1, (int) yycolumn + 1, yytext()); }
+
+//LISTA DE HISTORIAL
+"opponent_history" { return new Symbol(sym.OPPONENT_HISTORY, yyline + 1, (int) yycolumn + 1, yytext()); }
+"self_history" { return new Symbol(sym.SELF_HISTORY, yyline + 1, (int) yycolumn + 1, yytext()); }
+
+//BOOLEANOS
+"true" { return new Symbol(sym.TRUE, yyline + 1, (int) yycolumn + 1, yytext()); }
+"false" { return new Symbol(sym.FALSE, yyline + 1, (int) yycolumn + 1, yytext()); }
+
+//VALORES
+{ENTERO} { return new Symbol(sym.ENTERO, yyline + 1, (int) yycolumn + 1, (yytext())); }   //parsear despues
+{FLOTANTE} { return new Symbol(sym.FLOTANTE, yyline + 1, (int) yycolumn + 1, (yytext())); }  //parsear despues
+{ID} { return new Symbol(sym.ID, yyline + 1, yycolumn + 1, yytext()); }
+
+
+// OPERADORES--------
+// Lógicas
+"&&"  { return new Symbol(sym.AND, yyline + 1, (int) yycolumn + 1, yytext()); }
+"||"  { return new Symbol(sym.OR, yyline + 1, (int) yycolumn + 1, yytext()); }
+"!"  { return new Symbol(sym.NOT, yyline + 1, (int) yycolumn + 1, yytext()); }
+
+// Comparadores
+"=="  { return new Symbol(sym.IGUAL, yyline + 1, (int) yycolumn + 1, yytext()); }
+"!="  { return new Symbol(sym.NO_IGUAL, yyline + 1, (int) yycolumn + 1, yytext()); }
+"<"  { return new Symbol(sym.MENOR, yyline + 1, (int) yycolumn + 1, yytext()); }
+">"  { return new Symbol(sym.MAYOR, yyline + 1, (int) yycolumn + 1, yytext()); }
+"<="  { return new Symbol(sym.MENOR_IGUAL, yyline + 1, (int) yycolumn + 1, yytext()); }
+">="  { return new Symbol(sym.MAYOR_IGUAL, yyline + 1, (int) yycolumn + 1, yytext()); }
+
+// OTROS----------
+"[" { return new Symbol(sym.ABRE_CORCHETE, yyline + 1, (int) yycolumn + 1, yytext()); }
+"]" { return new Symbol(sym.CIERRA_CORCHETE, yyline + 1, (int) yycolumn + 1, yytext()); }
+"{" { return new Symbol(sym.ABRE_LLAVE, yyline + 1, (int) yycolumn + 1, yytext()); }
+"}" { return new Symbol(sym.CIERRA_LLAVE, yyline + 1, (int) yycolumn + 1, yytext()); }
+"(" { return new Symbol(sym.ABRE_PARENTESIS, yyline + 1, (int) yycolumn + 1, yytext()); }
+")" { return new Symbol(sym.CIERRA_PARENTESIS, yyline + 1, (int) yycolumn + 1, yytext()); }
+"," { return new Symbol(sym.COMA, yyline + 1, (int) yycolumn + 1, yytext()); }
+":" { return new Symbol(sym.DOS_PUNTOS, yyline + 1, (int) yycolumn + 1, yytext()); }
+
+{COMENTARIOS} { /* Ignorar comentario de línea */ }
+{COMENTARIOS_MULTILINEA} { /* Ignorar comentario de varias líneas */ }
+
+// SINO ENTONCES ESTO XD DEBE DE LANZAR UN EXCEPCION O ALGO MAS+++++6+2+5+5+52+252+652+6246+
+.    { return new Symbol(sym.ERROR_LEXICO, yyline + 1, yycolumn + 1, yytext()); }
+//{ throw new Error("Error léxico en fila " + (yyline + 1) + " columna " + (yycolumn + 1)); }
+```
+### Análisis Sintáctico
+El análisis sintáctico permite que se pueda corroborar que los tokens se encuentre en el orden en el cual deberían de estar. Para esto, como se mencionó previamente, se utilizó cup, con el cual, además de permitir que se pueda hacer esta revisión, permite que se guarden los valores para su posterior utilización.
+
+```java
+
+
+```
+
+
+```java
+
+
+```
+
+### Ejecución del programa
+Para la ejecución del programa, como se mencionó previamente, se crearon muchas clases que se fueron guardando durante el análisis sintáctico con cup para que, cuando se tenga que iniciar el programa, se pueda adentrar en estas y ejecutar todo tal y como debería.
+
+```java
+
+
+```

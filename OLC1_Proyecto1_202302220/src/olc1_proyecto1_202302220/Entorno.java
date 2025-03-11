@@ -4,6 +4,8 @@
  */
 package olc1_proyecto1_202302220;
 
+import abstractas.Expresion;
+import java.util.ArrayList;
 import objetos.Estrategia;
 import java.util.Map;
 import java.util.TreeMap;
@@ -14,7 +16,7 @@ import objetos.Partida;
  * @author Enner
  */
 public class Entorno {
-    
+
     public String nombre;
     public Map<String, Estrategia> estrategias = new TreeMap<>();
     public Map<String, Partida> partidas = new TreeMap<>();
@@ -26,8 +28,6 @@ public class Entorno {
     public Entorno(String nombre) {
         this.nombre = nombre;
     }
-    
-    
 
     public boolean guardarEstrategia(String nombre, Estrategia estrategia) {
         if (!this.estrategias.containsKey(nombre)) {
@@ -47,7 +47,7 @@ public class Entorno {
         return false;
     }
 
-    public Partida obtenerPartida(String nombre){
+    public Partida obtenerPartida(String nombre) {
         if (partidas.containsKey(nombre)) {
             // System.out.println("Encuentra la partida");
             return partidas.get(nombre);
@@ -55,7 +55,7 @@ public class Entorno {
         return null;
     }
 
-    public Estrategia obtenerEstrategia(String nombre){
+    public Estrategia obtenerEstrategia(String nombre) {
         if (estrategias.containsKey(nombre)) {
             // System.out.println("Encuentra la estrategia");
             return estrategias.get(nombre);
@@ -80,18 +80,16 @@ public class Entorno {
     public int getRondaActual() {
         return this.rondaActual;
     }
-    
-    
+
+    //RONDAS TOTALES
     public void setTotalRondas(int ronda) {
         this.totalRondas = ronda;
     }
-    
-    
-    //RONDAS TOTALES
-    public int getTotalRondas(){
+
+    public int getTotalRondas() {
         return this.totalRondas;
     }
-    
-    
-    
+
+
+
 }

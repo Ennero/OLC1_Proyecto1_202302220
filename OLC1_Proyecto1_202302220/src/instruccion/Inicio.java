@@ -1,8 +1,10 @@
-
 package instruccion;
 
 import abstractas.Expresion;
 import abstractas.Instruccion;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import objetos.Estrategia;
 import objetos.Partida;
 import olc1_proyecto1_202302220.Entorno;
@@ -13,7 +15,8 @@ import utilidades.TipoInstruccion;
  *
  * @author Enner
  */
-public class Inicio extends Instruccion{
+public class Inicio extends Instruccion {
+
     Object partida;
     int rondas;
     boolean decision1;
@@ -24,8 +27,8 @@ public class Inicio extends Instruccion{
     int traicionado = 0;
     int puntuacion1 = 0;
     int puntuacion2 = 0;
-    int cooperacion1 =0;
-    int cooperacion2 =0;
+    int cooperacion1 = 0;
+    int cooperacion2 = 0;
 
     Estrategia estrategia1;
     Estrategia estrategia2;
@@ -58,7 +61,7 @@ public class Inicio extends Instruccion{
             Salida.salidaInfo.add("         Cooperacion Mutua: " + cooperacion);
             Salida.salidaInfo.add("         Defeccion Mutua: " + defeccion);
             Salida.salidaInfo.add("         Traicion: " + traidor + "/" + traicionado + " (Traidor/Traicionado)");
-            
+
             Salida.salidaInfo.add("DESARROLLO:");
             for (int i = 0; i < rondas; i++) {
                 entorno.setRondaActual(i);
@@ -66,6 +69,9 @@ public class Inicio extends Instruccion{
                     decision1 = decisionInicial(entorno, estrategia1);
                     decision2 = decisionInicial(entorno, estrategia2);
                     formato(i, estrategia1.nombre, estrategia2.nombre);
+                    //entorno.setHistorial1(historial1);
+                    //entorno.setHistorial2(historial2);
+                    
                 } else {
                     decision1 = (boolean) validarRegla(entorno, estrategia1);
                     decision2 = (boolean) validarRegla(entorno, estrategia2);
@@ -74,24 +80,24 @@ public class Inicio extends Instruccion{
             }
         }
         Salida.salidaInfo.add("RESUMEN:");
-        
-        //Parte del primer jugador
-        Salida.salidaInfo.add("     "+estrategia1.nombre + ":");
-        Salida.salidaInfo.add("    - Puntuacion final: "+ puntuacion1);
-        Salida.salidaInfo.add("    - Cooperaciones: "+ Math.round(cooperacion1/rondas)*100 + "%");
-        Salida.salidaInfo.add("    - Defecciones: "+ Math.round((rondas-cooperacion1)/rondas)*100 + "%");
-        
-        //Parte del segundo jugador
-        Salida.salidaInfo.add("     "+estrategia2.nombre + ":");
-        Salida.salidaInfo.add("    - Puntuacion final: "+ puntuacion2);
-        Salida.salidaInfo.add("    - Cooperaciones: "+ Math.round(cooperacion2/rondas)*100 + "%");
-        Salida.salidaInfo.add("    - Defecciones: "+ Math.round((rondas-cooperacion2)/rondas)*100 + "%");
 
-        
+        //Parte del primer jugador
+        Salida.salidaInfo.add("     " + estrategia1.nombre + ":");
+        Salida.salidaInfo.add("    - Puntuacion final: " + puntuacion1);
+        Salida.salidaInfo.add("    - Cooperaciones: " + Math.round(cooperacion1 / rondas) * 100 + "%");
+        Salida.salidaInfo.add("    - Defecciones: " + Math.round((rondas - cooperacion1) / rondas) * 100 + "%");
+
+        //Parte del segundo jugador
+        Salida.salidaInfo.add("     " + estrategia2.nombre + ":");
+        Salida.salidaInfo.add("    - Puntuacion final: " + puntuacion2);
+        Salida.salidaInfo.add("    - Cooperaciones: " + Math.round(cooperacion2 / rondas) * 100 + "%");
+        Salida.salidaInfo.add("    - Defecciones: " + Math.round((rondas - cooperacion2) / rondas) * 100 + "%");
+
     }
 
     public boolean decisionInicial(Entorno entorno, Estrategia estrategia) {
         Expresion decisionInicial = estrategia.instrucciones.inicio;
+        //estrategia.historial.add(decisionInicial.jugar(entorno).valor);
         return (boolean) decisionInicial.jugar(entorno).valor;
     }
 
@@ -101,40 +107,45 @@ public class Inicio extends Instruccion{
         for (Regla regla : estrategia.instrucciones.reglas) {
             if (regla.condicion != null && (boolean) regla.condicion.jugar(entorno).valor) {
                 // regla if CONDICION then ACCION 
+                //estrategia.historial.add(regla.acion.jugar(entorno).valor);
                 return regla.acion.jugar(entorno).valor;
             } else if (regla.condicion == null) {
                 determinada = regla.acion.jugar(entorno).valor;
             }
         }
+        //estrategia.historial.add(determinada);
         return determinada;
     }
 
-    
     //Funcion para que escriba la cosa como debe de ser de bonita
     public void formato(int i, String estrategia1, String estrategia2) {
         if (decision1 && decision2) {
-            Salida.salidaInfo.add("     Ronda: " + (i+1) + ": " + estrategia1 + " = COOPERATE" + " , " + estrategia2 + " = COOPERATE (" + cooperacion + "-" + cooperacion + ")");
+            Salida.salidaInfo.add("     Ronda: " + (i + 1) + ": " + estrategia1 + " = COOPERATE" + " , " + estrategia2 + " = COOPERATE (" + cooperacion + "-" + cooperacion + ")");
             puntuacion1 += cooperacion;
             puntuacion2 += cooperacion;
             cooperacion1++;
             cooperacion2++;
-            
+
         } else if (!decision1 && !decision2) {
-            Salida.salidaInfo.add("     Ronda: " + (i+1) + ": " + estrategia1 + " = DEFECT" + " , " + estrategia2 + " = DEFECT (" + defeccion + "-" + defeccion + ")");
+            Salida.salidaInfo.add("     Ronda: " + (i + 1) + ": " + estrategia1 + " = DEFECT" + " , " + estrategia2 + " = DEFECT (" + defeccion + "-" + defeccion + ")");
             puntuacion1 += defeccion;
             puntuacion2 += defeccion;
-            
+
         } else if (!decision1 && decision2) {
-            Salida.salidaInfo.add("     Ronda: " + (i+1) + ": " + estrategia1 + " = DEFECT" + " , " + estrategia2 + " = COOPERATE (" + traidor + "-" + traicionado + ")");
+            Salida.salidaInfo.add("     Ronda: " + (i + 1) + ": " + estrategia1 + " = DEFECT" + " , " + estrategia2 + " = COOPERATE (" + traidor + "-" + traicionado + ")");
             puntuacion1 += traidor;
             puntuacion2 += traicionado;
             cooperacion2++;
-            
+
         } else {
-            Salida.salidaInfo.add("     Ronda: " + (i+1) + ": " + estrategia1 + " = COOPERATE" + " , " + estrategia2 + " = DEFECT (" + traicionado + "-" + traidor + ")");
+            Salida.salidaInfo.add("     Ronda: " + (i + 1) + ": " + estrategia1 + " = COOPERATE" + " , " + estrategia2 + " = DEFECT (" + traicionado + "-" + traidor + ")");
             puntuacion1 += traicionado;
             puntuacion2 += traidor;
             cooperacion1++;
+
         }
+        //historial1.add(decision1);
+        //historial2.add(decision2);
+        
     }
 }
