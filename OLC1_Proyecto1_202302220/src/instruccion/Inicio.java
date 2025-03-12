@@ -18,7 +18,8 @@ import utilidades.TipoInstruccion;
  */
 public class Inicio extends Instruccion {
 
-    Object partida;
+    ArrayList<String> partidas;
+    Object seed;
     int rondas;
     boolean decision1;
     boolean decision2;
@@ -33,14 +34,24 @@ public class Inicio extends Instruccion {
 
     Estrategia estrategia1;
     Estrategia estrategia2;
-    public Inicio(Object partida) {
+    public Inicio(ArrayList<String>  partidas, Object seed) {
         super(TipoInstruccion.MAIN);
-        this.partida = partida;
+        this.partidas = partidas;
+        this.seed = seed;
     }
 
     @Override
     public void jugar(Entorno entorno) {
-        Partida partida = entorno.obtenerPartida(this.partida.toString());
+        for(String nombrPartida:partidas){
+            Partida partida = entorno.obtenerPartida(nombrPartida);
+            if (partida != null){
+                ejecutarPartida(entorno, partida);
+            }
+        }
+    }
+    
+    
+    public void ejecutarPartida(Entorno entorno, Partida partida){
         if (partida != null) {
             this.rondas = (int) partida.rondas;
             entorno.setPartidaActual(partida);
@@ -95,9 +106,8 @@ public class Inicio extends Instruccion {
         //Parte del segundo jugador
         Salida.salidaInfo.add("     " + estrategia2.nombre + ":");
         Salida.salidaInfo.add("    - Puntuacion final: " + puntuacion2);
-        Salida.salidaInfo.add("    - Cooperaciones: " + Math.round(cooperacion2 / rondas) * 100 + "%");
-        Salida.salidaInfo.add("    - Defecciones: " + Math.round((rondas - cooperacion2) / rondas) * 100 + "%");
-
+        Salida.salidaInfo.add("    - Cooperaciones: " + Math.round((double) cooperacion2 / (double) rondas) * 100 + "%");
+        Salida.salidaInfo.add("    - Defecciones: " + Math.round((double) (rondas - cooperacion2) / (double) rondas) * 100 + "%");
     }
 
     public boolean decisionInicial(Entorno entorno, Estrategia estrategia) {
@@ -124,8 +134,7 @@ public class Inicio extends Instruccion {
             }
             estrategia.state=false;
         }
-        //estrategia.historial.add(determinada);
-        return determinada;
+        return determinada; //Después puede que lo cambie para que se false porque no estoy seguro de como debería de funcionar
     }
 
     //Funcion para que escriba la cosa como debe de ser de bonita

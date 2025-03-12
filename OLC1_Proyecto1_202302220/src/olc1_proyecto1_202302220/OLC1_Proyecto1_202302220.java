@@ -147,7 +147,6 @@ public class OLC1_Proyecto1_202302220 {
             System.err.println("Error durante el análisis sintáctico: " + e.getMessage());
         }
 
-
         // Agregar errores sintácticos detectados
         OLC1_Proyecto1_202302220.errores.addAll(Parser.erroresSintacticos);
     }

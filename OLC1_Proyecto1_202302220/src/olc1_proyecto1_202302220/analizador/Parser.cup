@@ -96,8 +96,9 @@ non terminal Puntos puntos;
 non terminal Expresion puntuacion;
 //Lo que va en el bloque main
 non terminal Instruccion bloque_Main;
-non terminal main_Cuerpo;
-non terminal match_Lista;
+non terminal ArrayList<Inicio> lista_Accesos; //Aqui tengo que ver como arregla la cosa esa de las clases
+non terminal Inicio main_Cuerpo;
+non terminal ArrayList<String> match_Lista;
 //PARTES COMPLEMENTARIAS DEL CODIGO :)
 non terminal Expresion expresion;
 non terminal Expresion comparacion;
@@ -145,17 +146,26 @@ puntuacion ::= MUTUAL_COOPERATION DOS_PUNTOS expresion:exp {: RESULT =  exp; :}
 | BETRAYAL_PUNISHMENT DOS_PUNTOS expresion:exp {: RESULT =  exp; :}
 ;
 //-------------------------------------
+
+
+
+
 //BLOQUE DE INICIO
-bloque_Main ::= MAIN ABRE_LLAVE main_Cuerpo:p CIERRA_LLAVE {: RESULT = new Inicio(p); :} ;
-main_Cuerpo ::= RUN ABRE_CORCHETE ID:id CIERRA_CORCHETE WITH 
-        ABRE_LLAVE SEED DOS_PUNTOS expresion CIERRA_LLAVE {: RESULT = id; :} ;
-//Aqui el auxiliar colocó que no se "reproducía la lista" ****
-//Así que lo probaré como si sí y luego veo si es viable tal y como lo ando haciendo ****
-//match_Lista ::= match_Lista COMA ID 
-//| ID:id {:  RESULT = :}
-//;
-//Aqui el auxiliar colocó que no se "reproducía la lista" ****
-//Así que lo probaré como si sí y luego veo si es viable tal y como lo ando haciendo ****
+bloque_Main ::= MAIN ABRE_LLAVE lista_Accesos:p CIERRA_LLAVE {: RESULT = new Todo(p); :} ;
+
+lista_Accesos ::= lista_Accesos:l main_Cuerpo:i {: RESULT = l; RESULT.add(i); :}
+| main_Cuerpo:i                                 {: RESULT = new ArrayList<>(Arrays.asList(i));  :}
+;
+
+main_Cuerpo ::= RUN ABRE_CORCHETE match_Lista:id CIERRA_CORCHETE WITH 
+        ABRE_LLAVE SEED DOS_PUNTOS expresion:seed CIERRA_LLAVE {: RESULT = new Inicio(id,seed); :} ;
+
+match_Lista ::= match_Lista:l COMA ID:id {: RESULT = l; RESULT.add(id); :} 
+| ID:id                                  {: RESULT = new ArrayList<>(Arrays.asList(id));  :}
+;
+
+
+
 //-------------------------------------
 //PARTES COMPLEMENTARIAS DEL CODIGO :)
 decision ::= C:d {: RESULT = new Primitiva(d, TipoTipo.DECISION); :}

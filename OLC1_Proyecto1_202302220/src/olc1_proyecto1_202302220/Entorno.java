@@ -17,18 +17,20 @@ import objetos.Partida;
  */
 public class Entorno {
 
+    //Variables donde guardo las cositas
+    Partida partidaActual;
+    int rondaActual;
+    int totalRondas;
     public String nombre;
     public Map<String, Estrategia> estrategias = new TreeMap<>();
     public Map<String, Partida> partidas = new TreeMap<>();
 
-    Partida partidaActual;
-    int rondaActual;
-    int totalRondas;
-
+    //Contructor del entorno
     public Entorno(String nombre) {
         this.nombre = nombre;
     }
 
+    //Guardo la estrategia que se ejecuta
     public boolean guardarEstrategia(String nombre, Estrategia estrategia) {
         if (!this.estrategias.containsKey(nombre)) {
             // System.out.println("ESTR: " + nombre);
@@ -38,6 +40,7 @@ public class Entorno {
         return false;
     }
 
+    //Guardo la partida que se ejecuta
     public boolean guardarPartida(String nombre, Partida partida) {
         if (!this.partidas.containsKey(nombre)) {
             this.partidas.put(nombre, partida);
@@ -47,6 +50,7 @@ public class Entorno {
         return false;
     }
 
+    //Se obtiene la partida que se está ejecutando
     public Partida obtenerPartida(String nombre) {
         if (partidas.containsKey(nombre)) {
             // System.out.println("Encuentra la partida");
@@ -55,6 +59,7 @@ public class Entorno {
         return null;
     }
 
+    //Obtiene la estrategia que se está usando
     public Estrategia obtenerEstrategia(String nombre) {
         if (estrategias.containsKey(nombre)) {
             // System.out.println("Encuentra la estrategia");
@@ -69,27 +74,28 @@ public class Entorno {
         this.partidaActual = partida;
     }
 
+    //Obtiene la partida actual
     public Partida getPartidaActual() {
         return this.partidaActual;
     }
 
+    //Coloca el número de ronda actual
     public void setRondaActual(int ronda) {
         this.rondaActual = ronda;
     }
 
+    //Obtiene el númoer de ronda Actual
     public int getRondaActual() {
         return this.rondaActual;
     }
 
-    //RONDAS TOTALES
+    //Coloca el totol de rondas
     public void setTotalRondas(int ronda) {
         this.totalRondas = ronda;
     }
 
+    //Retorna el total de rodas
     public int getTotalRondas() {
         return this.totalRondas;
     }
-
-
-
 }
