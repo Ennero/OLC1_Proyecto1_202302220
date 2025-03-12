@@ -42,10 +42,6 @@ public class Comparacion extends Expresion {
                 mayorIgual(entorno);
             case "<=" ->
                 menorIgual(entorno);
-            case "&&" ->
-                and(entorno);
-            case "||" ->
-                or(entorno);
             default ->
                 new TipoRetorno(-1, null);
         };
@@ -58,6 +54,7 @@ public class Comparacion extends Expresion {
         //System.out.println("aqui si no hay problemas");
         TipoRetorno valor2 = exp2.jugar(entorno);
         //System.out.println("aqui si no hay probelmas");
+        System.out.println("valor 1: "+valor1.valor.toString()+"Valor 2: "+valor2.valor.toString());
         if (valor1.tipo == TipoTipo.ENTERO || valor1.tipo == TipoTipo.FLOTANTE) {
             if (valor2.tipo == TipoTipo.ENTERO || valor2.tipo == TipoTipo.FLOTANTE) {
                 return new TipoRetorno(Double.parseDouble(valor1.valor.toString()) == Double.parseDouble(valor2.valor.toString()), TipoTipo.BOOLEANO);
@@ -68,7 +65,7 @@ public class Comparacion extends Expresion {
                 return new TipoRetorno((valor1.valor.toString()).equals(valor2.valor.toString()), TipoTipo.BOOLEANO);
             }
         }
-        return null;
+        return new TipoRetorno(false, TipoTipo.BOOLEANO);
     }
 
     public TipoRetorno noIgual(Entorno entorno) {
@@ -124,37 +121,6 @@ public class Comparacion extends Expresion {
             }
         }
         return null;
-    }
-
-    public TipoRetorno and(Entorno entorno) {
-        TipoRetorno valor1 = exp1.jugar(entorno);
-        TipoRetorno valor2 = exp2.jugar(entorno);
-
-        // Verifica que no sean null y sean del tipo BOOLEANO
-        if (valor1 == null || valor2 == null) {
-            return null;
-        }
-        if (valor1.tipo != TipoTipo.BOOLEANO || valor2.tipo != TipoTipo.BOOLEANO) {
-            return null;
-        }
-        boolean b1 = Boolean.parseBoolean(valor1.valor.toString());
-        boolean b2 = Boolean.parseBoolean(valor2.valor.toString());
-        return new TipoRetorno(b1 && b2, TipoTipo.BOOLEANO);
-    }
-
-    public TipoRetorno or(Entorno entorno) {
-        TipoRetorno valor1 = exp1.jugar(entorno);
-        TipoRetorno valor2 = exp2.jugar(entorno);
-        // Verifica que no sean null y sean del tipo BOOLEANO
-        if (valor1 == null || valor2 == null) {
-            return null;
-        }
-        if (valor1.tipo != TipoTipo.BOOLEANO || valor2.tipo != TipoTipo.BOOLEANO) {
-            return null;
-        }
-        boolean b1 = Boolean.parseBoolean(valor1.valor.toString());
-        boolean b2 = Boolean.parseBoolean(valor2.valor.toString());
-        return new TipoRetorno(b1 || b2, TipoTipo.BOOLEANO);
     }
 
 }

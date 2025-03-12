@@ -68,7 +68,6 @@ public class Funcion extends Expresion {
                 System.out.println(valor);
                 System.out.println("-------------------");
                 return new TipoRetorno(valor,TipoTipo.DECISION);
-                
             }
             if(!estrategia2.state && estrategia1.state){
                 boolean valor= estrategia2.historial.get(rondonda);
@@ -86,7 +85,7 @@ public class Funcion extends Expresion {
                 return new TipoRetorno(valor,TipoTipo.DECISION);
             }
         }
-        return null;        
+        return new TipoRetorno(false,TipoTipo.DECISION);        
     }
     
     
@@ -118,8 +117,7 @@ public class Funcion extends Expresion {
                 return new TipoRetorno(valor,TipoTipo.DECISION);
             }
         }
-        
-        return null;
+        return new TipoRetorno(false,TipoTipo.DECISION); 
     }
     
     public TipoRetorno getMovesCount(Entorno entorno){
@@ -161,11 +159,6 @@ public class Funcion extends Expresion {
     public TipoRetorno getLastNMoves(Entorno entorno){
         return null;
     }
-    
-    
-    
-    
-    
     
     
 }

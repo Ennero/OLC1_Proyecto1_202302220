@@ -101,14 +101,14 @@ non terminal match_Lista;
 //PARTES COMPLEMENTARIAS DEL CODIGO :)
 non terminal Expresion expresion;
 non terminal Expresion comparacion;
-non terminal logica;
-non terminal funcion;
+non terminal Expresion logica;
+non terminal Expresion funcion;
 non terminal lista;
 non terminal elemento;
 non terminal Expresion decision;
 //---------------------------------------------------------------------------------
-precedence left OR, AND, IGUAL, NO_IGUAL, MENOR, MAYOR, MENOR_IGUAL, MAYOR_IGUAL;
-precedence nonassoc NOT;
+precedence left OR, AND;
+precedence nonassoc NOT, IGUAL, NO_IGUAL, MENOR, MAYOR, MENOR_IGUAL, MAYOR_IGUAL;
 //-------------------------------------------------------------------------------
 start with ini;
 ini ::= iniciar:iniciar {: sentencias = iniciar; :};
@@ -162,7 +162,7 @@ decision ::= C:d {: RESULT = new Primitiva(d, TipoTipo.DECISION); :}
 | D:d {: RESULT = new Primitiva(d, TipoTipo.DECISION); :}
 ;
 expresion ::= comparacion:r {: RESULT =r; :}
-| logica
+| logica:l {: RESULT = l; :}
 | decision:d {: RESULT = d; :}
 | funcion:f {: RESULT = f; :}
 | lista
@@ -183,9 +183,9 @@ comparacion ::= expresion:exp1 IGUAL:op expresion:exp2                   {: RESU
 | expresion:exp1 MENOR_IGUAL:op expresion:exp2                           {: RESULT = new Comparacion(exp1,op,exp2); :}
 | expresion:exp1 MAYOR_IGUAL:op expresion:exp2                           {: RESULT = new Comparacion(exp1,op,exp2); :}
 ;
-logica ::= expresion AND expresion
-| expresion OR expresion
-| NOT expresion
+logica ::= expresion:exp1 AND:op expresion:exp2  {: RESULT = new OperacionLogica(exp1,op,exp2); :}
+| expresion:exp1 OR:op expresion:exp2            {: RESULT = new OperacionLogica(exp1,op,exp2); :}
+| NOT expresion                     
 ;
 funcion ::= GET_MOVE:func ABRE_PARENTESIS expresion:e1 COMA expresion:e2 CIERRA_PARENTESIS {: RESULT = new Funcion(func, e1, e2); :} 
 | LAST_MOVE:func ABRE_PARENTESIS expresion:e1 CIERRA_PARENTESIS                            {: RESULT = new Funcion(func, e1, null); :}   
