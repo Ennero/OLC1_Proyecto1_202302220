@@ -86,10 +86,11 @@ public class OLC1_Proyecto1_202302220 {
     static public void analisisSintactico(String input) throws Exception {
         Lexer lexer = new Lexer(new StringReader(input));
         salidita = "";
-
         tokens.clear();
         errores.clear();
         Parser.erroresSintacticos.clear();
+        
+        utilidades.Salida.salidaInfo.clear();
 
         analisisLexico(input);
         Parser parser = new Parser(lexer);
@@ -117,9 +118,11 @@ public class OLC1_Proyecto1_202302220 {
                 }
             } catch (Exception e) {
                 gui.SintacError();
+                System.out.println(e);
             }
         }
-        System.out.println(SALIDA);
+        
+        //System.out.println(SALIDA);
         salidita = SALIDA;
     }
 
@@ -143,6 +146,7 @@ public class OLC1_Proyecto1_202302220 {
         } catch (Exception e) {
             System.err.println("Error durante el análisis sintáctico: " + e.getMessage());
         }
+
 
         // Agregar errores sintácticos detectados
         OLC1_Proyecto1_202302220.errores.addAll(Parser.erroresSintacticos);

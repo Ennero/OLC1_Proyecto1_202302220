@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import random.DeterministicRandomGenerator;
 import random.RandomGenerator;
+import funciones.*;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -424,7 +425,7 @@ public class Parser extends java_cup.runtime.lr_parser {
     public void syntax_error(Symbol s) {
         String[] error = new String[5];
         OLC1_Proyecto1_202302220.contador1++;
-        error[0] = Integer.toString(OLC1_Proyecto1_202302220.contador1); // Número de error
+        error[0] = Integer.toString(OLC1_Proyecto1_202302220.contador1+1); // Número de error
         error[1] = "ERROR_SINTACTICO";
         error[2] = (s.value != null) ? s.value.toString() : "null";
         error[3] = Integer.toString(s.left);
@@ -1130,12 +1131,6 @@ class CUP$Parser$actions {
           case 51: // funcion ::= GET_MOVE ABRE_PARENTESIS expresion COMA expresion CIERRA_PARENTESIS 
             {
               Object RESULT =null;
-		int listaleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).left;
-		int listaright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-3)).right;
-		Expresion lista = (Expresion)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-3)).value;
-		int accionleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
-		int accionright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
-		Expresion accion = (Expresion)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("funcion",21, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-5)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }

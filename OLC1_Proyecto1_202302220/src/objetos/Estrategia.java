@@ -14,8 +14,9 @@ import java.util.ArrayList;
 public class Estrategia {
     
     public String nombre;
-    public ArrayList<Object> historial;
     public InstruccionEstrategia instrucciones;
+    public ArrayList<Boolean> historial = new ArrayList<>(); 
+    public boolean state;
     public Estrategia (String nombre, InstruccionEstrategia instrucciones){
         this.nombre = nombre;
         this.instrucciones=instrucciones;

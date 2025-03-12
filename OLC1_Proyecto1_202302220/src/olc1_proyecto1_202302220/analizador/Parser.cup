@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import random.DeterministicRandomGenerator;
 import random.RandomGenerator;
+import funciones.*;
 
 
 /* 2. Codigo para el parser, variables y metodos */
@@ -163,11 +164,11 @@ decision ::= C:d {: RESULT = new Primitiva(d, TipoTipo.DECISION); :}
 expresion ::= comparacion:r {: RESULT =r; :}
 | logica
 | decision:d {: RESULT = d; :}
-| funcion
+| funcion 
 | lista
 | RANDOM:p {: RESULT = new RandomNumber(); :}
-| OPPONENT_HISTORY 
-| SELF_HISTORY 
+| OPPONENT_HISTORY
+| SELF_HISTORY
 | ROUND_NUMBER:r {: RESULT =new RondaActual(); :}
 | TOTAL_ROUNDS:R {: RESULT =new TotalRondas(); :}
 | TRUE:p         {: RESULT = new Primitiva(p,TipoTipo.BOOLEANO); :}
@@ -186,10 +187,10 @@ logica ::= expresion AND expresion
 | expresion OR expresion
 | NOT expresion
 ;
-funcion ::= GET_MOVE ABRE_PARENTESIS expresion:lista COMA expresion:accion CIERRA_PARENTESIS 
-| LAST_MOVE ABRE_PARENTESIS expresion CIERRA_PARENTESIS
-| GET_MOVES_COUNT ABRE_PARENTESIS expresion COMA expresion CIERRA_PARENTESIS
-| GET_LAST_N_MOVES ABRE_PARENTESIS expresion COMA expresion CIERRA_PARENTESIS
+funcion ::= GET_MOVE ABRE_PARENTESIS expresion COMA expresion CIERRA_PARENTESIS 
+| LAST_MOVE ABRE_PARENTESIS expresion CIERRA_PARENTESIS                              
+| GET_MOVES_COUNT ABRE_PARENTESIS expresion COMA expresion CIERRA_PARENTESIS   
+| GET_LAST_N_MOVES ABRE_PARENTESIS expresion COMA expresion CIERRA_PARENTESIS   
 ;
 lista ::= ABRE_CORCHETE elemento CIERRA_CORCHETE ;
 elemento ::= elemento COMA expresion

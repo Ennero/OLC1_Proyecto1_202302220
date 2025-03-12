@@ -30,13 +30,24 @@ public class Comparacion extends Expresion {
     @Override
     public TipoRetorno jugar(Entorno entorno) {
         return switch (this.operador) {
-            case "==" -> igual(entorno);
-            case "!=" -> noIgual(entorno);
-            case ">" -> mayor(entorno);
-            case "<" -> menor(entorno);
-            case ">=" -> mayorIgual(entorno);
-            case "<=" -> menorIgual(entorno);
-            default -> new TipoRetorno(-1, null);
+            case "==" ->
+                igual(entorno);
+            case "!=" ->
+                noIgual(entorno);
+            case ">" ->
+                mayor(entorno);
+            case "<" ->
+                menor(entorno);
+            case ">=" ->
+                mayorIgual(entorno);
+            case "<=" ->
+                menorIgual(entorno);
+            case "&&" ->
+                and(entorno);
+            case "||" ->
+                or(entorno);
+            default ->
+                new TipoRetorno(-1, null);
         };
     }
 
@@ -50,7 +61,7 @@ public class Comparacion extends Expresion {
         }
         return null;
     }
-    
+
     public TipoRetorno noIgual(Entorno entorno) {
         TipoRetorno valor1 = exp1.jugar(entorno);
         TipoRetorno valor2 = exp2.jugar(entorno);
@@ -61,8 +72,7 @@ public class Comparacion extends Expresion {
         }
         return null;
     }
-    
-    
+
     public TipoRetorno mayor(Entorno entorno) {
         TipoRetorno valor1 = exp1.jugar(entorno);
         TipoRetorno valor2 = exp2.jugar(entorno);
@@ -73,9 +83,7 @@ public class Comparacion extends Expresion {
         }
         return null;
     }
-    
-    
-    
+
     public TipoRetorno menor(Entorno entorno) {
         TipoRetorno valor1 = exp1.jugar(entorno);
         TipoRetorno valor2 = exp2.jugar(entorno);
@@ -86,9 +94,7 @@ public class Comparacion extends Expresion {
         }
         return null;
     }
-    
-    
-    
+
     public TipoRetorno mayorIgual(Entorno entorno) {
         TipoRetorno valor1 = exp1.jugar(entorno);
         TipoRetorno valor2 = exp2.jugar(entorno);
@@ -99,14 +105,32 @@ public class Comparacion extends Expresion {
         }
         return null;
     }
-    
-        public TipoRetorno menorIgual(Entorno entorno) {
+
+    public TipoRetorno menorIgual(Entorno entorno) {
         TipoRetorno valor1 = exp1.jugar(entorno);
         TipoRetorno valor2 = exp2.jugar(entorno);
         if (valor1.tipo == TipoTipo.ENTERO || valor1.tipo == TipoTipo.FLOTANTE) {
             if (valor2.tipo == TipoTipo.ENTERO || valor2.tipo == TipoTipo.FLOTANTE) {
                 return new TipoRetorno(Double.parseDouble(valor1.valor.toString()) <= Double.parseDouble(valor2.valor.toString()), TipoTipo.BOOLEANO);
             }
+        }
+        return null;
+    }
+
+    public TipoRetorno and(Entorno entorno) {
+        TipoRetorno valor1 = exp1.jugar(entorno);
+        TipoRetorno valor2 = exp2.jugar(entorno);
+            if (valor2.tipo == TipoTipo.BOOLEANO && valor2.tipo == TipoTipo.BOOLEANO) {
+                return new TipoRetorno(Boolean.parseBoolean(valor1.valor.toString()) && Boolean.parseBoolean(valor2.valor.toString()), TipoTipo.BOOLEANO);
+        }
+        return null;
+    }
+    
+        public TipoRetorno or(Entorno entorno) {
+        TipoRetorno valor1 = exp1.jugar(entorno);
+        TipoRetorno valor2 = exp2.jugar(entorno);
+            if (valor2.tipo == TipoTipo.BOOLEANO && valor2.tipo == TipoTipo.BOOLEANO) {
+                return new TipoRetorno(Boolean.parseBoolean(valor1.valor.toString()) || Boolean.parseBoolean(valor2.valor.toString()), TipoTipo.BOOLEANO);
         }
         return null;
     }

@@ -3,6 +3,7 @@ package instruccion;
 import abstractas.Expresion;
 import abstractas.Instruccion;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import objetos.Estrategia;
@@ -68,15 +69,17 @@ public class Inicio extends Instruccion {
                 if (i == 0) {
                     decision1 = decisionInicial(entorno, estrategia1);
                     decision2 = decisionInicial(entorno, estrategia2);
-                    formato(i, estrategia1.nombre, estrategia2.nombre);
-                    //entorno.setHistorial1(historial1);
-                    //entorno.setHistorial2(historial2);
-                    
                 } else {
                     decision1 = (boolean) validarRegla(entorno, estrategia1);
                     decision2 = (boolean) validarRegla(entorno, estrategia2);
-                    formato(i, estrategia1.nombre, estrategia2.nombre);
+                    
+                    System.out.println("decision 1 - "+i+"=" + decision1 );
+                    System.out.println("decision 2 - "+i+"=" + decision2 );
+                    
                 }
+                estrategia1.historial.add(decision1);
+                estrategia2.historial.add(decision2);
+                formato(i, estrategia1.nombre, estrategia2.nombre);
             }
         }
         Salida.salidaInfo.add("RESUMEN:");
@@ -103,8 +106,12 @@ public class Inicio extends Instruccion {
 
     public Object validarRegla(Entorno entorno, Estrategia estrategia) {
         Object determinada = null;
-
-        for (Regla regla : estrategia.instrucciones.reglas) {
+        
+        ArrayList<Regla> reglaOrdenada = new ArrayList<>(estrategia.instrucciones.reglas);
+        Collections.reverse(reglaOrdenada);
+        for (Regla regla : reglaOrdenada) {
+            
+            estrategia.state=true;
             if (regla.condicion != null && (boolean) regla.condicion.jugar(entorno).valor) {
                 // regla if CONDICION then ACCION 
                 //estrategia.historial.add(regla.acion.jugar(entorno).valor);
@@ -112,6 +119,7 @@ public class Inicio extends Instruccion {
             } else if (regla.condicion == null) {
                 determinada = regla.acion.jugar(entorno).valor;
             }
+            estrategia.state=false;
         }
         //estrategia.historial.add(determinada);
         return determinada;
@@ -144,8 +152,5 @@ public class Inicio extends Instruccion {
             cooperacion1++;
 
         }
-        //historial1.add(decision1);
-        //historial2.add(decision2);
-        
     }
 }

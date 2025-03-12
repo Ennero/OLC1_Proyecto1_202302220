@@ -229,7 +229,7 @@ public class GUI extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         String entrada = jTextArea2.getText();
-        System.out.println(entrada);
+        //System.out.println(entrada);
 
         if (!errorLexico) {
             try {
@@ -248,7 +248,7 @@ public class GUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public void SintacError() {
-        JOptionPane.showMessageDialog(this, "Error Sintáctico, solucionar antes de continuar");
+        JOptionPane.showMessageDialog(this, "Error Durante la ejecución");
     }
 
 
