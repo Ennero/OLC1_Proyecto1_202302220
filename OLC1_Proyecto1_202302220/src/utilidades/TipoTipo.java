@@ -13,4 +13,5 @@ public enum TipoTipo {
     ENTERO,
     FLOTANTE,
     BOOLEANO,
+    STRING,
 }

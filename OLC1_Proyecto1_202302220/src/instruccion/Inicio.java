@@ -67,14 +67,16 @@ public class Inicio extends Instruccion {
             for (int i = 0; i < rondas; i++) {
                 entorno.setRondaActual(i);
                 if (i == 0) {
+                    System.out.println("Validando Reglas 1");
                     decision1 = decisionInicial(entorno, estrategia1);
                     decision2 = decisionInicial(entorno, estrategia2);
                 } else {
+                    System.out.println("Validando Reglas");
                     decision1 = (boolean) validarRegla(entorno, estrategia1);
                     decision2 = (boolean) validarRegla(entorno, estrategia2);
                     
-                    System.out.println("decision 1 - "+i+"=" + decision1 );
-                    System.out.println("decision 2 - "+i+"=" + decision2 );
+                    System.out.println("decision 1 - " + i + "=" + decision1 );
+                    System.out.println("decision 2 - " + i + "=" + decision2 );
                     
                 }
                 estrategia1.historial.add(decision1);
@@ -112,9 +114,10 @@ public class Inicio extends Instruccion {
         for (Regla regla : reglaOrdenada) {
             
             estrategia.state=true;
+            System.out.println("Aqui comienzo con las condiciones");
             if (regla.condicion != null && (boolean) regla.condicion.jugar(entorno).valor) {
                 // regla if CONDICION then ACCION 
-                //estrategia.historial.add(regla.acion.jugar(entorno).valor);
+                System.out.println("Aqui ejecuto la solución");
                 return regla.acion.jugar(entorno).valor;
             } else if (regla.condicion == null) {
                 determinada = regla.acion.jugar(entorno).valor;
@@ -150,7 +153,6 @@ public class Inicio extends Instruccion {
             puntuacion1 += traicionado;
             puntuacion2 += traidor;
             cooperacion1++;
-
         }
     }
 }

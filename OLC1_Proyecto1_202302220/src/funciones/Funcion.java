@@ -2,7 +2,6 @@
 package funciones;
 
 import abstractas.Expresion;
-import expresion.History;
 import objetos.Estrategia;
 import olc1_proyecto1_202302220.Entorno;
 import utilidades.TipoExpresion;
@@ -15,10 +14,10 @@ import utilidades.TipoTipo;
  */
 public class Funcion extends Expresion {
     public String funcion;
-    public History exp1;
+    public Expresion exp1;
     public Expresion exp2;
 
-    public Funcion(String funcion, History exp1, Expresion exp2) {
+    public Funcion(String funcion, Expresion exp1, Expresion exp2) {
         super(TipoExpresion.FUNCION);
         this.funcion = funcion;
         this.exp1 = exp1;
@@ -27,6 +26,8 @@ public class Funcion extends Expresion {
 
     @Override
     public TipoRetorno jugar(Entorno entorno) {
+        
+        System.out.println("dentro de jugar");
         
         //Aqui hago un switch case dependiento de que hay dentro de cada una de las funciones
         switch (funcion){
@@ -52,17 +53,20 @@ public class Funcion extends Expresion {
         Estrategia estrategia1 = entorno.obtenerEstrategia(entorno.getPartidaActual().jugador1);
         Estrategia estrategia2 = entorno.obtenerEstrategia(entorno.getPartidaActual().jugador2);
         
+        System.out.println("Estoy dentor de getMove");
         //la ronda que quiero buscar
-        System.out.println(exp1.history);
+        System.out.println(exp1.jugar(entorno));
         int rondonda =(int) exp2.jugar(entorno).valor;
-        String funcioncita= exp1.history;
-        
+        String funcioncita= (String) (exp1.jugar(entorno).valor);
+        System.out.println(funcioncita);
         
         if(rondonda <0 || rondonda >=entorno.getRondaActual()) return null;
         
         if (funcioncita.equals("opponent_history")){
             if (!estrategia1.state && estrategia2.state){
                 boolean valor= estrategia1.historial.get(rondonda);
+                System.out.println(valor);
+                System.out.println("-------------------");
                 return new TipoRetorno(valor,TipoTipo.DECISION);
                 
             }
@@ -115,17 +119,42 @@ public class Funcion extends Expresion {
             }
         }
         
-        
-        
-        
-        
-        
         return null;
-        
     }
     
     public TipoRetorno getMovesCount(Entorno entorno){
-        return null;
+        Estrategia estrategia1= entorno.obtenerEstrategia(entorno.getPartidaActual().jugador1);
+        Estrategia estrategia2= entorno.obtenerEstrategia(entorno.getPartidaActual().jugador2);        
+        
+        String funcioncita=String.valueOf(exp1.jugar(entorno).valor);
+        boolean decision = (boolean) exp2.jugar(entorno).valor;
+        
+        Estrategia estrategiaSeleccionada = null;
+        
+        if (funcioncita.equals("opponent_history")){
+            if(!estrategia1.state && estrategia2.state){
+                estrategiaSeleccionada=estrategia1;
+            }else if(!estrategia2.state && estrategia1.state){
+                estrategiaSeleccionada=estrategia2;
+            }
+        } else if(funcioncita.equals("self_history")){
+            if(!estrategia1.state && estrategia2.state){
+                estrategiaSeleccionada =estrategia2;
+            }else if(!estrategia2.state && estrategia1.state){
+                estrategiaSeleccionada=estrategia1;
+            }
+        }
+        
+        if (estrategiaSeleccionada == null || estrategiaSeleccionada.historial.isEmpty()){
+            return new TipoRetorno(0, TipoTipo.ENTERO);
+        }
+        
+        //Aqui voy a comenzar a hallar las veces que se repite cada uno
+        int contador =0;
+        for (boolean decisionini : estrategiaSeleccionada.historial){
+            contador++;
+        }
+        return new TipoRetorno(contador,TipoTipo.ENTERO);
     }
     
     

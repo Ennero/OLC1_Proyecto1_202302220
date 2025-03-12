@@ -39,6 +39,9 @@ public class Primitiva extends Expresion{
             case DECISION -> {
                 return new TipoRetorno(valor.toString().equals("C"), tipo);
             }
+            case STRING -> {
+                return new TipoRetorno(valor.toString(), tipo);
+            }
             default -> {
             }
         }

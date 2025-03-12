@@ -164,11 +164,11 @@ decision ::= C:d {: RESULT = new Primitiva(d, TipoTipo.DECISION); :}
 expresion ::= comparacion:r {: RESULT =r; :}
 | logica
 | decision:d {: RESULT = d; :}
-| funcion 
+| funcion:f {: RESULT = f; :}
 | lista
 | RANDOM:p {: RESULT = new RandomNumber(); :}
-| OPPONENT_HISTORY
-| SELF_HISTORY
+| OPPONENT_HISTORY:h {: RESULT = new Primitiva(h,TipoTipo.STRING); :}
+| SELF_HISTORY:h {: RESULT = new Primitiva(h,TipoTipo.STRING); :}
 | ROUND_NUMBER:r {: RESULT =new RondaActual(); :}
 | TOTAL_ROUNDS:R {: RESULT =new TotalRondas(); :}
 | TRUE:p         {: RESULT = new Primitiva(p,TipoTipo.BOOLEANO); :}
@@ -187,10 +187,10 @@ logica ::= expresion AND expresion
 | expresion OR expresion
 | NOT expresion
 ;
-funcion ::= GET_MOVE ABRE_PARENTESIS expresion COMA expresion CIERRA_PARENTESIS 
-| LAST_MOVE ABRE_PARENTESIS expresion CIERRA_PARENTESIS                              
-| GET_MOVES_COUNT ABRE_PARENTESIS expresion COMA expresion CIERRA_PARENTESIS   
-| GET_LAST_N_MOVES ABRE_PARENTESIS expresion COMA expresion CIERRA_PARENTESIS   
+funcion ::= GET_MOVE:func ABRE_PARENTESIS expresion:e1 COMA expresion:e2 CIERRA_PARENTESIS {: RESULT = new Funcion(func, e1, e2); :} 
+| LAST_MOVE:func ABRE_PARENTESIS expresion:e1 CIERRA_PARENTESIS                            {: RESULT = new Funcion(func, e1, null); :}   
+| GET_MOVES_COUNT:func ABRE_PARENTESIS expresion:e1 COMA expresion:e2 CIERRA_PARENTESIS    {: RESULT = new Funcion(func, e1, e2); :} 
+| GET_LAST_N_MOVES:func ABRE_PARENTESIS expresion:e1 COMA expresion:e2 CIERRA_PARENTESIS   {: RESULT = new Funcion(func, e1, e2); :} 
 ;
 lista ::= ABRE_CORCHETE elemento CIERRA_CORCHETE ;
 elemento ::= elemento COMA expresion
