@@ -44,7 +44,7 @@ public class OperacionLogica extends Expresion {
             case "&&" ->
                 new TipoRetorno(b1 && b2, TipoTipo.BOOLEANO);
             case "||" ->
-                new TipoRetorno(b1 && b2, TipoTipo.BOOLEANO);
+                new TipoRetorno(b1 || b2, TipoTipo.BOOLEANO);
             default ->
                 null;
         };

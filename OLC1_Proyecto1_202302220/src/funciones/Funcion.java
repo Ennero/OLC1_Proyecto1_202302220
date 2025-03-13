@@ -151,9 +151,11 @@ public class Funcion extends Expresion {
         }
 
         //Aqui voy a comenzar a hallar las veces que se repite cada uno
-        int contador = 0;
+        int contador = 1;
         for (boolean decisionini : estrategiaSeleccionada.historial) {
-            contador++;
+            if (decisionini == decision) {  // Filtramos los valores correctos
+                contador++;
+            }
         }
         return new TipoRetorno(contador, TipoTipo.ENTERO);
     }

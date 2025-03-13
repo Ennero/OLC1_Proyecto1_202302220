@@ -169,7 +169,7 @@ expresion ::= comparacion:r {: RESULT =r; :}
 | logica:l {: RESULT = l; :}
 | decision:d {: RESULT = d; :}
 | funcion:f {: RESULT = f; :}
-| lista
+| lista:f {: RESULT = f; :}
 | RANDOM:p {: RESULT = new RandomNumber(); :}
 | OPPONENT_HISTORY:h {: RESULT = new Primitiva(h,TipoTipo.STRING); :}
 | SELF_HISTORY:h {: RESULT = new Primitiva(h,TipoTipo.STRING); :}
