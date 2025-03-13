@@ -21,6 +21,7 @@ public class Entorno {
     Partida partidaActual;
     int rondaActual;
     int totalRondas;
+    int seed;
     public String nombre;
     public Map<String, Estrategia> estrategias = new TreeMap<>();
     public Map<String, Partida> partidas = new TreeMap<>();
@@ -97,5 +98,13 @@ public class Entorno {
     //Retorna el total de rodas
     public int getTotalRondas() {
         return this.totalRondas;
+    }
+    
+    public double getSeed(){
+        return this.seed;
+    }
+    
+    public void setSeed(int seed){
+        this.seed=seed;
     }
 }

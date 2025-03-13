@@ -16,12 +16,12 @@ public class DeterministicRandomGenerator implements RandomGenerator{
     
     private Random random;
 
-    public DeterministicRandomGenerator(long seed) {
+    public DeterministicRandomGenerator(int seed) {
         this.originalSeed = seed;
         this.random = new Random(seed);
     }
     
-    public static RandomGenerator create(long seed){
+    public static RandomGenerator create(int seed){
         return new DeterministicRandomGenerator(seed);
     }
     

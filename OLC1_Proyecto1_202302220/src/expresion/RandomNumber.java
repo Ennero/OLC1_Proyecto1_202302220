@@ -1,11 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package expresion;
 
 import abstractas.Expresion;
 import olc1_proyecto1_202302220.Entorno;
+import random.DeterministicRandomGenerator;
+import random.RandomGenerator;
 import utilidades.TipoExpresion;
 import utilidades.TipoRetorno;
 import utilidades.TipoTipo;
@@ -20,11 +19,10 @@ public class RandomNumber extends Expresion {
     }
     
     @Override
-    public TipoRetorno jugar(Entorno entorno) {
-        
-        
-        //Aquí tengo pensando retorno el valor random
-        return new TipoRetorno(entorno.getRondaActual(), TipoTipo.FLOTANTE);
+    public TipoRetorno jugar(Entorno entorno) {        
+        RandomGenerator gen1 = DeterministicRandomGenerator.create((int) entorno.getSeed());
+        double numerito=gen1.nextDouble();
+        System.out.println("Numero aleatorio: "+numerito);
+        return new TipoRetorno(numerito, TipoTipo.FLOTANTE);
     }
-    
 }

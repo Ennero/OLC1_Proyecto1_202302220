@@ -104,8 +104,8 @@ non terminal Expresion expresion;
 non terminal Expresion comparacion;
 non terminal Expresion logica;
 non terminal Expresion funcion;
-non terminal lista;
-non terminal elemento;
+non terminal Lista lista;
+non terminal ArrayList<Expresion> elemento;
 non terminal Expresion decision;
 //---------------------------------------------------------------------------------
 precedence left OR, AND;
@@ -147,9 +147,6 @@ puntuacion ::= MUTUAL_COOPERATION DOS_PUNTOS expresion:exp {: RESULT =  exp; :}
 ;
 //-------------------------------------
 
-
-
-
 //BLOQUE DE INICIO
 bloque_Main ::= MAIN ABRE_LLAVE lista_Accesos:p CIERRA_LLAVE {: RESULT = new Todo(p); :} ;
 
@@ -163,9 +160,6 @@ main_Cuerpo ::= RUN ABRE_CORCHETE match_Lista:id CIERRA_CORCHETE WITH
 match_Lista ::= match_Lista:l COMA ID:id {: RESULT = l; RESULT.add(id); :} 
 | ID:id                                  {: RESULT = new ArrayList<>(Arrays.asList(id));  :}
 ;
-
-
-
 //-------------------------------------
 //PARTES COMPLEMENTARIAS DEL CODIGO :)
 decision ::= C:d {: RESULT = new Primitiva(d, TipoTipo.DECISION); :}
@@ -202,7 +196,7 @@ funcion ::= GET_MOVE:func ABRE_PARENTESIS expresion:e1 COMA expresion:e2 CIERRA_
 | GET_MOVES_COUNT:func ABRE_PARENTESIS expresion:e1 COMA expresion:e2 CIERRA_PARENTESIS    {: RESULT = new Funcion(func, e1, e2); :} 
 | GET_LAST_N_MOVES:func ABRE_PARENTESIS expresion:e1 COMA expresion:e2 CIERRA_PARENTESIS   {: RESULT = new Funcion(func, e1, e2); :} 
 ;
-lista ::= ABRE_CORCHETE elemento CIERRA_CORCHETE ;
-elemento ::= elemento COMA expresion
-| expresion
+lista ::= ABRE_CORCHETE elemento:e CIERRA_CORCHETE {: RESULT = new Lista(e); :};
+elemento ::= elemento:l COMA expresion:e {: RESULT = l; RESULT.add(e); :} 
+| expresion:e {: RESULT = new ArrayList<>(Arrays.asList(e)); :}
 ;

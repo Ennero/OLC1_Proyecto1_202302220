@@ -26,7 +26,7 @@ strategy Tester {
 strategy Joss {
     initial: C
     rules: [
-        if random() < 0.1 then D,
+        if random < 0.1 then D,
         else last_move(opponent_history)
     ]
 }

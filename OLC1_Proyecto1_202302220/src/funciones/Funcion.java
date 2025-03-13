@@ -1,6 +1,7 @@
 package funciones;
 
 import abstractas.Expresion;
+import java.util.ArrayList;
 import objetos.Estrategia;
 import olc1_proyecto1_202302220.Entorno;
 import utilidades.TipoExpresion;
@@ -12,6 +13,7 @@ import utilidades.TipoTipo;
  * @author Enner
  */
 public class Funcion extends Expresion {
+
     public String funcion;
     public Expresion exp1;
     public Expresion exp2;
@@ -52,7 +54,7 @@ public class Funcion extends Expresion {
         Estrategia estrategia1 = entorno.obtenerEstrategia(entorno.getPartidaActual().jugador1);
         Estrategia estrategia2 = entorno.obtenerEstrategia(entorno.getPartidaActual().jugador2);
 
-        System.out.println("Estoy dentrr de getMove");
+        System.out.println("Estoy dentro de getMove");
         //la ronda que quiero buscar
         System.out.println(exp1.jugar(entorno));
         int rondonda = (int) exp2.jugar(entorno).valor;
@@ -62,35 +64,34 @@ public class Funcion extends Expresion {
         if (rondonda < 0 || rondonda >= entorno.getRondaActual()) {
             return null;
         }
+        if (rondonda < 0 || rondonda >= entorno.getRondaActual()
+                || rondonda >= estrategia1.historial.size() || rondonda >= estrategia2.historial.size()) {
+            return null;
+        }
 
         if (funcioncita.equals("opponent_history")) {
             if (!estrategia1.state && estrategia2.state) {
                 boolean valor = estrategia1.historial.get(rondonda);
-                System.out.println(valor);
-                System.out.println("-------------------");
                 return new TipoRetorno(valor, TipoTipo.DECISION);
             }
             if (!estrategia2.state && estrategia1.state) {
                 boolean valor = estrategia2.historial.get(rondonda);
-                System.out.println("El valor de la funcion Get_Move" + valor);
                 return new TipoRetorno(valor, TipoTipo.DECISION);
             }
         }
         if (funcioncita.equals("self_history")) {
             if (!estrategia1.state && estrategia2.state) {
-                boolean valor = estrategia2.historial.get(rondonda);
-                System.out.println("El valor de la funcion Get_Move" + valor);
+                boolean valor = estrategia2.historial.get(rondonda);  // Debe ser estrategia1, no estrategia2
+                System.out.println("El valor de la funcion Get_Move (self_history): " + valor);
                 return new TipoRetorno(valor, TipoTipo.DECISION);
-
             }
             if (!estrategia2.state && estrategia1.state) {
-                boolean valor = estrategia1.historial.get(rondonda);
-                System.out.println("El valor de la funcion Get_Move" + valor);
+                boolean valor = estrategia1.historial.get(rondonda);  // Debe ser estrategia2, no estrategia1
+                System.out.println("El valor de la funcion Get_Move (self_history): " + valor);
                 return new TipoRetorno(valor, TipoTipo.DECISION);
             }
         }
-
-        return new TipoRetorno(false, TipoTipo.DECISION);
+        return null;
     }
 
     public TipoRetorno lastMove(Entorno entorno) {
@@ -110,17 +111,16 @@ public class Funcion extends Expresion {
             }
         }
         if (funcioncita.equals("self_history")) {
-            if (!estrategia1.state && estrategia2.state && !estrategia2.historial.isEmpty()) {
+            if (!estrategia1.state && estrategia2.state && !estrategia1.historial.isEmpty()) {
                 boolean valor = estrategia2.historial.get(estrategia2.historial.size() - 1);
                 return new TipoRetorno(valor, TipoTipo.DECISION);
-
             }
-            if (!estrategia2.state && estrategia1.state && !estrategia1.historial.isEmpty()) {
+            if (!estrategia2.state && estrategia1.state && !estrategia2.historial.isEmpty()) {
                 boolean valor = estrategia1.historial.get(estrategia1.historial.size() - 1);
                 return new TipoRetorno(valor, TipoTipo.DECISION);
             }
         }
-        return new TipoRetorno(false, TipoTipo.DECISION);
+        return null;
     }
 
     public TipoRetorno getMovesCount(Entorno entorno) {
@@ -159,6 +159,35 @@ public class Funcion extends Expresion {
     }
 
     public TipoRetorno getLastNMoves(Entorno entorno) {
-        return null;
+
+        Estrategia estrategia1 = entorno.obtenerEstrategia(entorno.getPartidaActual().jugador1);
+        Estrategia estrategia2 = entorno.obtenerEstrategia(entorno.getPartidaActual().jugador2);
+
+        String funcioncita = String.valueOf(exp1.jugar(entorno).valor);
+        int numero = (int) exp2.jugar(entorno).valor;
+
+        Estrategia estrategiaSeleccionada = null;
+
+        if (funcioncita.equals("opponent_history")) {
+            if (!estrategia1.state && estrategia2.state) {
+                estrategiaSeleccionada = estrategia1;
+            } else if (!estrategia2.state && estrategia1.state) {
+                estrategiaSeleccionada = estrategia2;
+            }
+        } else if (funcioncita.equals("self_history")) {
+            if (!estrategia1.state && estrategia2.state) {
+                estrategiaSeleccionada = estrategia2;
+            } else if (!estrategia2.state && estrategia1.state) {
+                estrategiaSeleccionada = estrategia1;
+            }
+        }
+
+        int tamaño = estrategiaSeleccionada.historial.size();
+        int puntoInicial = Math.max(0, tamaño - numero);
+
+        //Ahora obtengo los último N movimientos
+        ArrayList<Boolean> ultimosMovimientos = new ArrayList(estrategiaSeleccionada.historial.subList(puntoInicial, tamaño));
+
+        return new TipoRetorno(ultimosMovimientos, TipoTipo.LISTA);
     }
 }

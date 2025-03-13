@@ -2,6 +2,7 @@ package instruccion;
 
 import abstractas.Expresion;
 import abstractas.Instruccion;
+import expresion.Primitiva;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -11,6 +12,7 @@ import objetos.Partida;
 import olc1_proyecto1_202302220.Entorno;
 import utilidades.Salida;
 import utilidades.TipoInstruccion;
+import utilidades.TipoRetorno;
 
 /**
  *
@@ -19,7 +21,7 @@ import utilidades.TipoInstruccion;
 public class Inicio extends Instruccion {
 
     ArrayList<String> partidas;
-    Object seed;
+    Expresion seed;
     int rondas;
     boolean decision1;
     boolean decision2;
@@ -34,7 +36,7 @@ public class Inicio extends Instruccion {
 
     Estrategia estrategia1;
     Estrategia estrategia2;
-    public Inicio(ArrayList<String>  partidas, Object seed) {
+    public Inicio(ArrayList<String>  partidas, Expresion seed) {
         super(TipoInstruccion.MAIN);
         this.partidas = partidas;
         this.seed = seed;
@@ -56,6 +58,9 @@ public class Inicio extends Instruccion {
             this.rondas = (int) partida.rondas;
             entorno.setPartidaActual(partida);
             entorno.setTotalRondas(rondas);
+            
+            TipoRetorno semilla = seed.jugar(entorno);
+            entorno.setSeed(Integer.parseInt(semilla.valor.toString()));
 
             estrategia1 = entorno.obtenerEstrategia(partida.jugador1);
             estrategia2 = entorno.obtenerEstrategia(partida.jugador2);
@@ -78,16 +83,16 @@ public class Inicio extends Instruccion {
             for (int i = 0; i < rondas; i++) {
                 entorno.setRondaActual(i);
                 if (i == 0) {
-                    System.out.println("Validando Reglas 1");
                     decision1 = decisionInicial(entorno, estrategia1);
                     decision2 = decisionInicial(entorno, estrategia2);
                 } else {
-                    System.out.println("Validando Reglas");
+                    System.out.println("------Validando Reglas------");
+                    System.out.println("Ronda "+i+1);
                     decision1 = (boolean) validarRegla(entorno, estrategia1);
                     decision2 = (boolean) validarRegla(entorno, estrategia2);
                     
-                    System.out.println("decision 1 - " + i + "=" + decision1 );
-                    System.out.println("decision 2 - " + i + "=" + decision2 );
+                    System.out.println("decision 1 = " + decision1 );
+                    System.out.println("decision 2 = " + decision2 );
                     
                 }
                 estrategia1.historial.add(decision1);

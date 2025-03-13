@@ -14,8 +14,7 @@ public class TipoRetorno {
     public TipoRetorno(Object valor, TipoTipo tipo){
         this.tipo=tipo;
         this.valor=valor;
-        
-        
+
     }
     
 }

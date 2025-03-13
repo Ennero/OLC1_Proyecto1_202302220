@@ -13,5 +13,6 @@ public enum TipoExpresion {
     COMPARATIVO,
     LOGICO,
     FUNCION,
-    PUNTEO
+    PUNTEO,
+    LISTA
 }

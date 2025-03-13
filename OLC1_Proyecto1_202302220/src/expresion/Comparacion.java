@@ -5,6 +5,7 @@
 package expresion;
 
 import abstractas.Expresion;
+import java.util.ArrayList;
 import olc1_proyecto1_202302220.Entorno;
 import utilidades.TipoExpresion;
 import utilidades.TipoRetorno;
@@ -54,18 +55,46 @@ public class Comparacion extends Expresion {
         //System.out.println("aqui si no hay problemas");
         TipoRetorno valor2 = exp2.jugar(entorno);
         //System.out.println("aqui si no hay probelmas");
-        System.out.println("valor 1: "+valor1.valor.toString()+"Valor 2: "+valor2.valor.toString());
+        System.out.println("IGUALO "+"valor 1: " + valor1.valor.toString() + "Valor 2: " + valor2.valor.toString());
+
+        //para flotante o entero
         if (valor1.tipo == TipoTipo.ENTERO || valor1.tipo == TipoTipo.FLOTANTE) {
             if (valor2.tipo == TipoTipo.ENTERO || valor2.tipo == TipoTipo.FLOTANTE) {
                 return new TipoRetorno(Double.parseDouble(valor1.valor.toString()) == Double.parseDouble(valor2.valor.toString()), TipoTipo.BOOLEANO);
             }
         }
+
+        //Para las decisiones
         if (valor1.tipo == TipoTipo.DECISION || valor1.tipo == TipoTipo.DECISION) {
             if (valor2.tipo == TipoTipo.DECISION && valor2.tipo == TipoTipo.DECISION) {
                 return new TipoRetorno((valor1.valor.toString()).equals(valor2.valor.toString()), TipoTipo.BOOLEANO);
             }
         }
-        return new TipoRetorno(false, TipoTipo.BOOLEANO);
+
+        //para las listas
+        if (valor1.tipo == TipoTipo.LISTA && valor2.tipo == TipoTipo.LISTA) {
+            ArrayList<?> lista1 = (ArrayList<?>) valor1.valor;
+            ArrayList<?> lista2 = (ArrayList<?>) valor2.valor;
+
+            //Si tienen tamaños diferentes de una lo saco
+            if (lista1.size() != lista2.size()) {
+                return new TipoRetorno(false, TipoTipo.BOOLEANO);
+            }
+
+            //Si no entonces hago un ciclo que lo compare todo
+            for (int i = 0; i < lista1.size(); i++) {
+                if (!lista1.get(i).equals(lista2.get(i))) {
+                    //Si no son iguales entonces no son iguales xd
+                    return new TipoRetorno(false, TipoTipo.BOOLEANO);
+                }
+            }
+            //Entonces si son iguales
+            return new TipoRetorno(true, TipoTipo.BOOLEANO);  // Son iguales
+        }
+
+        //Si no no
+        return null;
+        //return new TipoRetorno(false, TipoTipo.BOOLEANO);
     }
 
     public TipoRetorno noIgual(Entorno entorno) {
