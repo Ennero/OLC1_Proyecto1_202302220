@@ -87,7 +87,7 @@ public class Inicio extends Instruccion {
                     decision2 = decisionInicial(entorno, estrategia2);
                 } else {
                     System.out.println("------Validando Reglas------");
-                    System.out.println("Ronda "+i+1);
+                    System.out.println("Ronda " + (i+1) );
                     decision1 = (boolean) validarRegla(entorno, estrategia1);
                     decision2 = (boolean) validarRegla(entorno, estrategia2);
                     

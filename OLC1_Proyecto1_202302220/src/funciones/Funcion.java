@@ -120,6 +120,7 @@ public class Funcion extends Expresion {
                 return new TipoRetorno(valor, TipoTipo.DECISION);
             }
         }
+        System.out.println("LAST_MOVE es nulo");
         return null;
     }
 
@@ -128,8 +129,13 @@ public class Funcion extends Expresion {
         Estrategia estrategia2 = entorno.obtenerEstrategia(entorno.getPartidaActual().jugador2);
 
         String funcioncita = String.valueOf(exp1.jugar(entorno).valor);
-        boolean decision = (boolean) exp2.jugar(entorno).valor;
-
+        Object decisionObj = exp2.jugar(entorno).valor;
+        
+        if(!(decisionObj instanceof Boolean)){
+            System.out.println("EL BOOLEANO DE MOVESCOUNT ESTÁ MALLLLL");
+        }
+        
+        boolean decision =(boolean) decisionObj;
         Estrategia estrategiaSeleccionada = null;
 
         if (funcioncita.equals("opponent_history")) {
@@ -151,12 +157,13 @@ public class Funcion extends Expresion {
         }
 
         //Aqui voy a comenzar a hallar las veces que se repite cada uno
-        int contador = 1;
+        int contador = 0;
         for (boolean decisionini : estrategiaSeleccionada.historial) {
             if (decisionini == decision) {  // Filtramos los valores correctos
                 contador++;
             }
         }
+        System.out.println("De la cuenta se obtuvo: "+ funcioncita + ", "+decision +"un total de "+contador);
         return new TipoRetorno(contador, TipoTipo.ENTERO);
     }
 
