@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package instrucciones;
+package tipoInstruccion;
 
 import abstractas.Expresion;
 import abstractas.Instruccion;
@@ -14,8 +14,10 @@ import tipos.TipoInstruccion;
  * @author Enner
  */
 public class Regla extends Instruccion {
+
     Expresion condicion;
     Expresion acion;
+
     public Regla(Expresion condicion, Expresion acion) {
         super(TipoInstruccion.REGLA);
         this.condicion = condicion;
@@ -23,10 +25,13 @@ public class Regla extends Instruccion {
     }
 
     @Override
-    public void jugar(Ambiente entorno) {
+    public void jugar(Ambiente ambiente) {
+
+        //Si se cumple la condición
         if (condicion != null) {
-            condicion.jugar(entorno);
+            //Lo juega
+            condicion.jugar(ambiente);
         }
-        acion.jugar(entorno);
+        acion.jugar(ambiente);
     }
 }

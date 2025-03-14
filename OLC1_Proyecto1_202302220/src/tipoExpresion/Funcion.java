@@ -1,4 +1,4 @@
-package expresiones;
+package tipoExpresion;
 
 import abstractas.Expresion;
 import java.util.ArrayList;
@@ -15,34 +15,34 @@ import tipos.TipoTipo;
 public class Funcion extends Expresion {
 
     public String funcion;
-    public Expresion exp1;
-    public Expresion exp2;
+    public Expresion expresion1;
+    public Expresion expresion2;
 
     public Funcion(String funcion, Expresion exp1, Expresion exp2) {
         super(TipoExpresion.FUNCION);
         this.funcion = funcion;
-        this.exp1 = exp1;
-        this.exp2 = exp2;
+        this.expresion1 = exp1;
+        this.expresion2 = exp2;
     }
 
     @Override
-    public TipoRetorno jugar(Ambiente entorno) {
+    public TipoRetorno jugar(Ambiente ambiente) {
 
         System.out.println("dentro de jugar");
 
         //Aqui hago un switch case dependiento de que hay dentro de cada una de las funciones
         switch (funcion) {
             case "get_move" -> {
-                return getMove(entorno);
+                return getMove(ambiente);
             }
             case "last_move" -> {
-                return lastMove(entorno);
+                return lastMove(ambiente);
             }
             case "get_moves_count" -> {
-                return getMovesCount(entorno);
+                return getMovesCount(ambiente);
             }
             case "get_last_n_moves" -> {
-                return getLastNMoves(entorno);
+                return getLastNMoves(ambiente);
             }
             default -> {
                 return null;
@@ -50,21 +50,21 @@ public class Funcion extends Expresion {
         }
     }
 
-    public TipoRetorno getMove(Ambiente entorno) {
-        Estrategia estrategia1 = entorno.obtenerEstrategia(entorno.getPartidaActual().jugador1);
-        Estrategia estrategia2 = entorno.obtenerEstrategia(entorno.getPartidaActual().jugador2);
+    public TipoRetorno getMove(Ambiente ambiente) {
+        Estrategia estrategia1 = ambiente.obtenerEstrategia(ambiente.getPartidaActual().jugador1);
+        Estrategia estrategia2 = ambiente.obtenerEstrategia(ambiente.getPartidaActual().jugador2);
 
         System.out.println("Estoy dentro de getMove");
         //la ronda que quiero buscar
-        System.out.println(exp1.jugar(entorno));
-        int rondonda = (int) exp2.jugar(entorno).valor;
-        String funcioncita = (String) (exp1.jugar(entorno).valor);
+        System.out.println(expresion1.jugar(ambiente));
+        int rondonda = (int) expresion2.jugar(ambiente).valor;
+        String funcioncita = (String) (expresion1.jugar(ambiente).valor);
         System.out.println(funcioncita);
 
-        if (rondonda < 0 || rondonda >= entorno.getRondaActual()) {
+        if (rondonda < 0 || rondonda >= ambiente.getRondaActual()) {
             return null;
         }
-        if (rondonda < 0 || rondonda >= entorno.getRondaActual()
+        if (rondonda < 0 || rondonda >= ambiente.getRondaActual()
                 || rondonda >= estrategia1.historial.size() || rondonda >= estrategia2.historial.size()) {
             return null;
         }
@@ -91,15 +91,15 @@ public class Funcion extends Expresion {
                 return new TipoRetorno(valor, TipoTipo.DECISION);
             }
         }
+        //Para que me de error
         return null;
     }
 
-    public TipoRetorno lastMove(Ambiente entorno) {
-        Estrategia estrategia1 = entorno.obtenerEstrategia(entorno.getPartidaActual().jugador1);
-        Estrategia estrategia2 = entorno.obtenerEstrategia(entorno.getPartidaActual().jugador2);
+    public TipoRetorno lastMove(Ambiente ambiente) {
+        Estrategia estrategia1 = ambiente.obtenerEstrategia(ambiente.getPartidaActual().jugador1);
+        Estrategia estrategia2 = ambiente.obtenerEstrategia(ambiente.getPartidaActual().jugador2);
 
-        String funcioncita = String.valueOf(exp1.jugar(entorno).valor);
-
+        String funcioncita = String.valueOf(expresion1.jugar(ambiente).valor);
 
         if (funcioncita.equals("opponent_history")) {
             if (!estrategia1.state && estrategia2.state && !estrategia1.historial.isEmpty()) {
@@ -125,21 +125,21 @@ public class Funcion extends Expresion {
         return null;
     }
 
-    public TipoRetorno getMovesCount(Ambiente entorno) {
-        Estrategia estrategia1 = entorno.obtenerEstrategia(entorno.getPartidaActual().jugador1);
-        Estrategia estrategia2 = entorno.obtenerEstrategia(entorno.getPartidaActual().jugador2);
+    public TipoRetorno getMovesCount(Ambiente ambiente) {
+        Estrategia estrategia1 = ambiente.obtenerEstrategia(ambiente.getPartidaActual().jugador1);
+        Estrategia estrategia2 = ambiente.obtenerEstrategia(ambiente.getPartidaActual().jugador2);
 
-        System.out.println("Estrategia1 "+estrategia1.state);
-        System.out.println("Estrategia2 "+estrategia2.state);
-        
-        String funcioncita = String.valueOf(exp1.jugar(entorno).valor);
-        Object decisionObj = exp2.jugar(entorno).valor;
-        
-        if(!(decisionObj instanceof Boolean)){
+        System.out.println("Estrategia1 " + estrategia1.state);
+        System.out.println("Estrategia2 " + estrategia2.state);
+
+        String funcioncita = String.valueOf(expresion1.jugar(ambiente).valor);
+        Object decisionObj = expresion2.jugar(ambiente).valor;
+
+        if (!(decisionObj instanceof Boolean)) {
             System.out.println("EL BOOLEANO DE MOVESCOUNT ESTÁ MALLLLL");
         }
-        
-        boolean decision =(boolean) decisionObj;
+
+        boolean decision = (boolean) decisionObj;
         Estrategia estrategiaSeleccionada = null;
 
         if (funcioncita.equals("opponent_history")) {
@@ -167,17 +167,17 @@ public class Funcion extends Expresion {
                 contador++;
             }
         }
-        System.out.println("De la cuenta se obtuvo: "+ funcioncita + ", "+decision +"un total de "+contador);
+        System.out.println("De la cuenta se obtuvo: " + funcioncita + ", " + decision + "un total de " + contador);
         return new TipoRetorno(contador, TipoTipo.ENTERO);
     }
 
-    public TipoRetorno getLastNMoves(Ambiente entorno) {
+    public TipoRetorno getLastNMoves(Ambiente ambiente) {
 
-        Estrategia estrategia1 = entorno.obtenerEstrategia(entorno.getPartidaActual().jugador1);
-        Estrategia estrategia2 = entorno.obtenerEstrategia(entorno.getPartidaActual().jugador2);
+        Estrategia estrategia1 = ambiente.obtenerEstrategia(ambiente.getPartidaActual().jugador1);
+        Estrategia estrategia2 = ambiente.obtenerEstrategia(ambiente.getPartidaActual().jugador2);
 
-        String funcioncita = String.valueOf(exp1.jugar(entorno).valor);
-        int numero = (int) exp2.jugar(entorno).valor;
+        String funcioncita = String.valueOf(expresion1.jugar(ambiente).valor);
+        int numero = (int) expresion2.jugar(ambiente).valor;
 
         Estrategia estrategiaSeleccionada = null;
 

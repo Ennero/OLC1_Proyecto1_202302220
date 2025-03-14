@@ -10,18 +10,14 @@ import java.util.ArrayList;
  *
  * @author Enner
  */
-public class Configuracion {
-    
+public class Run {
+
     public ArrayList<Object> partidas;
     public Object seed;
 
-    public Configuracion(ArrayList<Object> partidas, Object seed) {
+    public Run(ArrayList<Object> partidas, Object seed) {
         this.partidas = partidas;
         this.seed = seed;
     }
-    
-    
-    
-    
-    
+
 }

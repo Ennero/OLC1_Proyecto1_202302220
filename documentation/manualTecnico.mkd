@@ -639,9 +639,490 @@ elemento ::= elemento COMA expresion
 ### Ejecución del programa
 Para la ejecución del programa, como se mencionó previamente, se crearon muchas clases que se fueron guardando durante el análisis sintáctico con cup para que, cuando se tenga que iniciar el programa, se pueda adentrar en estas y ejecutar todo tal y como debería.
 
+#### Clases Abstractas
+Estas clases fueron el "molde" con el cual se dio forma a la mayoria de las clases.
+
+```java
+public abstract class Expresion extends Sentencia {
+
+    TipoExpresion tipoExpresion;
+
+    public Expresion(TipoExpresion tipoExpresion) {
+        super(TipoSentencia.EXPRESION);
+        this.tipoExpresion = tipoExpresion;
+    }
+
+    public abstract TipoRetorno jugar(Ambiente ambiente);
+}
+
+public abstract class Instruccion extends Sentencia {
+
+    TipoInstruccion tipoInstruccion;
+
+    public Instruccion(TipoInstruccion tipoInstruccion) {
+        super(TipoSentencia.INSTRUCCION);
+        this.tipoInstruccion = tipoInstruccion;
+    }
+
+    public abstract void jugar(Ambiente ambiente);
+
+}
+
+public abstract class Sentencia {
+
+    TipoSentencia tipoSetencia;
+
+    public Sentencia(TipoSentencia tipoSetencia) {
+        this.tipoSetencia = tipoSetencia;
+    }
+}
+```
+#### Clases de Tipos
+
+Este tipo de clases se utilizaron principalmente para darle un tipo de orden a las demás clases, es decir, estas clases son del tipo *enum*, esto quiere decir que estas se presentan como una *lista* que permite que se tenga un estilo *indice* para poder organizar de forma indexada cada una de las varibales.
+
+
+```java
+public enum TipoExpresion {
+    LOGICO,
+    FUNCION,
+    PUNTEO,
+    LISTA,
+    PRIMITIVO,
+    COMPARATIVO,
+
+}
+
+public enum TipoInstruccion {
+    REGLA,
+    PARTIDA,
+    MAIN,
+    ESTRATEGIA,
+    INICIAL,
+
+}
+
+public class TipoRetorno {
+
+    public TipoTipo tipo;
+    public Object valor;
+
+    public TipoRetorno(Object valor, TipoTipo tipo) {
+        this.tipo = tipo;
+        this.valor = valor;
+
+    }
+
+}
+
+public enum TipoSentencia {
+        EXPRESION,
+        INSTRUCCION
+}
+
+public enum TipoTipo {
+    BOOLEANO,
+    STRING,
+    LISTA,
+    DECISION,
+    ENTERO,
+    FLOTANTE,
+
+}
+```
+
+#### Clases de tipo Instruccion
+Este tipo de clases, como su nombre indica, contienen las instrucciones, es decir, aquellos objetos que contienen qué es lo que debe de realizar el programa, dado a que son muchas y contiene muchas funciones, unicamente se colocará el código de la más imporatnte que es la clase Inicio, la cual es la que representa la partida unitaria.
+
+
+```java
+
+public class Inicio extends Instruccion {
+
+    //Declaro todo
+    ArrayList<String> partidas;
+    Expresion seed;
+    int rondas;
+    boolean decision1;
+    boolean decision2;
+    int cooperacion = 0;
+    int defeccion = 0;
+    int traidor = 0;
+    int traicionado = 0;
+    int p1 = 0;
+    int p2 = 0;
+    int coop1 = 0;
+    int coop2 = 0;
+
+    Estrategia estrategia1;
+    Estrategia estrategia2;
+
+    public Inicio(ArrayList<String> partidas, Expresion seed) {
+        super(TipoInstruccion.MAIN);
+        this.partidas = partidas;
+        this.seed = seed;
+    }
+
+    @Override
+    public void jugar(Ambiente ambiente) {
+        for (String nombrPartida : partidas) {
+            Partida partida = ambiente.obtenerPartida(nombrPartida);
+            if (partida != null) {
+                ejecutarPartida(ambiente, partida);
+            }
+        }
+    }
+```
+#### Clases de tipo Expresión
+Dentro de la gramática hay expresion que se tiene que evaluar para poder devolver el valor de algo, es decir, funciones que al usarse devueven un valor primitivo capaz de ser evaluado para retornar la salida.
+```java
+public class Comparacion extends Expresion {
+
+    Expresion exp1;
+    Expresion exp2;
+    String operador;
+
+    public Comparacion(Expresion exp1, String operador, Expresion exp2) {
+        super(TipoExpresion.COMPARATIVO);
+        this.exp1 = exp1;
+        this.exp2 = exp2;
+        this.operador = operador;
+    }
+}
+
+    public class Funcion extends Expresion {
+
+    public String funcion;
+    public Expresion expresion1;
+    public Expresion expresion2;
+
+    public Funcion(String funcion, Expresion exp1, Expresion exp2) {
+        super(TipoExpresion.FUNCION);
+        this.funcion = funcion;
+        this.expresion1 = exp1;
+        this.expresion2 = exp2;
+    }
+    }
+
+public class Lista extends Expresion {
+
+    ArrayList<Expresion> elementos;
+
+    public Lista(ArrayList<Expresion> lista) {
+        super(tipos.TipoExpresion.LISTA);
+        this.elementos = lista;
+    }
+
+    @Override
+    public TipoRetorno jugar(Ambiente ambiente) {
+        ArrayList<Boolean> valores = new ArrayList<>();
+        for (Expresion exp : elementos) {
+            TipoRetorno resultado = exp.jugar(ambiente);
+
+            //Voy añadiendo lo booleanos
+            if (resultado.tipo == TipoTipo.DECISION) {
+                valores.add((Boolean) resultado.valor);
+            } else {
+                return null;
+            }
+        }
+        return new TipoRetorno(valores, TipoTipo.LISTA);
+    }
+}
+
+public class OperacionLogica extends Expresion {
+
+    Expresion exp1;
+    Expresion exp2;
+    String operador;
+
+    public OperacionLogica(Expresion exp1, String operador, Expresion exp2) {
+        super(TipoExpresion.LOGICO);
+        this.exp1 = exp1;
+        this.exp2 = exp2;
+        this.operador = operador;
+    }
+
+    @Override
+    public TipoRetorno jugar(Ambiente ambiente) {
+
+        TipoRetorno v1 = exp1.jugar(ambiente);
+        TipoRetorno v2 = exp2.jugar(ambiente);
+
+        if (v1 == null || v2 == null) {
+            System.out.println("alguno es nulo al parecer");
+            return null;
+        }
+        boolean b1 = Boolean.parseBoolean(v1.valor.toString());
+        boolean b2 = Boolean.parseBoolean(v2.valor.toString());
+        System.out.println("el primero es " + b1 + "y el segundo es " + b2);
+        return switch (this.operador) {
+            case "&&" ->
+                new TipoRetorno(b1 && b2, TipoTipo.BOOLEANO);
+            case "||" ->
+                new TipoRetorno(b1 || b2, TipoTipo.BOOLEANO);
+            default ->
+                null;
+        };
+    }
+}
+
+
+public class Primitiva extends Expresion {
+
+    Object valor;
+    TipoTipo tipo;
+
+    public Primitiva(Object valor, TipoTipo tipo) {
+        super(TipoExpresion.PRIMITIVO);
+        this.valor = valor;
+        this.tipo = tipo;
+    }
+
+    @Override
+    public TipoRetorno jugar(Ambiente ambiente) {
+        switch (tipo) {
+            case ENTERO -> {
+                return new TipoRetorno(Integer.parseInt(valor.toString()), tipo);
+            }
+            case FLOTANTE -> {
+                return new TipoRetorno(Double.parseDouble(valor.toString()), tipo);
+            }
+            case BOOLEANO -> {
+                return new TipoRetorno(valor.toString().equals("true"), tipo);
+            }
+            case DECISION -> {
+                return new TipoRetorno(valor.toString().equals("C"), tipo);
+            }
+            case STRING -> {
+                return new TipoRetorno(valor.toString(), tipo);
+            }
+            default -> {
+            }
+        }
+        return null;
+    }
+}
+
+public class RandomNumber extends Expresion {
+
+    public RandomNumber() {
+        super(TipoExpresion.PRIMITIVO);
+    }
+
+    @Override
+    public TipoRetorno jugar(Ambiente ambiente) {
+        RandomGenerator gen1 = ambiente.getRandomGenerator();
+        double numerito = gen1.nextDouble();
+        System.out.println("Numero aleatorio: " + numerito);
+        return new TipoRetorno(numerito, TipoTipo.FLOTANTE);
+    }
+}
+
+public class RondaActual extends Expresion {
+
+    public RondaActual() {
+        super(TipoExpresion.PRIMITIVO);
+    }
+
+    @Override
+    public TipoRetorno jugar(Ambiente ambiente) {
+        return new TipoRetorno(ambiente.getRondaActual(), TipoTipo.ENTERO);
+    }
+}
+
+public class TotalRondas extends Expresion {
+
+    public TotalRondas() {
+        super(TipoExpresion.PRIMITIVO);
+    }
+
+    @Override
+    public TipoRetorno jugar(Ambiente ambiente) {
+        return new TipoRetorno(ambiente.getTotalRondas(), TipoTipo.ENTERO);
+    }
+
+}
+```
+#### Clase Run
+Esta contiena toda la informaicón de un run.
+```java
+
+public class Run {
+
+    public ArrayList<Object> partidas;
+    public Object seed;
+
+    public Run(ArrayList<Object> partidas, Object seed) {
+        this.partidas = partidas;
+        this.seed = seed;
+    }
+
+}
+```
+#### Clase Juego
+Esta contiene toda la salida que se presentara en la interfaz gráfica
+```java
+public class juego {
+
+    public static ArrayList<String> salidona = new ArrayList<>();
+
+}
+```
+#### Clase Ambiente
+
+Es el entorno actual con todos los datos de este mismo presentes en ese momento del juego 
+
+```java
+
+public class Ambiente {
+
+    //Variables donde guardo las cositas
+    Partida partidaActual;
+    int rondaActual;
+    int totalRondas;
+    long seed;
+    public String nombre;
+    public Map<String, Estrategia> estrategias = new TreeMap<>();
+    public Map<String, Partida> partidas = new TreeMap<>();
+    private RandomGenerator randomGenerator;
+
+    //Contructor del entorno
+    public Ambiente(String nombre) {
+        this.nombre = nombre;
+    }
+
+    //Cosa de la partida actual
+    public void setPartidaActual(Partida partida) {
+        this.partidaActual = partida;
+    }
+
+    //Obtiene la partida actual
+    public Partida getPartidaActual() {
+        return this.partidaActual;
+    }
+
+    //Coloca el número de ronda actual
+    public void setRondaActual(int ronda) {
+        this.rondaActual = ronda;
+    }
+
+    //Obtiene el númoer de ronda Actual
+    public int getRondaActual() {
+        return this.rondaActual;
+    }
+
+    //Coloca el totol de rondas
+    public void setTotalRondas(int ronda) {
+        this.totalRondas = ronda;
+    }
+
+    //Retorna el total de rodas
+    public int getTotalRondas() {
+        return this.totalRondas;
+    }
+
+    //obtiene la seed
+    public double getSeed() {
+        return this.seed;
+    }
+
+    //pone la seed
+    public void setSeed(long seed) {
+        this.seed = seed;
+    }
+
+    //el random xd
+    public RandomGenerator getRandomGenerator() {
+        return this.randomGenerator;
+    }
+
+    //el random xd
+    public void setRandomGenerator(RandomGenerator randomGenerator) {
+        this.randomGenerator = randomGenerator;
+    }
+
+    //Guardo la estrategia que se ejecuta
+    public boolean guardarEstrategia(String nombre, Estrategia estrategia) {
+        if (!this.estrategias.containsKey(nombre)) {
+            // System.out.println("ESTR: " + nombre);
+            this.estrategias.put(nombre, estrategia);
+            return true;
+        }
+        return false;
+    }
+
+    //Guardo la partida que se ejecuta
+    public boolean guardarPartida(String nombre, Partida partida) {
+        if (!this.partidas.containsKey(nombre)) {
+            this.partidas.put(nombre, partida);
+            // System.out.println("Se está guardando la partida");
+            return true;
+        }
+        return false;
+    }
+
+    //Se obtiene la partida que se está ejecutando
+    public Partida obtenerPartida(String nombre) {
+        if (partidas.containsKey(nombre)) {
+            // System.out.println("Encuentra la partida");
+            return partidas.get(nombre);
+        }
+        return null;
+    }
+
+    //Obtiene la estrategia que se está usando
+    public Estrategia obtenerEstrategia(String nombre) {
+        if (estrategias.containsKey(nombre)) {
+            // System.out.println("Encuentra la estrategia");
+            return estrategias.get(nombre);
+        }
+        return null;
+    }
+
+}
+
+```
+#### Clase Estrategia
+Contiene toda la información de una estrategia
+```java
+public class Estrategia {
+
+    public String nombre;
+    public InstruccionEstrategia instrucciones;
+    public ArrayList<Boolean> historial = new ArrayList<>();
+    public boolean state;
+
+    public Estrategia(String nombre, InstruccionEstrategia instrucciones) {
+        this.nombre = nombre;
+        this.instrucciones = instrucciones;
+    }
+
+}
+
+
+```
+
+
+#### Clase Puntaje
+Contine la información de todos los puntajes que se le da al jugador de pendiendo de la desición que este tome
 ```java
 
 
 
+public class Puntaje {
+    public Expresion cooperacion;
+    public Expresion defeccion;
+    public Expresion traidor;
+    public Expresion traicionado;
+    
+    public Puntaje(Expresion cooperacion, Expresion defeccion, Expresion traidor, Expresion traicionado) {
+        this.cooperacion = cooperacion;
+        this.defeccion = defeccion;
+        this.traidor = traidor;
+        this.traicionado = traicionado;
+    }
+    
+}
 
-```
+

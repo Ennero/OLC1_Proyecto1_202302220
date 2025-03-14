@@ -32,6 +32,56 @@ public class Ambiente {
         this.nombre = nombre;
     }
 
+    //Cosa de la partida actual
+    public void setPartidaActual(Partida partida) {
+        this.partidaActual = partida;
+    }
+
+    //Obtiene la partida actual
+    public Partida getPartidaActual() {
+        return this.partidaActual;
+    }
+
+    //Coloca el número de ronda actual
+    public void setRondaActual(int ronda) {
+        this.rondaActual = ronda;
+    }
+
+    //Obtiene el númoer de ronda Actual
+    public int getRondaActual() {
+        return this.rondaActual;
+    }
+
+    //Coloca el totol de rondas
+    public void setTotalRondas(int ronda) {
+        this.totalRondas = ronda;
+    }
+
+    //Retorna el total de rodas
+    public int getTotalRondas() {
+        return this.totalRondas;
+    }
+
+    //obtiene la seed
+    public double getSeed() {
+        return this.seed;
+    }
+
+    //pone la seed
+    public void setSeed(long seed) {
+        this.seed = seed;
+    }
+
+    //el random xd
+    public RandomGenerator getRandomGenerator() {
+        return this.randomGenerator;
+    }
+
+    //el random xd
+    public void setRandomGenerator(RandomGenerator randomGenerator) {
+        this.randomGenerator = randomGenerator;
+    }
+
     //Guardo la estrategia que se ejecuta
     public boolean guardarEstrategia(String nombre, Estrategia estrategia) {
         if (!this.estrategias.containsKey(nombre)) {
@@ -70,53 +120,4 @@ public class Ambiente {
         return null;
     }
 
-    // === ESTADOS DEL SISTEMA ===
-    // === RONDA ACTUAL ===
-    public void setPartidaActual(Partida partida) {
-        this.partidaActual = partida;
-    }
-
-    //Obtiene la partida actual
-    public Partida getPartidaActual() {
-        return this.partidaActual;
-    }
-
-    //Coloca el número de ronda actual
-    public void setRondaActual(int ronda) {
-        this.rondaActual = ronda;
-    }
-
-    //Obtiene el númoer de ronda Actual
-    public int getRondaActual() {
-        return this.rondaActual;
-    }
-
-    //Coloca el totol de rondas
-    public void setTotalRondas(int ronda) {
-        this.totalRondas = ronda;
-    }
-
-    //Retorna el total de rodas
-    public int getTotalRondas() {
-        return this.totalRondas;
-    }
-    
-    public double getSeed(){
-        return this.seed;
-    }
-    
-    public void setSeed(long seed){
-        this.seed=seed;
-    }
-    
-    public RandomGenerator getRandomGenerator(){
-        return this.randomGenerator;
-    }
-    
-    public void setRandomGenerator(RandomGenerator randomGenerator){
-        this.randomGenerator=randomGenerator;
-    }
-    
-    
-    
 }

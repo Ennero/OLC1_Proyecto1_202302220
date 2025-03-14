@@ -13,12 +13,14 @@ import tipos.TipoSentencia;
  *
  * @author Enner
  */
-public abstract class Expresion extends Sentencia{
+public abstract class Expresion extends Sentencia {
+
     TipoExpresion tipoExpresion;
+
     public Expresion(TipoExpresion tipoExpresion) {
         super(TipoSentencia.EXPRESION);
         this.tipoExpresion = tipoExpresion;
     }
 
-    public abstract TipoRetorno jugar(Ambiente entorno);
+    public abstract TipoRetorno jugar(Ambiente ambiente);
 }

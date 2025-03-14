@@ -9,10 +9,11 @@ package tipos;
  * @author Enner
  */
 public enum TipoExpresion {
-    PRIMITIVO,
-    COMPARATIVO,
     LOGICO,
     FUNCION,
     PUNTEO,
-    LISTA
+    LISTA,
+    PRIMITIVO,
+    COMPARATIVO,
+
 }

@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package expresiones;
+package tipoExpresion;
 
 import abstractas.Expresion;
 import olc1_proyecto1_202302220.Ambiente;
@@ -14,10 +14,11 @@ import tipos.TipoTipo;
  *
  * @author Enner
  */
+public class Primitiva extends Expresion {
 
-public class Primitiva extends Expresion{
     Object valor;
     TipoTipo tipo;
+
     public Primitiva(Object valor, TipoTipo tipo) {
         super(TipoExpresion.PRIMITIVO);
         this.valor = valor;
@@ -25,7 +26,7 @@ public class Primitiva extends Expresion{
     }
 
     @Override
-    public TipoRetorno jugar(Ambiente entorno) {
+    public TipoRetorno jugar(Ambiente ambiente) {
         switch (tipo) {
             case ENTERO -> {
                 return new TipoRetorno(Integer.parseInt(valor.toString()), tipo);

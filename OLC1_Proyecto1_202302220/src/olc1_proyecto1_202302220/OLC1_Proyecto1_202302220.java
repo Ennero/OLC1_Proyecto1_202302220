@@ -90,7 +90,7 @@ public class OLC1_Proyecto1_202302220 {
         errores.clear();
         Parser.erroresSintacticos.clear();
         
-        olc1_proyecto1_202302220.juego.salidaInfo.clear();
+        olc1_proyecto1_202302220.juego.salidona.clear();
 
         analisisLexico(input);
         Parser parser = new Parser(lexer);
@@ -113,7 +113,7 @@ public class OLC1_Proyecto1_202302220 {
         for (Instruccion instruccion : parser.sentencias) {
             try {
                 instruccion.jugar(global);
-                for (String salida : olc1_proyecto1_202302220.juego.salidaInfo) {
+                for (String salida : olc1_proyecto1_202302220.juego.salidona) {
                     SALIDA += salida + "\n";
                 }
             } catch (Exception e) {

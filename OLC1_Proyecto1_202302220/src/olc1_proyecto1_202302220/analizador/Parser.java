@@ -5,24 +5,24 @@
 
 package olc1_proyecto1_202302220.analizador;
 
-import olc1_proyecto1_202302220.Puntos;
+import olc1_proyecto1_202302220.Puntaje;
 import olc1_proyecto1_202302220.Jugadores;
-import instrucciones.Todo;
-import instrucciones.InstruccionEstrategia;
-import instrucciones.CrearPartida;
-import instrucciones.CrearEstrategia;
-import instrucciones.InstruccionPartida;
-import instrucciones.Regla;
-import instrucciones.Inicio;
-import expresiones.RondaActual;
-import expresiones.Lista;
-import expresiones.Comparacion;
-import expresiones.Primitiva;
-import expresiones.OperacionLogica;
-import expresiones.RandomNumber;
-import expresiones.TotalRondas;
+import tipoInstruccion.Todo;
+import tipoInstruccion.InstruccionEstrategia;
+import tipoInstruccion.CrearPartida;
+import tipoInstruccion.CrearEstrategia;
+import tipoInstruccion.InstruccionPartida;
+import tipoInstruccion.Regla;
+import tipoInstruccion.Inicio;
+import tipoExpresion.RondaActual;
+import tipoExpresion.Lista;
+import tipoExpresion.Comparacion;
+import tipoExpresion.Primitiva;
+import tipoExpresion.OperacionLogica;
+import tipoExpresion.RandomNumber;
+import tipoExpresion.TotalRondas;
 import tipos.TipoTipo;
-import expresiones.Funcion;
+import tipoExpresion.Funcion;
 import java_cup.runtime.Symbol;
 import java.util.LinkedList;
 import olc1_proyecto1_202302220.*;
@@ -690,7 +690,7 @@ class CUP$Parser$actions {
 		Expresion r = (Expresion)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		int pleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int pright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
-		Puntos p = (Puntos)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
+		Puntaje p = (Puntaje)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
 		 RESULT = new InstruccionPartida(j, r, p); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("match_Cuerpo",9, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-2)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -726,10 +726,10 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 18: // puntuaciones ::= SCORING DOS_PUNTOS ABRE_LLAVE puntos CIERRA_LLAVE 
             {
-              Puntos RESULT =null;
+              Puntaje RESULT =null;
 		int pleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).left;
 		int pright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-1)).right;
-		Puntos p = (Puntos)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
+		Puntaje p = (Puntaje)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-1)).value;
 		 RESULT = p; 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("puntuaciones",12, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-4)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
@@ -738,7 +738,7 @@ class CUP$Parser$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 19: // puntos ::= puntuacion COMA puntuacion COMA puntuacion COMA puntuacion 
             {
-              Puntos RESULT =null;
+              Puntaje RESULT =null;
 		int cleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)).left;
 		int cright = ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)).right;
 		Expresion c = (Expresion)((java_cup.runtime.Symbol) CUP$Parser$stack.elementAt(CUP$Parser$top-6)).value;
@@ -751,7 +751,7 @@ class CUP$Parser$actions {
 		int taleft = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).left;
 		int taright = ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()).right;
 		Expresion ta = (Expresion)((java_cup.runtime.Symbol) CUP$Parser$stack.peek()).value;
-		 RESULT = new Puntos(c, d, tr, ta); 
+		 RESULT = new Puntaje(c, d, tr, ta); 
               CUP$Parser$result = parser.getSymbolFactory().newSymbol("puntos",13, ((java_cup.runtime.Symbol)CUP$Parser$stack.elementAt(CUP$Parser$top-6)), ((java_cup.runtime.Symbol)CUP$Parser$stack.peek()), RESULT);
             }
           return CUP$Parser$result;
@@ -1360,6 +1360,6 @@ class CUP$Parser$actions {
                                CUP$Parser$stack,
                                CUP$Parser$top);
     }
-}
+    }
 
 }

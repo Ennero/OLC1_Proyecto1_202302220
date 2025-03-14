@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package expresiones;
+package tipoExpresion;
 
 import abstractas.Expresion;
 import olc1_proyecto1_202302220.Ambiente;
@@ -28,10 +28,10 @@ public class OperacionLogica extends Expresion {
     }
 
     @Override
-    public TipoRetorno jugar(Ambiente entorno) {
+    public TipoRetorno jugar(Ambiente ambiente) {
 
-        TipoRetorno v1 = exp1.jugar(entorno);
-        TipoRetorno v2 = exp2.jugar(entorno);
+        TipoRetorno v1 = exp1.jugar(ambiente);
+        TipoRetorno v2 = exp2.jugar(ambiente);
 
         if (v1 == null || v2 == null) {
             System.out.println("alguno es nulo al parecer");
@@ -39,7 +39,7 @@ public class OperacionLogica extends Expresion {
         }
         boolean b1 = Boolean.parseBoolean(v1.valor.toString());
         boolean b2 = Boolean.parseBoolean(v2.valor.toString());
-        System.out.println("el primero es "+ b1 + "y el segundo es " +b2);
+        System.out.println("el primero es " + b1 + "y el segundo es " + b2);
         return switch (this.operador) {
             case "&&" ->
                 new TipoRetorno(b1 && b2, TipoTipo.BOOLEANO);

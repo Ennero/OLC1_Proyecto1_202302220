@@ -4,7 +4,7 @@
  */
 package olc1_proyecto1_202302220;
 
-import instrucciones.InstruccionEstrategia;
+import tipoInstruccion.InstruccionEstrategia;
 import java.util.ArrayList;
 
 /**
@@ -12,14 +12,15 @@ import java.util.ArrayList;
  * @author Enner
  */
 public class Estrategia {
-    
+
     public String nombre;
     public InstruccionEstrategia instrucciones;
-    public ArrayList<Boolean> historial = new ArrayList<>(); 
+    public ArrayList<Boolean> historial = new ArrayList<>();
     public boolean state;
-    public Estrategia (String nombre, InstruccionEstrategia instrucciones){
+
+    public Estrategia(String nombre, InstruccionEstrategia instrucciones) {
         this.nombre = nombre;
-        this.instrucciones=instrucciones;
+        this.instrucciones = instrucciones;
     }
-    
+
 }

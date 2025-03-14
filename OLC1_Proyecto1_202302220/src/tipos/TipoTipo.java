@@ -9,10 +9,11 @@ package tipos;
  * @author Enner
  */
 public enum TipoTipo {
-    DECISION,
-    ENTERO,
-    FLOTANTE,
     BOOLEANO,
     STRING,
     LISTA,
+    DECISION,
+    ENTERO,
+    FLOTANTE,
+
 }

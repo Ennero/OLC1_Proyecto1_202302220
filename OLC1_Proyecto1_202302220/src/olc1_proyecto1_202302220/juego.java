@@ -11,6 +11,7 @@ import java.util.ArrayList;
  * @author Enner
  */
 public class juego {
-    public static ArrayList<String> salidaInfo = new ArrayList<>();
-    
+
+    public static ArrayList<String> salidona = new ArrayList<>();
+
 }

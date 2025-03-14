@@ -10,13 +10,13 @@ import abstractas.Expresion;
  *
  * @author Enner
  */
-public class Puntos {
+public class Puntaje {
     public Expresion cooperacion;
     public Expresion defeccion;
     public Expresion traidor;
     public Expresion traicionado;
     
-    public Puntos(Expresion cooperacion, Expresion defeccion, Expresion traidor, Expresion traicionado) {
+    public Puntaje(Expresion cooperacion, Expresion defeccion, Expresion traidor, Expresion traicionado) {
         this.cooperacion = cooperacion;
         this.defeccion = defeccion;
         this.traidor = traidor;

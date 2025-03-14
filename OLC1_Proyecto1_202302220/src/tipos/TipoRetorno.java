@@ -9,12 +9,14 @@ package tipos;
  * @author Enner
  */
 public class TipoRetorno {
+
     public TipoTipo tipo;
     public Object valor;
-    public TipoRetorno(Object valor, TipoTipo tipo){
-        this.tipo=tipo;
-        this.valor=valor;
+
+    public TipoRetorno(Object valor, TipoTipo tipo) {
+        this.tipo = tipo;
+        this.valor = valor;
 
     }
-    
+
 }

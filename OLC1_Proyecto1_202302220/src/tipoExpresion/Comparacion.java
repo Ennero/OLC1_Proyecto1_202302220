@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package expresiones;
+package tipoExpresion;
 
 import abstractas.Expresion;
 import java.util.ArrayList;
@@ -29,31 +29,31 @@ public class Comparacion extends Expresion {
     }
 
     @Override
-    public TipoRetorno jugar(Ambiente entorno) {
+    public TipoRetorno jugar(Ambiente ambiente) {
         return switch (this.operador) {
             case "==" ->
-                igual(entorno);
+                igual(ambiente);
             case "!=" ->
-                noIgual(entorno);
+                noIgual(ambiente);
             case ">" ->
-                mayor(entorno);
+                mayor(ambiente);
             case "<" ->
-                menor(entorno);
+                menor(ambiente);
             case ">=" ->
-                mayorIgual(entorno);
+                mayorIgual(ambiente);
             case "<=" ->
-                menorIgual(entorno);
+                menorIgual(ambiente);
             default ->
                 new TipoRetorno(-1, null);
         };
     }
 
-    public TipoRetorno igual(Ambiente entorno) {
+    public TipoRetorno igual(Ambiente ambiente) {
         //System.out.println("comienzo la comparación aqui");
         //if(exp1==null) System.out.println("es nulo desde aquiiiiii");
-        TipoRetorno valor1 = exp1.jugar(entorno);
+        TipoRetorno valor1 = exp1.jugar(ambiente);
         //System.out.println("aqui si no hay problemas");
-        TipoRetorno valor2 = exp2.jugar(entorno);
+        TipoRetorno valor2 = exp2.jugar(ambiente);
         //System.out.println("aqui si no hay probelmas");
         System.out.println("IGUALO "+"valor 1: " + valor1.valor.toString() + "Valor 2: " + valor2.valor.toString());
 
@@ -97,9 +97,9 @@ public class Comparacion extends Expresion {
         //return new TipoRetorno(false, TipoTipo.BOOLEANO);
     }
 
-    public TipoRetorno noIgual(Ambiente entorno) {
-        TipoRetorno valor1 = exp1.jugar(entorno);
-        TipoRetorno valor2 = exp2.jugar(entorno);
+    public TipoRetorno noIgual(Ambiente ambiente) {
+        TipoRetorno valor1 = exp1.jugar(ambiente);
+        TipoRetorno valor2 = exp2.jugar(ambiente);
         if (valor1.tipo == TipoTipo.ENTERO || valor1.tipo == TipoTipo.FLOTANTE) {
             if (valor2.tipo == TipoTipo.ENTERO || valor2.tipo == TipoTipo.FLOTANTE) {
                 return new TipoRetorno(Double.parseDouble(valor1.valor.toString()) != Double.parseDouble(valor2.valor.toString()), TipoTipo.BOOLEANO);
@@ -108,9 +108,9 @@ public class Comparacion extends Expresion {
         return null;
     }
 
-    public TipoRetorno mayor(Ambiente entorno) {
-        TipoRetorno valor1 = exp1.jugar(entorno);
-        TipoRetorno valor2 = exp2.jugar(entorno);
+    public TipoRetorno mayor(Ambiente ambiente) {
+        TipoRetorno valor1 = exp1.jugar(ambiente);
+        TipoRetorno valor2 = exp2.jugar(ambiente);
         if (valor1.tipo == TipoTipo.ENTERO || valor1.tipo == TipoTipo.FLOTANTE) {
             if (valor2.tipo == TipoTipo.ENTERO || valor2.tipo == TipoTipo.FLOTANTE) {
                 return new TipoRetorno(Double.parseDouble(valor1.valor.toString()) > Double.parseDouble(valor2.valor.toString()), TipoTipo.BOOLEANO);
@@ -119,9 +119,9 @@ public class Comparacion extends Expresion {
         return null;
     }
 
-    public TipoRetorno menor(Ambiente entorno) {
-        TipoRetorno valor1 = exp1.jugar(entorno);
-        TipoRetorno valor2 = exp2.jugar(entorno);
+    public TipoRetorno menor(Ambiente ambiente) {
+        TipoRetorno valor1 = exp1.jugar(ambiente);
+        TipoRetorno valor2 = exp2.jugar(ambiente);
         if (valor1.tipo == TipoTipo.ENTERO || valor1.tipo == TipoTipo.FLOTANTE) {
             if (valor2.tipo == TipoTipo.ENTERO || valor2.tipo == TipoTipo.FLOTANTE) {
                 return new TipoRetorno(Double.parseDouble(valor1.valor.toString()) < Double.parseDouble(valor2.valor.toString()), TipoTipo.BOOLEANO);
@@ -130,9 +130,9 @@ public class Comparacion extends Expresion {
         return null;
     }
 
-    public TipoRetorno mayorIgual(Ambiente entorno) {
-        TipoRetorno valor1 = exp1.jugar(entorno);
-        TipoRetorno valor2 = exp2.jugar(entorno);
+    public TipoRetorno mayorIgual(Ambiente ambiente) {
+        TipoRetorno valor1 = exp1.jugar(ambiente);
+        TipoRetorno valor2 = exp2.jugar(ambiente);
         if (valor1.tipo == TipoTipo.ENTERO || valor1.tipo == TipoTipo.FLOTANTE) {
             if (valor2.tipo == TipoTipo.ENTERO || valor2.tipo == TipoTipo.FLOTANTE) {
                 return new TipoRetorno(Double.parseDouble(valor1.valor.toString()) >= Double.parseDouble(valor2.valor.toString()), TipoTipo.BOOLEANO);
@@ -141,9 +141,9 @@ public class Comparacion extends Expresion {
         return null;
     }
 
-    public TipoRetorno menorIgual(Ambiente entorno) {
-        TipoRetorno valor1 = exp1.jugar(entorno);
-        TipoRetorno valor2 = exp2.jugar(entorno);
+    public TipoRetorno menorIgual(Ambiente ambiente) {
+        TipoRetorno valor1 = exp1.jugar(ambiente);
+        TipoRetorno valor2 = exp2.jugar(ambiente);
         if (valor1.tipo == TipoTipo.ENTERO || valor1.tipo == TipoTipo.FLOTANTE) {
             if (valor2.tipo == TipoTipo.ENTERO || valor2.tipo == TipoTipo.FLOTANTE) {
                 return new TipoRetorno(Double.parseDouble(valor1.valor.toString()) <= Double.parseDouble(valor2.valor.toString()), TipoTipo.BOOLEANO);

@@ -9,10 +9,10 @@ package tipos;
  * @author Enner
  */
 public enum TipoInstruccion {
-    ESTRATEGIA,
-    INICIAL,
     REGLA,
     PARTIDA,
     MAIN,
+    ESTRATEGIA,
+    INICIAL,
 
 }

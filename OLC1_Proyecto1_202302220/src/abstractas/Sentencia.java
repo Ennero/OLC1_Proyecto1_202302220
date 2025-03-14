@@ -10,9 +10,10 @@ import tipos.TipoSentencia;
  *
  * @author Enner
  */
-
 public abstract class Sentencia {
+
     TipoSentencia tipoSetencia;
+
     public Sentencia(TipoSentencia tipoSetencia) {
         this.tipoSetencia = tipoSetencia;
     }

@@ -4,9 +4,9 @@ import java_cup.runtime.Symbol;
 import java.util.LinkedList;
 import olc1_proyecto1_202302220.*;
 import utilidades.*;
-import expresiones.*;
+import tipoExpresion.*;
 import abstractas.*;
-import instrucciones.*;
+import tipoInstruccion.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import random.DeterministicRandomGenerator;
@@ -85,8 +85,8 @@ non terminal Instruccion bloque_Match;
 non terminal InstruccionPartida match_Cuerpo;
 non terminal Jugadores jugadores;
 non terminal Expresion rondas;
-non terminal Puntos puntuaciones;
-non terminal Puntos puntos;
+non terminal Puntaje puntuaciones;
+non terminal Puntaje puntos;
 non terminal Expresion puntuacion;
 //Lo que va en el bloque main
 non terminal Instruccion bloque_Main;
@@ -133,7 +133,7 @@ jugadores ::= PLAYERS STRATEGIES DOS_PUNTOS ABRE_CORCHETE ID:j1 COMA
                 ID:j2 CIERRA_CORCHETE   {: RESULT = new Jugadores(j1, j2); :} ;
 rondas ::= ROUNDS DOS_PUNTOS expresion:exp {: RESULT = exp; :} ;
 puntuaciones ::= SCORING DOS_PUNTOS ABRE_LLAVE puntos:p CIERRA_LLAVE {: RESULT = p; :} ;
-puntos ::= puntuacion:c COMA puntuacion:d COMA puntuacion:tr COMA puntuacion:ta  {: RESULT = new Puntos(c, d, tr, ta); :} ;
+puntos ::= puntuacion:c COMA puntuacion:d COMA puntuacion:tr COMA puntuacion:ta  {: RESULT = new Puntaje(c, d, tr, ta); :} ;
 puntuacion ::= MUTUAL_COOPERATION DOS_PUNTOS expresion:exp {: RESULT =  exp; :}
 | MUTUAL_DEFECTION DOS_PUNTOS expresion:exp {: RESULT =  exp; :}
 | BETRAYAL_REWARD DOS_PUNTOS expresion:exp {: RESULT =  exp; :}
