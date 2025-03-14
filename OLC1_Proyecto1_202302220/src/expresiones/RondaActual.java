@@ -2,23 +2,26 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package abstractas;
+package expresiones;
 
+import abstractas.Expresion;
 import olc1_proyecto1_202302220.Ambiente;
 import tipos.TipoExpresion;
 import tipos.TipoRetorno;
-import tipos.TipoSentencia;
+import tipos.TipoTipo;
 
 /**
  *
  * @author Enner
  */
-public abstract class Expresion extends Sentencia{
-    TipoExpresion tipoExpresion;
-    public Expresion(TipoExpresion tipoExpresion) {
-        super(TipoSentencia.EXPRESION);
-        this.tipoExpresion = tipoExpresion;
+
+public class RondaActual extends Expresion {
+    public RondaActual() {
+        super(TipoExpresion.PRIMITIVO);
     }
 
-    public abstract TipoRetorno jugar(Ambiente entorno);
+    @Override
+    public TipoRetorno jugar(Ambiente entorno) {
+        return new TipoRetorno(entorno.getRondaActual(), TipoTipo.ENTERO);
+    }
 }

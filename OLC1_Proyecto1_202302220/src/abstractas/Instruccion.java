@@ -4,9 +4,9 @@
  */
 package abstractas;
 
-import olc1_proyecto1_202302220.Entorno;
-import utilidades.TipoInstruccion;
-import utilidades.TipoSentencia;
+import olc1_proyecto1_202302220.Ambiente;
+import tipos.TipoInstruccion;
+import tipos.TipoSentencia;
 
 /**
  *
@@ -19,6 +19,6 @@ public abstract class Instruccion extends Sentencia {
         super(TipoSentencia.INSTRUCCION);
         this.tipoInstruccion = tipoInstruccion;
     }
-    public abstract void jugar(Entorno entorno);
+    public abstract void jugar(Ambiente entorno);
     
 }

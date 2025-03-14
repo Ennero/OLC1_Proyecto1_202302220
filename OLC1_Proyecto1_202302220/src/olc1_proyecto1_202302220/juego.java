@@ -2,18 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package abstractas;
+package olc1_proyecto1_202302220;
 
-import tipos.TipoSentencia;
+import java.util.ArrayList;
 
 /**
  *
  * @author Enner
  */
-
-public abstract class Sentencia {
-    TipoSentencia tipoSetencia;
-    public Sentencia(TipoSentencia tipoSetencia) {
-        this.tipoSetencia = tipoSetencia;
-    }
+public class juego {
+    public static ArrayList<String> salidaInfo = new ArrayList<>();
+    
 }

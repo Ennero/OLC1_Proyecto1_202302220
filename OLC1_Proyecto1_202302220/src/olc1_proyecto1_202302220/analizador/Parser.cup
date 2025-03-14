@@ -4,21 +4,18 @@ import java_cup.runtime.Symbol;
 import java.util.LinkedList;
 import olc1_proyecto1_202302220.*;
 import utilidades.*;
-import expresion.*;
+import expresiones.*;
 import abstractas.*;
-import instruccion.*;
-import objetos.*;
+import instrucciones.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import random.DeterministicRandomGenerator;
 import random.RandomGenerator;
-import funciones.*;
 
 
 /* 2. Codigo para el parser, variables y metodos */
 parser code
 {:
- 
     public ArrayList<Instruccion> sentencias;
     public static LinkedList<String[]> erroresSintacticos = new LinkedList<>();
 
@@ -35,10 +32,7 @@ parser code
         // Agregar a la lista de errores sintácticos
         erroresSintacticos.add(error);
     }
-
-
 :}
-
 
 //----------------------------------------------------------------------------------
 //Para el error (yo en esta carrera)

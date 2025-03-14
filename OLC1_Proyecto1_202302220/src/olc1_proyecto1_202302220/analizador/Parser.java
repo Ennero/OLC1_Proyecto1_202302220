@@ -5,19 +5,32 @@
 
 package olc1_proyecto1_202302220.analizador;
 
+import olc1_proyecto1_202302220.Puntos;
+import olc1_proyecto1_202302220.Jugadores;
+import instrucciones.Todo;
+import instrucciones.InstruccionEstrategia;
+import instrucciones.CrearPartida;
+import instrucciones.CrearEstrategia;
+import instrucciones.InstruccionPartida;
+import instrucciones.Regla;
+import instrucciones.Inicio;
+import expresiones.RondaActual;
+import expresiones.Lista;
+import expresiones.Comparacion;
+import expresiones.Primitiva;
+import expresiones.OperacionLogica;
+import expresiones.RandomNumber;
+import expresiones.TotalRondas;
+import tipos.TipoTipo;
+import expresiones.Funcion;
 import java_cup.runtime.Symbol;
 import java.util.LinkedList;
 import olc1_proyecto1_202302220.*;
-import utilidades.*;
-import expresion.*;
 import abstractas.*;
-import instruccion.*;
-import objetos.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import random.DeterministicRandomGenerator;
 import random.RandomGenerator;
-import funciones.*;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.

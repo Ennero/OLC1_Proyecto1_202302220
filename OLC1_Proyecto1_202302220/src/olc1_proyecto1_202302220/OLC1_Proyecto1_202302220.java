@@ -90,7 +90,7 @@ public class OLC1_Proyecto1_202302220 {
         errores.clear();
         Parser.erroresSintacticos.clear();
         
-        utilidades.Salida.salidaInfo.clear();
+        olc1_proyecto1_202302220.juego.salidaInfo.clear();
 
         analisisLexico(input);
         Parser parser = new Parser(lexer);
@@ -108,12 +108,12 @@ public class OLC1_Proyecto1_202302220 {
         }
 
         // Si no hay errores, continuar con la ejecución
-        Entorno global = new Entorno("global");
+        Ambiente global = new Ambiente("global");
         String SALIDA = "";
         for (Instruccion instruccion : parser.sentencias) {
             try {
                 instruccion.jugar(global);
-                for (String salida : utilidades.Salida.salidaInfo) {
+                for (String salida : olc1_proyecto1_202302220.juego.salidaInfo) {
                     SALIDA += salida + "\n";
                 }
             } catch (Exception e) {
