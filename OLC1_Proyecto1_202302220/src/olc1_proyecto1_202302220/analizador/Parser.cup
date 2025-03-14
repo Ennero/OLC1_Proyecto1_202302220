@@ -197,6 +197,7 @@ funcion ::= GET_MOVE:func ABRE_PARENTESIS expresion:e1 COMA expresion:e2 CIERRA_
 | GET_LAST_N_MOVES:func ABRE_PARENTESIS expresion:e1 COMA expresion:e2 CIERRA_PARENTESIS   {: RESULT = new Funcion(func, e1, e2); :} 
 ;
 lista ::= ABRE_CORCHETE elemento:e CIERRA_CORCHETE {: RESULT = new Lista(e); :};
+
 elemento ::= elemento:l COMA expresion:e {: RESULT = l; RESULT.add(e); :} 
 | expresion:e {: RESULT = new ArrayList<>(Arrays.asList(e)); :}
 ;

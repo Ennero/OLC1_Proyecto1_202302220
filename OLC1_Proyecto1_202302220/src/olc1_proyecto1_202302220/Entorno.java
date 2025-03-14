@@ -10,6 +10,8 @@ import objetos.Estrategia;
 import java.util.Map;
 import java.util.TreeMap;
 import objetos.Partida;
+import random.DeterministicRandomGenerator;
+import random.RandomGenerator;
 
 /**
  *
@@ -21,10 +23,11 @@ public class Entorno {
     Partida partidaActual;
     int rondaActual;
     int totalRondas;
-    int seed;
+    long seed;
     public String nombre;
     public Map<String, Estrategia> estrategias = new TreeMap<>();
     public Map<String, Partida> partidas = new TreeMap<>();
+    private RandomGenerator randomGenerator;
 
     //Contructor del entorno
     public Entorno(String nombre) {
@@ -104,7 +107,18 @@ public class Entorno {
         return this.seed;
     }
     
-    public void setSeed(int seed){
+    public void setSeed(long seed){
         this.seed=seed;
     }
+    
+    public RandomGenerator getRandomGenerator(){
+        return this.randomGenerator;
+    }
+    
+    public void setRandomGenerator(RandomGenerator randomGenerator){
+        this.randomGenerator=randomGenerator;
+    }
+    
+    
+    
 }

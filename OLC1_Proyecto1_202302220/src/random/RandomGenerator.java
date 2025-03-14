@@ -9,5 +9,6 @@ package random;
  * @author Enner
  */
 public interface RandomGenerator {
+    //Se supono que genera un número decimal aleatori entro 0.0 y 1.0
     double nextDouble();
 }

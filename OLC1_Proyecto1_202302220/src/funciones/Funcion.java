@@ -100,6 +100,7 @@ public class Funcion extends Expresion {
 
         String funcioncita = String.valueOf(exp1.jugar(entorno).valor);
 
+
         if (funcioncita.equals("opponent_history")) {
             if (!estrategia1.state && estrategia2.state && !estrategia1.historial.isEmpty()) {
                 boolean valor = estrategia1.historial.get(estrategia1.historial.size() - 1);
@@ -128,6 +129,9 @@ public class Funcion extends Expresion {
         Estrategia estrategia1 = entorno.obtenerEstrategia(entorno.getPartidaActual().jugador1);
         Estrategia estrategia2 = entorno.obtenerEstrategia(entorno.getPartidaActual().jugador2);
 
+        System.out.println("Estrategia1 "+estrategia1.state);
+        System.out.println("Estrategia2 "+estrategia2.state);
+        
         String funcioncita = String.valueOf(exp1.jugar(entorno).valor);
         Object decisionObj = exp2.jugar(entorno).valor;
         

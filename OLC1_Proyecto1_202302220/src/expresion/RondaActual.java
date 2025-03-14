@@ -22,6 +22,6 @@ public class RondaActual extends Expresion {
 
     @Override
     public TipoRetorno jugar(Entorno entorno) {
-        return new TipoRetorno(entorno.getRondaActual()+1, TipoTipo.ENTERO);
+        return new TipoRetorno(entorno.getRondaActual(), TipoTipo.ENTERO);
     }
 }
