@@ -164,8 +164,10 @@ public class Inicio extends Instruccion {
             if (regla.condicion != null && (boolean) regla.condicion.jugar(ambiente).valor) {
                 System.out.println("Aqui ejecuto la solución");
                 //Desactivo la estrategia
-                estrategia.state = false;
-                return regla.acion.jugar(ambiente).valor;
+                estrategia.state=true;                
+                Object reglita=regla.acion.jugar(ambiente).valor;
+                estrategia.state=false;
+                return reglita;
             } else if (regla.condicion == null) {
                 //Activo la estrategia
                 estrategia.state = true;

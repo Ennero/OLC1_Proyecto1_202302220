@@ -55,7 +55,7 @@ public class Comparacion extends Expresion {
         //System.out.println("aqui si no hay problemas");
         TipoRetorno valor2 = exp2.jugar(ambiente);
         //System.out.println("aqui si no hay probelmas");
-        System.out.println("IGUALO "+"valor 1: " + valor1.valor.toString() + "Valor 2: " + valor2.valor.toString());
+        System.out.println("IGUALO " + "valor 1: " + valor1.valor.toString() + "Valor 2: " + valor2.valor.toString());
 
         //para flotante o entero
         if (valor1.tipo == TipoTipo.ENTERO || valor1.tipo == TipoTipo.FLOTANTE) {
@@ -104,6 +104,9 @@ public class Comparacion extends Expresion {
             if (valor2.tipo == TipoTipo.ENTERO || valor2.tipo == TipoTipo.FLOTANTE) {
                 return new TipoRetorno(Double.parseDouble(valor1.valor.toString()) != Double.parseDouble(valor2.valor.toString()), TipoTipo.BOOLEANO);
             }
+        }
+        if (valor1.tipo == TipoTipo.DECISION && valor1.tipo == TipoTipo.DECISION) {
+            return new TipoRetorno(Boolean.parseBoolean(valor1.valor.toString()) != Boolean.parseBoolean(valor2.valor.toString()), TipoTipo.BOOLEANO);
         }
         return null;
     }
