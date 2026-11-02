@@ -1,4 +1,20 @@
-/OLC1_Proyecto1_202302220/nbproject/private/
-/OLC1_Proyecto1_202302220/build/
-/proyecto/nbproject/private/
-/OLC1_Proyecto1_202302220/dist/
+# Java
+*.class
+*.log
+*.ctxt
+.mtj.tmp/
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+target/
+build/
+.gradle/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.iml
