@@ -1,68 +1,41 @@
-<div align="center">
+# Analizador e intérprete Java con JFlex, CUP y Swing
 
-# 📑 Lexical and Syntactic Compiler Analyzer in Java (OLC1)
+Proyecto de Organización de Lenguajes y Compiladores 1 con especificaciones léxicas/sintácticas, clases de expresiones/instrucciones y una interfaz Swing para analizar programas y consultar resultados.
 
-**Analizador léxico y sintáctico con generación de árboles de derivación y tablas de símbolos en Java.**
+## Requisitos
 
-[![Language](https://img.shields.io/badge/Language-Java-blue?style=for-the-badge)](https://github.com/Ennero/OLC1_Proyecto1_202302220)
-[![Course](https://img.shields.io/badge/Course-Organización%20de%20Lenguajes%20y%20Compiladores%201-003366?style=for-the-badge)](https://ingenieria.usac.edu.gt/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge)](LICENSE)
+JDK 23 y Apache Ant, según la configuración NetBeans incluida. Las bibliotecas CUP de lib/ son dependencias necesarias y se conservan versionadas.
 
-</div>
+## Ejecución
 
----
+Los comandos parten de la raíz del repositorio, salvo donde se indica otra terminal.
 
-
-## 📌 Descripción General
-
-Este repositorio contiene la implementación y entrega de **📑 Lexical and Syntactic Compiler Analyzer in Java (OLC1)**, desarrollado en el curso de **Organización de Lenguajes y Compiladores 1** en la Universidad de San Carlos de Guatemala.
-
-- **Objetivo:** Analizador léxico y sintáctico con generación de árboles de derivación y tablas de símbolos en Java.
-- **Stack Principal:** `Java`.
-- **Área:** Ciencias de la Computación, Algoritmos y Desarrollo de Software.
-
----
-
-## 🚀 Características y Componentes
-
-- Implementación modular y buenas prácticas de codificación.
-- Manejo estructurado de datos, control de flujo y validaciones.
-- Documentación y scripts de soporte para compilación o ejecución.
-
----
-
-## 📦 Estructura del Proyecto
-
-```
-OLC1_Proyecto1_202302220/
-├── src/ o archivos de código fuente
-├── docs/ (si aplica)
-├── .gitignore
-├── LICENSE
-└── README.md
+```bash
+cd OLC1_Proyecto1_202302220
+ant jar
+ant run
 ```
 
----
+## Recorrido de demostración
 
-## ⚙️ Requisitos y Ejecución
+Abrir un archivo de examples/ desde la interfaz y ejecutar el análisis. Consultar los manuales para la sintaxis del lenguaje y los reportes. Los archivos Lexer.jflex y Parser.cup están en src/olc1_proyecto1_202302220/analizador/.
 
-1. Clonar el repositorio:
-   ```bash
-   git clone https://github.com/Ennero/OLC1_Proyecto1_202302220.git
-   cd OLC1_Proyecto1_202302220
-   ```
-2. Ejecutar según el entorno (`Java`):
-   - Consultar los scripts o archivos principales del proyecto para parámetros específicos.
+## Organización
 
----
+Carpetas de la entrega: [`OLC1_Proyecto1_202302220/`](OLC1_Proyecto1_202302220/), [`documentation/`](documentation/), [`examples/`](examples/), [`proyecto/`](proyecto/).
 
-## 📄 Licencia
+## Documentación
 
-Este proyecto está bajo la Licencia **MIT**. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+- [manualTecnico](documentation/manualTecnico.mkd)
+- [manualUsuario](documentation/manualUsuario.mkd)
+- [gramatica](documentation/gramatica.mkd)
 
----
+## Alcance y límites
 
-## 👨‍💻 Autor
+La compilación normal usa las fuentes Java del lexer/parser incluidas. Para modificar la gramática hace falta JFlex y CUP: seguir el procedimiento del manual y regenerar los archivos de forma consistente.
 
-- **Enner Mendizabal** - [@Ennero](https://github.com/Ennero)  
-- *Facultad de Ingeniería, Universidad de San Carlos de Guatemala.*
+## Contexto y licencia
+
+Trabajo académico o de aprendizaje conservado en el portafolio de [Enner Mendizabal](https://github.com/Ennero). Los créditos de los trabajos en grupo se conservan en sus entregas y manuales.
+
+Consultar [LICENSE](LICENSE) para la licencia de la raíz. Las dependencias y los componentes con avisos o licencias propios conservan sus condiciones.
